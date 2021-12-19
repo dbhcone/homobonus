@@ -1,0 +1,12 @@
+{
+    "CONN_STR_LOC": "mongodb://localhost:27017/hbevents",
+    "CONN_STR": "mongodb+srv://hb-events-user:pP00RDsetoM36rn3@cluster-hbevents.7qw1t.mongodb.net/hb-events?retryWrites=true&w=majority",
+    "JWT_SECRET": "SinnersJe$u$TheQu1ckBrownFoxJumped0verTheL@zyDog$WillReceive",
+    "MAILER_EMAIL": "dev.kiki@outlook.com",
+    "MAILER_PWD": "Hell1sRe@L.dev.outlook",
+    "PASSPHRASE": "#ThyWordIs&ALampToMy%Feet,ALightToMy@PathAlway",
+    "CALLBACK_URL": "http://localhost:4200",
+    "BE_URL": "http://localhost:9000",
+    "APPROOT": "http://localhost:9000",
+    "UPLOADPATH": "http://localhost:9000/public/uploads"
+}
