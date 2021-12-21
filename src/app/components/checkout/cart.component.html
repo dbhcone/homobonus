@@ -1,0 +1,27 @@
+<h3>Total amount in cart {{displayCartTotal()}}</h3>
+<mat-card class="example-card" *ngFor="let cartItem of cartItems">
+  <mat-card-title-group>
+    <mat-card-subtitle><a routerLink="/events/{{cartItem.eventId}}"> {{cartItem.name}} </a></mat-card-subtitle>
+    <mat-card-subtitle><b>Ticket Type:</b> {{cartItem.ticketName}}</mat-card-subtitle>
+    <mat-card-subtitle><b>Cost per Ticket:</b> GHS {{cartItem.price}}</mat-card-subtitle>
+    <img
+      mat-card-sm-image
+      src="https://material.angular.io/assets/img/examples/shiba2.jpg"
+    />
+  </mat-card-title-group>
+  <mat-card-content>
+    <!-- {{ longText }} -->
+  </mat-card-content>
+  <mat-divider inset></mat-divider>
+  <mat-card-actions>
+      <p>Subtotal: <b>GHS {{cartItem.total()}}</b></p>
+    <button mat-icon-button color="primary" (click)="decrement(cartItem)"><mat-icon>remove_circle</mat-icon></button>
+    <input type="text" name="" [value]="cartItem.quantity" class="cart-item-qty">
+    <button mat-icon-button color="primary" (click)="increment(cartItem)"><mat-icon>add_circle</mat-icon></button>
+    <button mat-icon-button color="warn" (click)="remove(cartItem)"><mat-icon>delete</mat-icon></button>
+  </mat-card-actions>
+</mat-card>
+
+<div class="container">
+    <a role="button" mat-raised-button color="primary" routerLink="/checkout">Checkout</a>
+</div>

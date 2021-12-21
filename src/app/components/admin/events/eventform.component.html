@@ -1,0 +1,177 @@
+<h2 mat-dialog-title>{{ HEADING }} <span mat-dialog-close>&times;</span></h2>
+
+<form [formGroup]="createEventForm" (ngSubmit)="onSubmit()" novalidate>
+  <mat-dialog-content class="mat-typography">
+    <!-- Title -->
+    <mat-form-field appearance="outline">
+      <mat-label>Title</mat-label>
+      <input
+        matInput
+        type="text"
+        formControlName="title"
+        placeholder="enter title here..."
+        required
+      />
+      <mat-error *ngIf="title?.touched && title?.hasError('required')">
+        Provide title
+      </mat-error>
+    </mat-form-field>
+
+    <!-- Date -->
+    <mat-form-field appearance="outline">
+      <mat-label>Choose a date</mat-label>
+      <input matInput [matDatepicker]="picker" formControlName="date" />
+      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker touchUi #picker></mat-datepicker>
+      <mat-error *ngIf="date?.touched && date?.hasError('required')">
+        Provide date
+      </mat-error>
+    </mat-form-field>
+
+    <!-- Time -->
+    <mat-form-field appearance="outline">
+      <mat-label>Time</mat-label>
+      <input
+        matInput
+        type="time"
+        formControlName="time"
+        placeholder="enter time here..."
+        required
+      />
+      <mat-error *ngIf="time?.touched && time?.hasError('required')">
+        Provide time
+      </mat-error>
+    </mat-form-field>
+
+    <!-- Speaker -->
+    <!-- <mat-form-field appearance="outline">
+      <mat-label>Speaker</mat-label>
+      <input
+        matInput
+        type="text"
+        formControlName="speaker"
+        placeholder="enter speaker here..."
+        required
+      />
+      <mat-error *ngIf="speaker?.touched && speaker?.hasError('required')">
+        Provide speaker
+      </mat-error>
+    </mat-form-field> -->
+
+    <!-- Venue -->
+    <mat-form-field appearance="outline">
+      <mat-label>Venue</mat-label>
+      <input
+        matInput
+        type="text"
+        formControlName="venue"
+        placeholder="enter venue here..."
+        required
+      />
+      <mat-error *ngIf="venue?.touched && venue?.hasError('required')">
+        Provide venue
+      </mat-error>
+    </mat-form-field>
+
+    <!-- Capacity -->
+    <mat-form-field appearance="outline">
+      <mat-label>Capacity</mat-label>
+      <input
+        matInput
+        type="number"
+        formControlName="capacity"
+        placeholder="enter capacity here..."
+        min="0"
+      />
+      <mat-error *ngIf="capacity?.touched && capacity?.hasError('required')">
+        Provide capacity
+      </mat-error>
+    </mat-form-field>
+
+    <!-- Flyer -->
+    <div>
+      <input
+        type="file"
+        style="display: none"
+        (change)="onFileSelected($event)"
+        #fileInput
+      />
+      <img
+        *ngIf="flyerSrc"
+        [src]="flyerSrc"
+        style="height: 300px; width: 300px"
+      />
+      <button mat-raised-button type="button" (click)="fileInput.click()">
+        <mat-icon color="primary">add_a_photo</mat-icon> Upload flyer
+      </button>
+    </div>
+
+    <!-- Description -->
+    <mat-form-field appearance="outline">
+      <mat-label>Description</mat-label>
+      <textarea
+        matInput
+        formControlName="description"
+        placeholder="describe the event here..."
+        required
+        rows="5"
+      >
+      </textarea>
+      <mat-error
+        *ngIf="description?.touched && description?.hasError('required')"
+      >
+        Provide description
+      </mat-error>
+    </mat-form-field>
+
+    <!-- Other Photos -->
+    <!-- <label>Select other photos</label>
+    <input
+      type="file"
+      style="display: none"
+      (change)="onFileSelected($event)"
+      #fileInput
+    />
+    <img
+      *ngIf="flyerSrc"
+      [src]="flyerSrc"
+      style="height: 350px; width: 350px"
+    />
+    <button type="button" class="upload" (click)="fileInput.click()">
+      Browse for a flyer
+    </button> -->
+    <!-- Extra Details -->
+    <table class="table table-bordered" formArrayName="extraDetails">
+      <tr>
+        <th colspan="2">Add Multiple Extra Detail:</th>
+        <th width="150px"><button mat-raised-button type="button" (click)="addDetail()" color="accent">Add More</button></th>
+      </tr>
+      <tr *ngFor="let extraDetail of extraDetails().controls; let i=index" [formGroupName]="i">
+        <td>
+            Label :
+            <input type="text" formControlName="label" class="form-control">
+        </td>
+        <td>
+            Value:
+            <input type="text" formControlName="value" class="form-control">
+        </td>
+        <td>
+            <button mat-raised-button (click)="removeDetail(i)" color="warn">Remove</button>
+        </td>
+      </tr>
+    </table>
+  </mat-dialog-content>
+
+  <mat-dialog-actions align="end">
+    <button mat-raised-button color="warn" mat-dialog-close>Cancel</button>
+    <button
+      mat-raised-button
+      color="primary"
+      cdkFocusInitial
+      type="submit"
+      [disabled]="!this.createEventForm.valid || submitting"
+    >
+      {{(submitting ? "Saving" : "Save") | uppercase}}
+    </button>
+  </mat-dialog-actions>
+</form>

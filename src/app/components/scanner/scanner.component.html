@@ -1,0 +1,67 @@
+<!-- API Documentation here -->
+<!-- https://github.com/zxing-js/ngx-scanner/wiki/Component-API#api -->
+<!-- 
+    - scanSuccess
+    - scanFailure
+    - scanError
+    - scanComplete
+    - camerasFound
+    - camerasNotFound
+ -->
+<zxing-scanner
+  *ngIf="scannerEnabled"
+  #scanner
+  (scanSuccess)="scanSuccessHandler($event)"
+>
+</zxing-scanner>
+<button
+  mat-raised-button
+  color="primary"
+  (click)="startScanner()"
+  *ngIf="!scannerEnabled"
+  type="button"
+>
+  Start Scanner
+</button>
+<button
+  type="button"
+  class="btn btn-danger text-uppercase"
+  (click)="stopScanner()"
+  *ngIf="scannerEnabled"
+>
+  Stop Scanner
+</button>
+<form [formGroup]="scannerForm" (ngSubmit)="onSubmit()" *ngIf="scanSuccess">
+  <mat-form-field>
+    <mat-label>Event Id</mat-label>
+    <input type="text" matInput placeholder="" formControlName="eventId" />
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label>Username</mat-label>
+    <input type="text" matInput placeholder="" formControlName="username" />
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label>Ticket Number</mat-label>
+    <input type="text" matInput placeholder="" formControlName="ticketNumber" />
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label>Something else</mat-label>
+    <input
+      type="text"
+      matInput
+      placeholder=""
+      formControlName="somethingElse"
+    />
+  </mat-form-field>
+
+  <button mat-raised-button color="primary" type="submit">
+    {{ (submitting ? "Authenticating ..." : "Submit") | uppercase }}
+  </button>
+</form>
+
+<div>
+  <p>{{ formValueJson }}</p>
+</div>

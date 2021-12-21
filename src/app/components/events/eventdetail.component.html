@@ -1,0 +1,178 @@
+<div class="container">
+  <div class="row">
+    <div class="col-md-8 col-sm-6 col-xs-12">
+      <h2 class="fs-2">{{ event?.title | uppercase }}</h2>
+
+      <!-- <div
+        simpleCountdown
+        [dateTo]="timestamp(event?.date)"
+        [language]="'fr'"
+        [styles]="
+          '
+        font-size: 26px;
+        text-align:center;
+        color: #FFF;
+        background-color: #3F51B5;
+        padding: 18px 13px;
+        font-weight: bold;
+        min-width:40px;
+        margin:0 1px;
+      '
+        "
+      ></div> -->
+
+      <!-- <div>
+        {{timestamp(event?.date)}}
+      </div> -->
+      <img class="event-flyer" [src]="displayFlyer()" alt="" srcset="" />
+
+      <!-- accordion start -->
+      <div class="accordion" id="accordionPanelsStayOpenExample">
+        <div class="accordion-item">
+          <h2 class="accordion-header" id="panelsStayOpen-headingOne">
+            <button
+              class="accordion-button"
+              type="button"
+              data-bs-toggle="collapse"
+              data-bs-target="#panelsStayOpen-collapseOne"
+              aria-expanded="true"
+              aria-controls="panelsStayOpen-collapseOne"
+            >
+              <span class="fs-5">Event Details</span>
+            </button>
+          </h2>
+          <div
+            id="panelsStayOpen-collapseOne"
+            class="accordion-collapse collapse show"
+            aria-labelledby="panelsStayOpen-headingOne"
+          >
+            <div class="accordion-body">
+              <div class="fs-6">
+                <p><span class="fw-bold"> Date: </span> {{ event?.date | date: "EEE dd-MMMM-yyyy" }}</p>
+              </div>
+              
+              <div class="fs-6">
+                <p><span class="fw-bold">Time:</span> {{ event?.time }}</p>
+              </div>
+
+              <div class="fs-6">
+                <p><span class="fw-bold">Description:</span> {{ event?.description }}</p>
+              </div>
+
+              <div class="fs-6">
+                <p><span class="fw-bold">Venue:</span> {{ event?.venue }}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="accordion-item" *ngIf="event?.extraDetails?.length > 0">
+          <h2 class="accordion-header" id="panelsStayOpen-headingTwo">
+            <button
+              class="accordion-button collapsed"
+              type="button"
+              data-bs-toggle="collapse"
+              data-bs-target="#panelsStayOpen-collapseTwo"
+              aria-expanded="false"
+              aria-controls="panelsStayOpen-collapseTwo"
+            >
+              <span class="fs-5">Other Details</span>
+            </button>
+          </h2>
+          <div
+            id="panelsStayOpen-collapseTwo"
+            class="accordion-collapse collapse"
+            aria-labelledby="panelsStayOpen-headingTwo"
+          >
+            <div class="accordion-body">
+              <div *ngFor="let detail of event.extraDetails" class="fs-6">
+                <label class="fw-bold">{{ detail.label }}</label>
+                <p>{{ detail.value }}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="accordion-item" *ngIf="pricings?.length > 0">
+          <h2 class="accordion-header" id="panelsStayOpen-headingThree">
+            <button
+              class="accordion-button collapsed"
+              type="button"
+              data-bs-toggle="collapse"
+              data-bs-target="#panelsStayOpen-collapseThree"
+              aria-expanded="false"
+              aria-controls="panelsStayOpen-collapseThree"
+            >
+              <span class="fs-5">Available Tickets</span>
+            </button>
+          </h2>
+          <div
+            id="panelsStayOpen-collapseThree"
+            class="accordion-collapse collapse"
+            aria-labelledby="panelsStayOpen-headingThree"
+          >
+            <div class="accordion-body">
+              <div *ngIf="pricings?.length > 0" class="table-responsive">
+                <table class="table table-striped">
+                  <thead>
+                    <tr>
+                      <th>Ticket Type</th>
+                      <th>Amount (GHS)</th>
+                      <th></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let pr of pricings">
+                      <td>{{ pr.pricing.name }}</td>
+                      <td>{{ pr.pricing.amount | number: "1.2-2" }}</td>
+                      <td>
+                        <button
+                          (click)="addToCart(pr._id)"
+                          color="primary"
+                          mat-icon-button
+                          title="add to cart"
+                        >
+                          <mat-icon matPrefix>add_shopping_cart</mat-icon>
+                        </button>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- accordion end -->
+    </div>
+    <div class="col-md-4 col-sm-6 col-xs-12">
+      <!-- Other Events can be here -->
+      <div *ngIf="otherEvents?.length > 0" class="other-events">
+        <h2>Other Events Available</h2>
+        <mat-card
+          class="side-event-card mb-3"
+          *ngFor="let ev of otherEvents"
+          (click)="viewDetails(ev._id)"
+        >
+          <mat-card-header>
+            <div
+              mat-card-avatar
+              [ngStyle]="{
+                'background-image': 'url(' + displayImage(ev.flyer) + ')',
+                'background-size': 'cover'
+              }"
+            ></div>
+            <mat-card-title>{{ ev.title }}</mat-card-title>
+            <mat-card-subtitle>{{
+              ev.date | date: "EEE dd-MMM-yyyy"
+            }}</mat-card-subtitle>
+          </mat-card-header>
+          <mat-card-content>
+            <p>
+              {{ ev.description }}
+            </p>
+          </mat-card-content>
+        </mat-card>
+      </div>
+    </div>
+  </div>
+</div>

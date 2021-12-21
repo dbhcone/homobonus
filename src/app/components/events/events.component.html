@@ -1,0 +1,106 @@
+<section class="container">
+    <h2>Upcoming events</h2>
+    <mat-paginator [pageSizeOptions]="[10, 25, 50, 100]"></mat-paginator>
+    <div class="row">
+        <div
+            class="col-md-4 col-sm-6 col-xs-12"
+            *ngFor="let event of obs | async"
+        >
+            <mat-card>
+                <mat-card-header>
+                    <mat-card-title>
+                        <h3>
+                            <mat-icon matPrefix>event</mat-icon
+                            >{{ event.title }}
+                        </h3>
+                    </mat-card-title>
+                    <mat-card-subtitle
+                        ><mat-icon matPrefix>schedule</mat-icon> <b>Date: </b
+                        >{{
+                            event.date | date: 'EEE dd-MMM-yyyy'
+                        }}</mat-card-subtitle
+                    >
+                </mat-card-header>
+                <mat-card-content (click)="viewDetails(event._id)">
+                    <img src="{{ displayFlyer(event.flyer) }}" class="flyer" />
+                    <section class="event-description">
+                        <p>{{ event.description }}</p>
+                    </section>
+                </mat-card-content>
+
+                <mat-card-footer>
+                    <section class="container">
+                        <h4>Available ticket price(s)</h4>
+                        <p>{{ displayPriceRange(event.pricings) }}</p>
+                    </section>
+                </mat-card-footer>
+
+                <mat-card-actions>
+                    <button
+                        class="small"
+                        mat-raised-button
+                        color="primary"
+                        (click)="viewDetails(event._id)"
+                    >
+                        <mat-icon>info</mat-icon> Info
+                    </button>
+                </mat-card-actions>
+            </mat-card>
+        </div>
+    </div>
+</section>
+
+<hr />
+
+<section class="container">
+    <h2>Past events</h2>
+    <mat-paginator [pageSizeOptions]="[10, 25, 50, 100]"></mat-paginator>
+
+    <div class="row">
+        <div
+            class="col-md-4 col-sm-6 col-xs-12"
+            *ngFor="let event of obs | async"
+        >
+            <mat-card>
+                <mat-card-header>
+                    <mat-card-title>
+                        <h3>
+                            <mat-icon matPrefix>event</mat-icon
+                            >{{ event.title }}
+                        </h3>
+                    </mat-card-title>
+                    <mat-card-subtitle
+                        ><mat-icon matPrefix>schedule</mat-icon> <b>Date: </b
+                        >{{
+                            event.date | date: 'EEE dd-MMM-yyyy'
+                        }}</mat-card-subtitle
+                    >
+                </mat-card-header>
+                <mat-card-content (click)="viewDetails(event._id)">
+                    <img src="{{ displayFlyer(event.flyer) }}" class="flyer" />
+                    <section class="event-description">
+                        <p>{{ event.description }}</p>
+                    </section>
+                </mat-card-content>
+
+                <mat-card-footer>
+                    <section class="container">
+                        <h4>Available ticket price(s)</h4>
+                        <p>{{ displayPriceRange(event.pricings) }}</p>
+                    </section>
+                </mat-card-footer>
+
+                <mat-card-actions>
+                    <button
+                        class="small"
+                        mat-raised-button
+                        color="primary"
+                        (click)="viewDetails(event._id)"
+                    >
+                        <mat-icon>info</mat-icon> Info
+                    </button>
+                </mat-card-actions>
+            </mat-card>
+        </div>
+    </div>
+</section>

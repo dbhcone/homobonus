@@ -1,0 +1,27 @@
+mat-radio-button {
+    margin-left: 15px;
+  }
+  
+  mat-radio-group {
+      display: block;
+  }
+  mat-form-field{
+      display: block;
+  }
+  
+  mat-card {
+      max-width: 500px;
+  }
+
+  .img-payment-avatar {
+      height: 80px;
+      width: 80px;
+      border-radius: 50%;
+  }
+
+  .payment-option{
+      border: 1px solid rgb(204, 0, 255);
+      border-radius: 10px;
+      padding: 10px;
+      margin: 5px 0;
+  }

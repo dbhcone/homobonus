@@ -6,11 +6,37 @@ import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { SharedModule } from './shared/shared.module';
 import { NgxSkeletonLoaderModule } from 'ngx-skeleton-loader';
+import { StoreModule } from '@ngrx/store';
+import { ZXingScannerModule } from '@zxing/ngx-scanner';
+import { QRCodeModule } from 'angular2-qrcode';
+import { ShoppingCartModule } from 'ng-shopping-cart';
+import { NgxSimpleCountdownModule } from 'ngx-simple-countdown';
+import { cartReducer } from './store/reducers/cart.reducers';
+import { userReducer } from './store/reducers/user.reducers';
+import { TicketItem } from './cart/ticket-item';
 
 @NgModule({
-  declarations: [AppComponent],
-  imports: [BrowserModule, AppRoutingModule, BrowserAnimationsModule, SharedModule, NgxSkeletonLoaderModule],
-  providers: [],
-  bootstrap: [AppComponent]
+    declarations: [AppComponent],
+    imports: [
+        BrowserModule,
+        AppRoutingModule,
+        BrowserAnimationsModule,
+        SharedModule,
+        NgxSkeletonLoaderModule,
+        ShoppingCartModule.forRoot({
+            itemType: TicketItem,
+            serviceType: 'localStorage',
+            serviceOptions: {
+                storageKey: 'HomoBonoShoppingCart',
+                clearOnError: true
+            }
+        }),
+        StoreModule.forRoot({ cart: cartReducer, userObj: userReducer }),
+        ZXingScannerModule,
+        QRCodeModule,
+        NgxSimpleCountdownModule
+    ],
+    providers: [],
+    bootstrap: [AppComponent]
 })
 export class AppModule {}

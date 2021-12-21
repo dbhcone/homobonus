@@ -1,0 +1,191 @@
+<section class="container">
+    <div class="row">
+        <!-- #region Ticket Pricings -->
+        <div class="col-md-5">
+            <h2>Ticket Pricings</h2>
+            <button align="end" type="button" mat-raised-button color="primary" (click)="openPricingForm()"><mat-icon>money</mat-icon>Add Pricing</button>
+            <div class="full-width">
+                <table
+                  class="full-width"
+                  matTableExporter
+                  mat-table
+                  [dataSource]="dataSource"
+                  #exporter="matTableExporter"
+                >
+                <!-- Image Column -->
+                <!-- <ng-container matColumnDef="thumbnail">
+                  <th mat-header-cell *matHeaderCellDef>Flyer</th>
+                  <td mat-cell *matCellDef="let row">
+                    <img mat-card-image
+                      src="{{ displayThumbnail(row.photourl) }}"
+                      alt="flyer of {{ row.personalDetails.speaker }}"
+                      class="thumbnail"
+                    />
+                  </td>
+                </ng-container> -->
+            
+                  <!-- Name Column -->
+                  <ng-container matColumnDef="name">
+                    <th mat-header-cell *matHeaderCellDef>Name</th>
+                    <td mat-cell *matCellDef="let row">{{ row.pricing.name }}</td>
+                  </ng-container>
+
+                  <!-- Quantity Column -->
+                  <ng-container matColumnDef="quantity">
+                    <th mat-header-cell *matHeaderCellDef>Number per Ticket</th>
+                    <td mat-cell *matCellDef="let row">{{ row.pricing.allowableNumberOfPersons }}</td>
+                  </ng-container>
+            
+                  <!-- Price Column -->
+                  <ng-container matColumnDef="amount">
+                    <th mat-header-cell *matHeaderCellDef>Price</th>
+                    <td mat-cell *matCellDef="let row">{{ row.pricing.amount| number : '1.2-2' }}</td>
+                  </ng-container>
+            
+                  <!-- Action Buttons -->
+                  <ng-container matColumnDef="edit">
+                    <th mat-header-cell *matHeaderCellDef>Edit</th>
+                    <td mat-cell *matCellDef="let row">
+                      <button mat-flat-button (click)="openPricingForm(row)">
+                        <mat-icon color="primary">edit</mat-icon>
+                      </button>
+                    </td>
+                  </ng-container>
+                  <ng-container matColumnDef="delete">
+                    <th mat-header-cell *matHeaderCellDef>Delete</th>
+                    <td mat-cell *matCellDef="let row">
+                      <button mat-flat-button (click)="triggerDeletePrice(row._id)">
+                        <mat-icon color="warn">delete</mat-icon>
+                      </button>
+                    </td>
+                  </ng-container>
+            
+                  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                  <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+                </table>
+              </div>
+        </div>
+        <!-- #endregion -->
+        
+        <div class="col-md-2">
+
+        </div>
+        <!-- Event details -->
+        <div class="col-md-5" *ngIf="eventDetailsForm">
+            <h2>Make Changes to Event Details</h2>
+            <form [formGroup]="eventDetailsForm" (ngSubmit)="saveEventChanges()">
+                  <!-- Title -->
+                  <mat-form-field appearance="outline">
+                    <mat-label>Title</mat-label>
+                    <input
+                      matInput
+                      type="text"
+                      formControlName="title"
+                      placeholder="enter title here..."
+                      required
+                    />
+                    <mat-error *ngIf="title?.touched && title?.hasError('required')">
+                      Provide title
+                    </mat-error>
+                  </mat-form-field>
+              
+                  <!-- Date -->
+                  <mat-form-field appearance="outline">
+                    <mat-label>Choose a date</mat-label>
+                    <input matInput [matDatepicker]="picker" formControlName="date" />
+                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-datepicker touchUi #picker></mat-datepicker>
+                    <mat-error *ngIf="date?.touched && date?.hasError('required')">
+                      Provide date
+                    </mat-error>
+                  </mat-form-field>
+              
+                  <!-- Time -->
+                  <mat-form-field appearance="outline">
+                    <mat-label>Time</mat-label>
+                    <input
+                      matInput
+                      type="time"
+                      formControlName="time"
+                      placeholder="enter time here..."
+                      required
+                    />
+                    <mat-error *ngIf="time?.touched && time?.hasError('required')">
+                      Provide time
+                    </mat-error>
+                  </mat-form-field>
+              
+                  <!-- Venue -->
+                  <mat-form-field appearance="outline">
+                    <mat-label>Venue</mat-label>
+                    <input
+                      matInput
+                      type="text"
+                      formControlName="venue"
+                      placeholder="enter venue here..."
+                      required
+                    />
+                    <mat-error *ngIf="venue?.touched && venue?.hasError('required')">
+                      Provide venue
+                    </mat-error>
+                  </mat-form-field>
+              
+                  <!-- Capacity -->
+                  <mat-form-field appearance="outline">
+                    <mat-label>Capacity</mat-label>
+                    <input
+                      matInput
+                      type="number"
+                      formControlName="capacity"
+                      placeholder="enter capacity here..."
+                      min="0"
+                    />
+                    <mat-error *ngIf="capacity?.touched && capacity?.hasError('required')">
+                      Provide capacity
+                    </mat-error>
+                  </mat-form-field>
+              
+                  <!-- Description -->
+                  <mat-form-field appearance="outline">
+                    <mat-label>Description</mat-label>
+                    <textarea
+                      matInput
+                      formControlName="description"
+                      placeholder="describe the event here..."
+                      required
+                      rows="5"
+                    >
+                    </textarea>
+                    <mat-error
+                      *ngIf="description?.touched && description?.hasError('required')"
+                    >
+                      Provide description
+                    </mat-error>
+                  </mat-form-field>
+              
+                 <!-- Extra Details -->
+                  <!-- <table class="table table-bordered" formArrayName="extraDetails">
+                    <tr>
+                      <th colspan="2">Add Multiple Extra Detail:</th>
+                      <th width="150px"><button mat-raised-button type="button" (click)="addDetail()" color="accent">Add More</button></th>
+                    </tr>
+                    <tr *ngFor="let extraDetail of extraDetails().controls; let i=index" [formGroupName]="i">
+                      <td>
+                          Label :
+                          <input type="text" formControlName="label" class="form-control">
+                      </td>
+                      <td>
+                          Value:
+                          <input type="text" formControlName="value" class="form-control">
+                      </td>
+                      <td>
+                          <button mat-raised-button (click)="removeDetail(i)" color="warn">Remove</button>
+                      </td>
+                    </tr>
+                  </table> -->
+             
+                  <button mat-raised-button type="submit">Save Changes</button>
+              </form>
+        </div>
+    </div>
+</section>

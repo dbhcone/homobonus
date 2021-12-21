@@ -1,0 +1,57 @@
+<h2 mat-dialog-title>{{ HEADING }} <span mat-dialog-close>&times;</span></h2>
+<form [formGroup]="pricingForm" (ngSubmit)="onSubmit()">
+  <mat-dialog-content class="mat-typograpy">
+    <!-- Ticket Type -->
+    <mat-form-field appearance="fill">
+      <mat-label>Ticket Name</mat-label>
+      <input matInput type="text" formControlName="name" required />
+      <mat-hint>Example: VIP, Regular, Diamond, Silver</mat-hint>
+    </mat-form-field>
+
+    <!-- Ticket Name
+      <mat-form-field appearance="fill">
+        <mat-label>Ticket Name</mat-label>
+        <input matInput type="text" formControlName="shortName" required placeholder="" >
+      </mat-form-field> -->
+
+    <!-- Allowable Number of People -->
+    <mat-form-field appearance="fill">
+      <mat-label>Allowable Number of People</mat-label>
+      <input
+        matInput
+        type="number"
+        formControlName="allowableNumberOfPersons"
+        required
+        min="1"
+        placeholder=""
+      />
+    </mat-form-field>
+
+    <!-- Price -->
+    <mat-form-field appearance="fill">
+      <mat-label>Price</mat-label>
+      <input
+        matInput
+        type="number"
+        formControlName="amount"
+        required
+        placeholder=""
+      />
+      <span matPrefix class="px-1">GHS</span>
+    </mat-form-field>
+  </mat-dialog-content>
+
+  <mat-dialog-actions align="end">
+    <button mat-raised-button color="warn" mat-dialog-close>Cancel</button>
+    <button
+      mat-raised-button
+      color="primary"
+      [mat-dialog-close]="pricingForm.value"
+      cdkFocusInitial
+      type="submit"
+      [disabled]="!pricingForm.valid || submitting"
+    >
+      {{ (submitting ? "Saving" : "Save") | uppercase }}
+    </button>
+  </mat-dialog-actions>
+</form>

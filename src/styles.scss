@@ -19,13 +19,13 @@ $lieb-warn: mat.define-palette(mat.$yellow-palette, 700, 500, A700);
 // Create the theme object. A theme consists of configurations for individual
 // theming systems such as "color" or "typography".
 $lieb-theme: mat.define-light-theme(
-  (
-    color: (
-      primary: $lieb-primary,
-      accent: $lieb-accent,
-      warn: $lieb-warn
+    (
+        color: (
+            primary: $lieb-primary,
+            accent: $lieb-accent,
+            warn: $lieb-warn
+        )
     )
-  )
 );
 
 // Include theme styles for core and each component used in your app.
@@ -42,20 +42,47 @@ $lieb-theme: mat.define-light-theme(
 
 html,
 body {
-  height: 100%;
+    height: 100%;
 }
 body {
-  margin: 0;
-  font-family: 'Poppins', 'Helvetica Neue', sans-serif;
+    margin: 0;
+    font-family: 'Poppins', 'Helvetica Neue', sans-serif;
 }
 .bg-light {
-  background-color: #fbfbfb;
+    background-color: #fbfbfb;
 }
 
 // Contact page google map
-.ll-google-map {
-  .map-container {
-    width: 100% !important;
-    height: 400px !important;
-  }
+.hb-google-map {
+    .map-container {
+        width: 100% !important;
+        height: 400px !important;
+    }
 }
+
+// .full-width {
+//   width: 100%;
+// }
+
+// th{
+//   background-color: ghostwhite;
+// }
+// .mat-row:nth-child(even){
+//     background-color: ghostwhite;
+// }
+
+// .mat-row:nth-child(odd){
+//     background-color:#ffffff;
+// }
+
+// .burlywood {
+//   background-color: burlywood;
+// }
+
+// .darkkhaki {
+//   background-color: darkkhaki;
+// }
+
+// .voilet {
+//   background-color: violet;
+// }

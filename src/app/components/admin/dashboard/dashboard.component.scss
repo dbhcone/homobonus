@@ -1,0 +1,33 @@
+.grid-container {
+  margin: 20px;
+}
+
+.more-button {
+  position: absolute;
+  top: 5px;
+  right: 10px;
+}
+
+.dashboard-card-content {
+  text-align: center;
+}
+
+
+.burlywood {
+  background-color: burlywood;
+}
+
+.darkkhaki {
+  background-color: darkkhaki;
+}
+
+.voilet {
+  background-color: violet;
+}
+
+mat-card {
+  height: 100px;
+  padding: 10px;
+  align-items: center;
+  cursor: pointer;
+}

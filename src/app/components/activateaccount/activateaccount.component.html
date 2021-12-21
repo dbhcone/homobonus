@@ -1,0 +1,58 @@
+<div class="container h-100 login-container">
+    <div class="row h-100 justify-content-center align-items-center">
+      <mat-card>
+        <mat-card-header class="center-content">
+          <mat-card-title class="text-center">ACTIVATE YOUR ACCOUNT</mat-card-title>
+          <mat-card-subtitle class="text-center"
+            >Enter the 6-digit pin your received in your email</mat-card-subtitle
+          >
+        </mat-card-header>
+        <mat-card-content>
+          <form [formGroup]="activateAccountForm" (ngSubmit)="onSubmit()">
+            <mat-form-field appearance="outline">
+              <mat-label>PIN</mat-label>
+              <input
+                matInput
+                type="text"
+                formControlName="pin"
+                placeholder="enter your PIN here"
+                minlength="6"
+                maxlength="6"
+                pattern="[0-9]{6}"
+                required
+              />
+              <mat-icon matSuffix>pin</mat-icon>
+              <mat-error
+                *ngIf="pin?.touched && pin?.hasError('pattern')"
+              >
+                Numbers only
+              </mat-error>
+              <mat-error
+                *ngIf="pin?.touched && pin?.hasError('required')"
+              >
+                Provide pin
+              </mat-error>
+            </mat-form-field>
+  
+            
+            <button
+              class="full-width"
+              type="submit"
+              mat-raised-button
+              color="accent"
+              [disabled]="!activateAccountForm.valid || submitting"
+            >
+              {{ (submitting ? "Activating ..." : "Activate") | uppercase}}
+            </button>
+          </form>
+        </mat-card-content>
+        <mat-card-footer>
+          <p>
+            Don't have an account?
+            <a routerLink="/signup"> Sign up here</a>
+          </p>
+        </mat-card-footer>
+      </mat-card>
+    </div>
+  </div>
+  

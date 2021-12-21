@@ -2,7 +2,8 @@ var createError = require('http-errors');
 // import * as dotenv from 'dotenv'
 import config from 'config';
 import cors from 'cors';
-import express, { NextFunction, Request, Response } from 'express';
+import express from 'express';
+import { NextFunction, Request, Response } from 'express';
 import mongoose from 'mongoose';
 import path from 'path';
 import { indexRouter } from './routes/index';
@@ -12,7 +13,6 @@ import { eventsRouter } from './routes/event';
 import { purchasesRouter } from './routes/purchase';
 import { paymentsRouter } from './routes/payment';
 import { statsRouter } from './routes/stats';
-
 
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
@@ -42,10 +42,7 @@ app.use('/api/admin/stats', statsRouter);
 
 // serve only the static files from the dist directory
 app.use(express.static(path.join(__dirname, '../public/fe')));
-app.use(
-  '/public/uploads',
-  express.static(path.join(__dirname, '../public/uploads'))
-);
+app.use('/public/uploads', express.static(path.join(__dirname, '../public/uploads')));
 
 //#region  ======= CREATE SERVER AND START ===============
 var http = require('http');
@@ -74,17 +71,11 @@ server.on('listening', onListening);
 
 // catch 404 and forward to error handler
 app.use(function (req: Request, res: Response, next: NextFunction) {
-  next(createError(404));
+    next(createError(404));
 });
 
 // error handler
-app.use(
-  (
-    err: { message: any; status: any },
-    req: Request,
-    res: Response,
-    next: NextFunction
-  ) => {
+app.use((err: { message: any; status: any }, req: Request, res: Response, next: NextFunction) => {
     // set locals, only providing error in development
     res.locals.message = err.message;
     res.locals.error = req.app.get('env') === 'development' ? err : {};
@@ -96,50 +87,49 @@ app.use(
     console.log('Error thrown by our error handler');
 
     res.status(404).sendFile(path.join(__dirname, '../public/fe/index.html'));
-  }
-);
+});
 
 // DB Connection
 try {
-  mongoose.connect(
-    config.get('CONN_STR_LOC'),
-    {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-      useCreateIndex: true,
-      useFindAndModify: false,
-    },
-    (err: mongoose.CallbackError) => {
-      if (err) {
-        console.log({ error: err.message });
-      } else {
-        console.log('Database connection successful');
-      }
-    }
-  );
+    mongoose.connect(
+        config.get('CONN_STR_LOC'),
+        {
+            useNewUrlParser: true,
+            useUnifiedTopology: true,
+            useCreateIndex: true,
+            useFindAndModify: false
+        },
+        (err: mongoose.CallbackError) => {
+            if (err) {
+                console.log({ error: err.message });
+            } else {
+                console.log('Database connection successful');
+            }
+        }
+    );
 } catch (error: any) {
-  console.log('Error', error);
+    console.log('Error', error);
 }
 
 // Some other functions
 function onError(error: { syscall: string; code: any }) {
-  if (error.syscall !== 'listen') {
-    throw error;
-  }
+    if (error.syscall !== 'listen') {
+        throw error;
+    }
 
-  var bind = typeof port === 'string' ? 'Pipe ' + port : 'Port ' + port;
+    var bind = typeof port === 'string' ? 'Pipe ' + port : 'Port ' + port;
 
-  // handle specific listen errors with friendly messages
-  switch (error.code) {
-    case 'EACCES':
-      console.error(bind + ' requires elevated privileges');
-      process.exit(1);
-    case 'EADDRINUSE':
-      console.error(bind + ' is already in use');
-      process.exit(1);
-    default:
-      throw error;
-  }
+    // handle specific listen errors with friendly messages
+    switch (error.code) {
+        case 'EACCES':
+            console.error(bind + ' requires elevated privileges');
+            process.exit(1);
+        case 'EADDRINUSE':
+            console.error(bind + ' is already in use');
+            process.exit(1);
+        default:
+            throw error;
+    }
 }
 
 /**
@@ -147,9 +137,9 @@ function onError(error: { syscall: string; code: any }) {
  */
 
 function onListening() {
-  var addr = server.address();
-  var bind = typeof addr === 'string' ? 'pipe ' + addr : 'port ' + addr.port;
-  console.log('App started on port: ', bind);
+    var addr = server.address();
+    var bind = typeof addr === 'string' ? 'pipe ' + addr : 'port ' + addr.port;
+    console.log('App started on port: ', bind);
 }
 
 /**
@@ -157,18 +147,18 @@ function onListening() {
  */
 
 function normalizePort(val: string) {
-  var port = parseInt(val, 10);
+    var port = parseInt(val, 10);
 
-  if (isNaN(port)) {
-    // named pipe
-    return val;
-  }
+    if (isNaN(port)) {
+        // named pipe
+        return val;
+    }
 
-  if (port >= 0) {
-    // port number
-    return port;
-  }
+    if (port >= 0) {
+        // port number
+        return port;
+    }
 
-  return false;
+    return false;
 }
 module.exports = app;

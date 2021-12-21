@@ -1,0 +1,85 @@
+<div class="col-md-12">
+    My Purchases
+    <div class="full-width">
+        <table
+            class="full-width"
+            matTableExporter
+            mat-table
+            [dataSource]="dataSource"
+            #exporter="matTableExporter"
+            matSort
+        >
+            <!-- Date Column -->
+            <ng-container matColumnDef="date">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>Date</th>
+                <td mat-cell *matCellDef="let row">
+                    {{ row.createdAt | date: 'EEE dd-MMM-yyy' }}
+                </td>
+            </ng-container>
+
+            <!-- Total Column -->
+            <ng-container matColumnDef="total">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                    Total (GHS)
+                </th>
+                <td mat-cell *matCellDef="let row">
+                    {{ row.total | number: '.2' }}
+                </td>
+            </ng-container>
+
+            <!-- Ticket(s) Column -->
+            <ng-container matColumnDef="tickets">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                    Ticket(s)
+                </th>
+                <td mat-cell *matCellDef="let row">
+                    <div class="table-responsive">
+                        <table class="table table-striped">
+                            <tbody>
+                                <tr *ngFor="let ticket of row.tickets">
+                                    <td>
+                                        <a
+                                            routerLink="/events/{{
+                                                ticket.eventId
+                                            }}"
+                                            >{{ ticket.eventName }}</a
+                                        >
+                                    </td>
+                                    <td>
+                                        <span class="fw-bold">Unit Price: GHS </span>
+                                        {{ ticket.unitPrice | number: '.2' }}
+                                    </td>
+                                    <td><span class="fw-bold">Qty: </span>{{ ticket.quantity }}</td>
+                                    <td>
+                                        <span class="fw-bold"> Subtotal: GHS </span>
+                                        {{ ticket.subTotal | number: '.2' }}
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </td>
+            </ng-container>
+            <!-- <ng-container matColumnDef="amount">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Ticket(s)</th>
+                    <td mat-cell *matCellDef="let row">
+                      {{ row.pricing.amount| number : '1.2-2' }}
+                    </td>
+                  </ng-container> -->
+
+            <!-- Action Buttons -->
+            <ng-container matColumnDef="edit">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>Edit</th>
+                <td mat-cell *matCellDef="let row">
+                    <button mat-flat-button>
+                        <mat-icon color="primary">edit</mat-icon>
+                    </button>
+                </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+        </table>
+    </div>
+</div>
+<!-- #endregion -->
