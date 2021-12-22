@@ -9,9 +9,9 @@ import { menuList as staticMenuList } from '../../data/menus';
 })
 export class HeaderComponent implements OnInit {
     @Input()
-    topFixed!: boolean;
+    topFixed: boolean = false;
     @Output() toggleSidenav = new EventEmitter();
-    isScrolled!: boolean;
+    isScrolled: boolean = false;
     menuList: any[] = [];
     isLessThanLargeDevice!: boolean;
     constructor(private breakpointObserver: BreakpointObserver) {}

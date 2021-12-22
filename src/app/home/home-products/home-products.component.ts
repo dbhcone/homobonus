@@ -6,7 +6,7 @@ import { productsDB } from '../../shared/data/products';
     styleUrls: ['./home-products.component.scss']
 })
 export class HomeProductsComponent implements OnInit {
-    products: any = [];
+    products: any[] = [];
     constructor() {
         this.products = productsDB.Product;
     }

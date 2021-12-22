@@ -9,17 +9,7 @@ import { productsDB } from 'src/app/shared/data/products';
 export class DashboardSavedItemComponent implements OnInit {
     view = 'list';
 
-    products: {
-        id: number;
-        created_by: { name: string; avatar: string };
-        images: string[];
-        name: string;
-        price: number;
-        rating: number;
-        feedback: number;
-        category: string;
-        tags: string[];
-    }[] = [];
+    products: any[] = [];
     constructor() {}
 
     ngOnInit(): void {
