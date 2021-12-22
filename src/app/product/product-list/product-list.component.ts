@@ -15,12 +15,12 @@ export class ProductListComponent implements OnInit {
     constructor(private eventService: EventService) {}
 
     ngOnInit(): void {
-        this.fetchAllEvents();
+        // this.fetchAllEvents();
 
         setTimeout(() => {
             this.products = productsDB.Product;
             this.isLoaded = true;
-        }, 8000);
+        }, 3000);
     }
 
     fetchAllEvents() {

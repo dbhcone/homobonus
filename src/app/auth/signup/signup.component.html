@@ -6,79 +6,169 @@
         </div>
         <div class="login__content p-4 sm:p-8 flex flex-col justify-center bg-accent">
             <div class="login w-full max-w-xl rounded-md mx-auto border p-4 sm:p-8 xl:p-20">
-                <form>
-                    <h1 class="text-2xl font-bold">Sign up</h1>
-                    <div class="mb-4 mt-6">
-                        <label class="block text-gray-700 text-sm font-semibold mb-2" for="email">
-                            Username or Email
-                        </label>
-                        <input
-                            class="
-                                text-sm
-                                appearance-none
-                                rounded
-                                w-full
-                                py-2
-                                px-3
-                                text-gray-700
-                                bg-gray-100
-                                leading-tight
-                                focus:outline-none
-                                focus:shadow-outline
-                                h-10
-                            "
-                            id="email"
-                            type="text"
-                            placeholder="Email address"
-                        />
+                <form [formGroup]="signupForm" (ngSubmit)="onSubmit()">
+                    <h1 class="text-2xl font-bold text-blue-900 uppercase text-center">CREATE YOUR ACCOUNT</h1>
+                    <hr />
+                    <div formGroupName="account">
+                        <!-- Surname -->
+                        <div class="mb-1 mt-1">
+                            <label class="block text-gray-700 text-sm font-semibold mb-2" for="surname">
+                                Surname
+                            </label>
+                            <input
+                                class="
+                                    text-sm
+                                    appearance-none
+                                    rounded
+                                    w-full
+                                    py-2
+                                    px-3
+                                    text-gray-700
+                                    bg-gray-100
+                                    leading-tight
+                                    focus:outline-none
+                                    focus:shadow-outline
+                                    h-10
+                                "
+                                id="surname"
+                                type="text"
+                                placeholder="Surname"
+                                formControlName="surname"
+                            />
+                        </div>
+
+                        <!-- First Name -->
+                        <div class="mb-1 mt-1">
+                            <label class="block text-gray-700 text-sm font-semibold mb-2" for="firstName">
+                                First Name
+                            </label>
+                            <input
+                                class="
+                                    text-sm
+                                    appearance-none
+                                    rounded
+                                    w-full
+                                    py-2
+                                    px-3
+                                    text-gray-700
+                                    bg-gray-100
+                                    leading-tight
+                                    focus:outline-none
+                                    focus:shadow-outline
+                                    h-10
+                                "
+                                id="firstName"
+                                type="text"
+                                placeholder="First Name"
+                                formControlName="firstName"
+                            />
+                        </div>
+                        <!-- Other Name(s) -->
+                        <div class="mb-1 mt-1">
+                            <label class="block text-gray-700 text-sm font-semibold mb-2" for="otherNames">
+                                Other Name(s)
+                            </label>
+                            <input
+                                matInput
+                                class="
+                                    text-sm
+                                    appearance-none
+                                    rounded
+                                    w-full
+                                    py-2
+                                    px-3
+                                    text-gray-700
+                                    bg-gray-100
+                                    leading-tight
+                                    focus:outline-none
+                                    focus:shadow-outline
+                                    h-10
+                                "
+                                id="otherNames"
+                                type="text"
+                                placeholder="Other Name(s)"
+                                formControlName="otherNames"
+                            />
+                        </div>
+                        <!-- Gender -->
+
+                        <!-- Mobile Number -->
                     </div>
-                    <div class="mb-6 mt-6">
-                        <label class="block text-gray-700 text-sm font-semibold mb-2" for="password"> Password </label>
-                        <input
-                            class="
-                                text-sm
-                                bg-gray-100
-                                appearance-none
-                                rounded
-                                w-full
-                                py-2
-                                px-3
-                                text-gray-700
-                                mb-1
-                                leading-tight
-                                focus:outline-none
-                                focus:shadow-outline
-                                h-10
-                            "
-                            id="password"
-                            type="password"
-                            placeholder="Password"
-                        />
-                    </div>
-                    <div class="mb-6 mt-6">
-                        <label class="block text-gray-700 text-sm font-semibold mb-2" for="password2">
-                            Confirm Password
-                        </label>
-                        <input
-                            class="
-                                text-sm
-                                bg-gray-100
-                                appearance-none
-                                rounded
-                                w-full
-                                py-2
-                                px-3
-                                text-gray-700
-                                mb-1
-                                leading-tight
-                                focus:outline-none
-                                focus:shadow-outline
-                                h-10
-                            "
-                            id="password2"
-                            type="password"
-                            placeholder="confirm password"
-                        />
+                    <div formGroupName="user">
+                        <div class="mb-1 mt-1">
+                            <label class="block text-gray-700 text-sm font-semibold mb-2" for="email">
+                                Username or Email
+                            </label>
+                            <input
+                                class="
+                                    text-sm
+                                    appearance-none
+                                    rounded
+                                    w-full
+                                    py-2
+                                    px-3
+                                    text-gray-700
+                                    bg-gray-100
+                                    leading-tight
+                                    focus:outline-none
+                                    focus:shadow-outline
+                                    h-10
+                                "
+                                id="email"
+                                type="text"
+                                placeholder="Email address"
+                            />
+                        </div>
+                        <div class="mb-1 mt-1">
+                            <label class="block text-gray-700 text-sm font-semibold mb-2" for="password">
+                                Password
+                            </label>
+                            <input
+                                class="
+                                    text-sm
+                                    bg-gray-100
+                                    appearance-none
+                                    rounded
+                                    w-full
+                                    py-2
+                                    px-3
+                                    text-gray-700
+                                    mb-1
+                                    leading-tight
+                                    focus:outline-none
+                                    focus:shadow-outline
+                                    h-10
+                                "
+                                id="password"
+                                type="password"
+                                placeholder="Password"
+                            />
+                        </div>
+                        <div class="mb-1 mt-1">
+                            <label class="block text-gray-700 text-sm font-semibold mb-2" for="password2">
+                                Confirm Password
+                            </label>
+                            <input
+                                class="
+                                    text-sm
+                                    bg-gray-100
+                                    appearance-none
+                                    rounded
+                                    w-full
+                                    py-2
+                                    px-3
+                                    text-gray-700
+                                    mb-1
+                                    leading-tight
+                                    focus:outline-none
+                                    focus:shadow-outline
+                                    h-10
+                                "
+                                id="password2"
+                                type="password"
+                                placeholder="confirm password"
+                            />
+                        </div>
                     </div>
                     <div class="flex items-center">
                         <input
@@ -106,7 +196,8 @@
                                 focus:shadow-outline
                                 h-10
                             "
-                            type="button"
+                            type="submit"
+                            [disabled]="!signupForm.valid || submitting"
                         >
                             Sign up
                         </button>

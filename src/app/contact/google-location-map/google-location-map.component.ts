@@ -11,7 +11,9 @@ import { map, catchError } from 'rxjs/operators';
 export class GoogleLocationMapComponent implements OnInit {
     apiLoaded: Observable<boolean>;
     options: google.maps.MapOptions = {
-        center: { lat: 23.698452658467275, lng: 90.3470423839077 },
+        // center: { lat: 23.698452658467275, lng: 90.3470423839077 },
+        // center: { lat: 6.7026967, lng: -1.608378 },
+        center: { lat: -1.608378, lng: 6.7026967 },
         zoom: 4,
         styles: [
             {

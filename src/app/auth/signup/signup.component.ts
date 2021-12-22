@@ -69,6 +69,8 @@ export class SignupComponent implements OnInit {
         const { confirmPassword, ...user } = userdata;
         const account = this.signupForm.get('account')?.value;
 
+        console.log('user and account', userdata, account);
+
         this.auth.signup(user, account)?.subscribe(
             async (resp: any) => {
                 console.log('signup', resp);
