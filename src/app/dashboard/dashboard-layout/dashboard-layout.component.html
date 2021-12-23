@@ -61,9 +61,25 @@
                             <button mat-icon-button>
                                 <mat-icon>notifications</mat-icon>
                             </button>
-                            <button mat-icon-button>
+                            <button mat-icon-button [matMenuTriggerFor]="beforeMenu">
                                 <mat-icon>account_circle</mat-icon>
                             </button>
+                            <!--  -->
+                            <mat-menu #beforeMenu="matMenu" xPosition="before">
+                                <button mat-menu-item>
+                                    <a class="btn" role="button"><mat-icon matPrefix>person</mat-icon> View Profile</a>
+                                </button>
+                                <button mat-menu-item>
+                                    <a class="btn" role="button" routerLink="/dashboard"
+                                        ><mat-icon matPrefix>dashboard</mat-icon> My Dashboard</a
+                                    >
+                                </button>
+                                <mat-divider></mat-divider>
+                                <button mat-menu-item (click)="onLogout()">
+                                    <a class="btn"><mat-icon matPrefix>logout</mat-icon> Logout</a>
+                                </button>
+                            </mat-menu>
+                            <!--  -->
                         </div>
                     </div>
                 </div>

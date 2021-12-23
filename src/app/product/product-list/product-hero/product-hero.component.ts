@@ -9,7 +9,7 @@ export class ProductHeroComponent implements OnInit {
     particlesOptions = {
         particles: {
             color: {
-                value: ['#ffffff', '#ffffff']
+                value: ['#ccc000', '#ffffff', '#eeefff', '#abcdef']
             },
             size: {
                 value: 1
@@ -20,7 +20,7 @@ export class ProductHeroComponent implements OnInit {
             },
             move: {
                 enable: true,
-                speed: 1
+                speed: 1.5
             }
         }
     };

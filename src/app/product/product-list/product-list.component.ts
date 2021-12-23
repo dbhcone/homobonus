@@ -12,6 +12,23 @@ export class ProductListComponent implements OnInit {
     advanceSearchExpanded: boolean = false;
     products: any[] = [];
     events: any[] = [];
+
+    /**
+     * Static event for enactus
+     */
+    cena_noctis = {
+        _id: '69d087e65b567c856',
+        title: 'Cena Noctis ',
+        date: '2022-01-02',
+        time: '16:00 GMT',
+        capacity: 500,
+        venue: "St. Theresa's Parish Hall - Asawase Kumasi",
+        flyer: { filename: 'assets/images/events/cena_noctis.jpg' },
+        extraDetails: [{ label: 'Dress Code', value: 'Strictly Official' }],
+        description: 'It is going to be an amazing time together',
+        rating: 5,
+        prices: [50]
+    };
     constructor(private eventService: EventService) {}
 
     ngOnInit(): void {

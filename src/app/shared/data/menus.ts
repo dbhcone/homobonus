@@ -19,9 +19,9 @@ export const menuList: Menu[] = [
     {
         path: '/dashboard',
         name: 'Dashboard'
-    },
-    {
-        path: '/doc',
-        name: 'Doc'
     }
+    // {
+    //     path: '/doc',
+    //     name: 'Doc'
+    // }
 ];

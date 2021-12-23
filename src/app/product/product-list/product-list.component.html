@@ -1,4 +1,6 @@
 <hb-product-hero></hb-product-hero>
+<!-- Search (simple and advanced) -->
+<!-- 
 <div class="hb-search pb-6">
     <div class="container">
         <div class="border overflow-hidden sm:rounded-md p-5">
@@ -115,9 +117,57 @@
         </div>
     </div>
 </div>
+ -->
 
 <div class="hb-products-area mb-24">
     <div class="container">
+        <h2>Latest Events</h2>
+        <div class="grid grid-cols-12 gap-6 xxl:gap-8">
+            <div class="col-span-12 md:col-span-6 xl:col-span-4">
+                <mat-card class="hb-product">
+                    <img
+                        mat-card-image
+                        [src]="cena_noctis?.flyer?.filename"
+                        alt="{{ cena_noctis?.title }}"
+                        style="height: 50%; margin: 0 0 20px"
+                    />
+                    <mat-card-content class="flex">
+                        <div class="flex-none w-10">
+                            <!-- <img src="{{ cena_noctis?.created_by?.avatar }}" alt="cena_noctis?.created_by?.name" /> -->
+                        </div>
+                        <div class="flex-grow pl-3">
+                            <!-- <h4 class="hb-product__creator">{{ cena_noctis?.created_by?.name }}</h4> -->
+                            <h4 class="hb-product__creator">{{ cena_noctis?.venue }}</h4>
+                            <h2 class="hb-product__name">
+                                <a [routerLink]="['/events', cena_noctis?._id]">{{ cena_noctis?.title }}</a>
+                            </h2>
+                            <div class="flex justify-between mt-5">
+                                <div class="hb-product__price-label">Prices:</div>
+                                <div class="hb-product__price text-accent font-bold">GHS 50.00</div>
+                            </div>
+                        </div>
+                    </mat-card-content>
+                    <mat-card-actions class="hb-product__action flex justify-between">
+                        <div class="flex-1 text-center flex items-center justify-center">
+                            <mat-icon color="warn">star</mat-icon> {{ cena_noctis?.rating }}/5
+                            <mat-icon color="warn">star</mat-icon> {{ cena_noctis?.rating }}/5
+                            <mat-icon color="warn">star</mat-icon> {{ cena_noctis?.rating }}/5
+                        </div>
+                        <div class="flex-1 text-center">
+                            <a [routerLink]="['/events', cena_noctis?._id]" mat-raised-button color="warn" class="px-4"
+                                >View Event Details</a
+                            >
+                        </div>
+                    </mat-card-actions>
+                </mat-card>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="hb-products-area mb-24">
+    <div class="container">
+        <!-- <h2>Latest Events</h2> -->
         <div class="grid grid-cols-12 gap-6 xxl:gap-8" *ngIf="events.length > 0">
             <div *ngFor="let event of events" class="col-span-12 md:col-span-6 xl:col-span-4">
                 <mat-card class="hb-product">
@@ -173,6 +223,7 @@
 
 <div class="hb-products-area mb-24">
     <div class="container">
+        <h2>Past Events</h2>
         <div class="grid grid-cols-12 gap-6 xxl:gap-8" *ngIf="isLoaded">
             <div *ngFor="let product of products" class="col-span-12 md:col-span-6 xl:col-span-4">
                 <mat-card class="hb-product">

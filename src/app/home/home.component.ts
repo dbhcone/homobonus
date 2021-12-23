@@ -9,7 +9,7 @@ export class HomeComponent implements OnInit {
     particlesOptions = {
         particles: {
             color: {
-                value: ['#ffffff', '#ffffff']
+                value: ['#ccc000', '#ffffff', '#eeefff', '#abcdef']
             },
             size: {
                 value: 1
