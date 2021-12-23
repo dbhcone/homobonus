@@ -17,7 +17,7 @@ export class DashboardOrderComponent implements OnInit {
                 orderBy: 'Dean Lynch',
                 productId: 'cdfsfe5d',
                 created: '25.05.2021, 10:00',
-                status: 'complated',
+                status: 'completed',
                 price: 2145.0
             },
             {
@@ -49,7 +49,7 @@ export class DashboardOrderComponent implements OnInit {
                 orderBy: 'Dean Lynch',
                 productId: 'cdfsfe5d',
                 created: '25.05.2021, 10:00',
-                status: 'complated',
+                status: 'completed',
                 price: 2145.0
             },
             {
@@ -81,7 +81,7 @@ export class DashboardOrderComponent implements OnInit {
                 orderBy: 'Dean Lynch',
                 productId: 'cdfsfe5d',
                 created: '25.05.2021, 10:00',
-                status: 'complated',
+                status: 'completed',
                 price: 2145.0
             }
         ];

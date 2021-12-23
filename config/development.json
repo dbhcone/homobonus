@@ -5,8 +5,8 @@
     "MAILER_EMAIL": "dev.kiki@outlook.com",
     "MAILER_PWD": "Hell1sRe@L.dev.outlook",
     "PASSPHRASE": "#ThyWordIs&ALampToMy%Feet,ALightToMy@PathAlway",
-    "CALLBACK_URL": "https://hbevents.herokuapp.com",
-    "BE_URL": "https://hbevents.herokuapp.com",
-    "APPROOT": "https://hbevents.herokuapp.com",
-    "UPLOADPATH": "https://hbevents.herokuapp.com/public/uploads"
+    "CALLBACK_URL": "http://localhost:4200",
+    "BE_URL": "http://localhost:9000",
+    "APPROOT": "http://localhost:9000",
+    "UPLOADPATH": "http://localhost:9000/public/uploads"
 }

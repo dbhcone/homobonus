@@ -14,17 +14,12 @@ const transporter = nodemailer.createTransport({
     service: 'outlook',
     auth: {
         user: mailer,
-        pass: pwd,
-    },
+        pass: pwd
+    }
 });
 
 //Account Activation Notification
-const accountActivationEmail = async (
-    firstname: string,
-    temp_token: string,
-    email: string,
-    pin: string
-) => {
+const accountActivationEmail = async (firstname: string, temp_token: string, email: string, pin: string) => {
     const mailOptions = {
         from: `HB Events<${mailer}>`,
         to: `${email}`,
@@ -33,14 +28,14 @@ const accountActivationEmail = async (
                <header> <h1>HB EVENTS</h1> </header> 
                <br> 
                <section> 
-                    <p>Welcome <b>"${firstname}"</b>. Thank you for choosing <b>"HB EVENTS & USHERING SERVICES"</b>. <br /> You are just one step away to completing your account setup. <br />
+                    <p>Welcome <b>${firstname}</b>. Thank you for choosing <b>HB EVENTS & USHERING SERVICES</b>. <br /> You are just one step away to completing your account setup. <br />
                     Please click the link below to activate your account</p> 
                     <br> 
                     <a href="${callbackurl}/activate-account?token=${temp_token}" target="_blank">ACTIVATE ACCOUNT</a>
                     <br> 
                     <p>You will be required to enter your PIN: <strong>${pin}</strong></p>
                </section> 
-            </body>`,
+            </body>`
     };
 
     try {
@@ -48,7 +43,7 @@ const accountActivationEmail = async (
         return {
             message: 'Email sent: ' + resp.response,
             status: 'ok',
-            code: '200',
+            code: '200'
         };
     } catch (error: any) {
         return { message: error.message, status: 'error', code: error.name };
@@ -56,12 +51,7 @@ const accountActivationEmail = async (
 };
 
 //Password Reset Request Notification
-const passwordResetRequestEmail = async (
-    firstname: string,
-    temp_token: string,
-    email: string,
-    temp_pin: number
-) => {
+const passwordResetRequestEmail = async (firstname: string, temp_token: string, email: string, temp_pin: number) => {
     const mailOptions = {
         from: `HB Events<${mailer}>`,
         to: `${email}`,
@@ -78,19 +68,16 @@ const passwordResetRequestEmail = async (
                       <a href="${callbackurl}/resetpassword?token=${temp_token}" target="_blank"> RESET PASSWORD</a>
                       <br> 
                  </section> 
-              </body>`,
+              </body>`
     };
 
-    transporter.sendMail(
-        mailOptions,
-        (error: Error | null, info: SMTPTransport.SentMessageInfo) => {
-            if (error) {
-                console.log(error);
-            } else {
-                console.log('Email sent: ' + info.response);
-            }
+    transporter.sendMail(mailOptions, (error: Error | null, info: SMTPTransport.SentMessageInfo) => {
+        if (error) {
+            console.log(error);
+        } else {
+            console.log('Email sent: ' + info.response);
         }
-    );
+    });
 };
 
 //Generate random digit Code
@@ -111,19 +98,14 @@ function verifyToken(req: Request, res: Response, next: NextFunction) {
     }
 }
 
-const sendTicketEmail = async (
-    email: string,
-    firstname: string,
-    items: ITicket[],
-    qrcode: string
-) => {
+const sendTicketEmail = async (email: string, firstname: string, items: ITicket[], qrcode: string) => {
     const preamble = `<header>
   <h2>HB EVENTS TICKET PURCHASE</h2>
 </header>
 <section>
   <p>
-    Hello <b>"${firstname}"</b>. Thank you for choosing
-    <b>"HB EVENTS & USHERING SERVICES"</b>. <br />
+    Hello <b>${firstname}</b>. Thank you for choosing
+    <b>HB EVENTS & USHERING SERVICES</b>. <br />
   </p>
 </section>
 <section>
@@ -144,7 +126,7 @@ const sendTicketEmail = async (
         from: `HB Events<${mailer}>`,
         to: `${email}`,
         subject: 'Ticket Purchase',
-        html: `${preamble}${tbl}`,
+        html: `${preamble}${tbl}`
     };
 
     try {
@@ -152,7 +134,7 @@ const sendTicketEmail = async (
         return {
             message: 'Email sent: ' + resp.response,
             status: 'ok',
-            code: 200,
+            code: 200
         };
     } catch (error: any) {
         return { message: error.message, status: 'error', code: error.name };
@@ -160,20 +142,16 @@ const sendTicketEmail = async (
 };
 
 //Ticket verification email
-const ticketVerificationEmail = async (
-  firstname: string,
-  email: string,
-  pin: string
-) => {
-  const mailOptions = {
-      from: `HB Events<${mailer}>`,
-      to: `${email}`,
-      subject: 'Ticket Verification',
-      html: `<body> 
+const ticketVerificationEmail = async (firstname: string, email: string, pin: string) => {
+    const mailOptions = {
+        from: `HB Events<${mailer}>`,
+        to: `${email}`,
+        subject: 'Ticket Verification',
+        html: `<body> 
              <header> <h1>HB EVENTS</h1> </header> 
              <br> 
              <section> 
-                  <p>Dear <b>"${firstname}"</b>, You have authorised your ticket to be redeemed.</p> 
+                  <p>Dear <b>${firstname}</b>, You have authorised your ticket to be redeemed.</p> 
                   
                   <p>Your ticket verification code is: <strong>${pin}</strong></p>
 
@@ -181,25 +159,19 @@ const ticketVerificationEmail = async (
 
                   <p><i>Please ignore this email if you did not request this.</i></p>
              </section> 
-          </body>`,
-  };
+          </body>`
+    };
 
-  try {
-      const resp = await transporter.sendMail(mailOptions);
-      return {
-          message: 'Email sent: ' + resp.response,
-          status: 'ok',
-          code: '200',
-      };
-  } catch (error: any) {
-      return { message: error.message, status: 'error', code: error.name };
-  }
+    try {
+        const resp = await transporter.sendMail(mailOptions);
+        return {
+            message: 'Email sent: ' + resp.response,
+            status: 'ok',
+            code: '200'
+        };
+    } catch (error: any) {
+        return { message: error.message, status: 'error', code: error.name };
+    }
 };
 
-export {
-    accountActivationEmail,
-    passwordResetRequestEmail,
-    generatePin,
-    sendTicketEmail,
-    ticketVerificationEmail
-};
+export { accountActivationEmail, passwordResetRequestEmail, generatePin, sendTicketEmail, ticketVerificationEmail };
