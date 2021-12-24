@@ -8,7 +8,7 @@
         </div>
         <div class="login__content p-4 sm:p-8 flex flex-col justify-center bg-accent">
             <div class="login w-full max-w-xl rounded-md mx-auto border p-4 sm:p-8 xl:p-20">
-                <form>
+                <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
                     <h1 class="text-2xl font-bold">Sign in</h1>
                     <div class="mb-4 mt-6">
                         <label class="block text-gray-700 text-sm font-semibold mb-2" htmlFor="email">
@@ -31,7 +31,8 @@
                             "
                             id="email"
                             type="text"
-                            placeholder="Your email address"
+                            placeholder="Your username or email address"
+                            formControlName="username"
                         />
                     </div>
                     <div class="mb-6 mt-6">
@@ -57,6 +58,7 @@
                             id="password"
                             type="password"
                             placeholder="Your password"
+                            formControlName="password"
                         />
                     </div>
                     <div class="flex items-center">
@@ -83,9 +85,10 @@
                                 focus:shadow-outline
                                 h-10
                             "
-                            type="button"
+                            type="submit"
+                            [disabled]="!loginForm.valid || submitting"
                         >
-                            Sign in
+                            {{ (submitting ? 'Authenticating ...' : 'Login') | uppercase }}
                         </button>
                     </div>
                 </form>

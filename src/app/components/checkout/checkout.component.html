@@ -1,6 +1,93 @@
-<div class="container h-100 login-container">
+<div class="login__page" [style.background-image]="'url(assets/images/login-bg.jpg)'">
+    <div class="login__row min-h-screen">
+        <div class="login__hero flex flex-col justify-center items-center py-10 px-4 sm:px-8 xl:px-20 text-white">
+            <a [routerLink]="['']" class="w-48 inline-block"
+                ><img src="assets/images/logo-lg.jpg" class="rounded" alt="HB Events"
+            /></a>
+            <!-- <h2 class="text-center mt-6">Welcome back!</h2> -->
+        </div>
+        <div class="login__content p-4 sm:p-8 flex flex-col justify-center bg-accent">
+            <div class="login w-full max-w-xl rounded-md mx-auto border p-4 sm:p-8 xl:p-20">
+                <form [formGroup]="paymentForm" (ngSubmit)="onSubmit()">
+                    <h1 class="text-2xl font-bold uppercase">Confirm Booking</h1>
+                    <div class="mb-4 mt-6">
+                        <label class="block text-gray-700 text-sm font-semibold mb-2" htmlFor="email"> Email </label>
+                        <input
+                            class="
+                                text-sm
+                                appearance-none
+                                rounded
+                                w-full
+                                py-2
+                                px-3
+                                text-gray-700
+                                bg-gray-100
+                                leading-tight
+                                focus:outline-none
+                                focus:shadow-outline
+                                h-10
+                            "
+                            id="email"
+                            type="email"
+                            placeholder="Your email address"
+                            formControlName="email"
+                        />
+                    </div>
+                    <div class="mb-6 mt-6">
+                        <label class="block text-gray-700 text-sm font-semibold mb-2" htmlFor="password">
+                            Mobile Number
+                        </label>
+                        <input
+                            class="
+                                text-sm
+                                appearance-none
+                                rounded
+                                w-full
+                                py-2
+                                px-3
+                                text-gray-700
+                                bg-gray-100
+                                leading-tight
+                                focus:outline-none
+                                focus:shadow-outline
+                                h-10
+                            "
+                            id="mobileNumber"
+                            type="text"
+                            placeholder="Your mobile number"
+                            formControlName="mobileNumber"
+                        />
+                    </div>
+
+                    <div class="flex w-full mt-6">
+                        <button
+                            class="
+                                w-full
+                                bg-gray-800
+                                hover:bg-grey-900
+                                text-white text-sm
+                                py-2
+                                px-4
+                                font-semibold
+                                rounded
+                                focus:outline-none
+                                focus:shadow-outline
+                                h-10
+                            "
+                            type="submit"
+                            [disabled]="!paymentForm.valid || submitting"
+                        >
+                            {{ (submitting ? 'Booking in progress ...' : 'Book') | uppercase }}
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- <div class="container h-100 login-container">
   <div class="row h-100 justify-content-center align-items-center">
-    <!-- <div class="col-md-12"> -->
     <mat-card>
       <mat-card-header class="center-content">
         <mat-card-title class="text-center">PAYMENT OF TICKETS</mat-card-title>
@@ -69,8 +156,7 @@
               </mat-radio-button>
             </mat-radio-group>
 
-            
-          <!-- Submit button -->
+         
           <button
             mat-raised-button
             aria-label="Sign up button"
@@ -84,6 +170,5 @@
         </form>
       </mat-card-content>
     </mat-card>
-    <!-- </div> -->
   </div>
-</div>
+</div> -->

@@ -13,7 +13,6 @@ export interface IAccount {
 export interface ICredentials {
     username: string;
     password: string;
-    isAdmin?: boolean;
 }
 
 export interface IUser extends ICredentials {
