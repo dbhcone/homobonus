@@ -20,18 +20,15 @@ export class SignupComponent implements OnInit {
                 firstName: [null, [Validators.required]],
                 otherNames: [null],
                 gender: [null, [Validators.required]],
-                primaryMobileNumber: [
-                    null,
-                    [Validators.required, Validators.maxLength(10), Validators.minLength(10)],
-                    Validators.pattern('[0-9]{10}')
-                ]
+                primaryMobileNumber: [null, [Validators.required, Validators.maxLength(10), Validators.minLength(10)]]
             }),
             user: this.fb.group({
                 email: [null, [Validators.email, Validators.required]],
                 username: [null, [Validators.required, Validators.minLength(8)]],
                 password: [null, [Validators.required, Validators.minLength(8)]],
                 confirmPassword: [null, [Validators.required, Validators.minLength(8)]]
-            })
+            }),
+            agree: [false, [Validators.requiredTrue]]
         });
     }
 
@@ -69,6 +66,8 @@ export class SignupComponent implements OnInit {
 
     onSubmit() {
         this.submitting = true;
+        console.log(this.signupForm.value);
+        return;
         const userdata = this.signupForm.get('user')?.value;
         const { confirmPassword, ...user } = userdata;
         const account = this.signupForm.get('account')?.value;

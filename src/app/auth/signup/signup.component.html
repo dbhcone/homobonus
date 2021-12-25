@@ -147,6 +147,9 @@
                             >
                                 Please, provide your mobile number
                             </mat-error>
+                            <mat-error *ngIf="primaryMobileNumber?.touched && primaryMobileNumber?.hasError('pattern')">
+                                Kindly check the format of the mobile number
+                            </mat-error>
                         </div>
                     </div>
                     <div formGroupName="user">
@@ -259,6 +262,7 @@
                             name="remember_me"
                             type="checkbox"
                             class="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border rounded"
+                            formControlName="agree"
                         />
                         <label for="remember_me" class="ml-2 block text-sm text-gray-900">
                             I agree with HB Events Terms and conditions.
