@@ -37,6 +37,9 @@
                                 placeholder="Surname"
                                 formControlName="surname"
                             />
+                            <mat-error *ngIf="surname?.touched && surname?.hasError('required')">
+                                Please, provide the surname!
+                            </mat-error>
                         </div>
 
                         <!-- First Name -->
@@ -64,6 +67,9 @@
                                 placeholder="First Name"
                                 formControlName="firstName"
                             />
+                            <mat-error *ngIf="firstName?.touched && firstName?.hasError('required')">
+                                Please, provide the first name!
+                            </mat-error>
                         </div>
                         <!-- Other Name(s) -->
                         <div class="mb-1 mt-1">
@@ -105,6 +111,9 @@
                                     >Female</mat-radio-button
                                 >
                             </mat-radio-group>
+                            <mat-error *ngIf="!gender?.valid && (gender?.dirty || gender?.touched)">
+                                <div [hidden]="!gender?.errors?.required">gender is required</div>
+                            </mat-error>
                         </div>
 
                         <!-- Mobile Number -->
@@ -133,6 +142,11 @@
                                 formControlName="primaryMobileNumber"
                             />
                             <!-- <mat-hint> Example: 024xxxxxxx </mat-hint> -->
+                            <mat-error
+                                *ngIf="primaryMobileNumber?.touched && primaryMobileNumber?.hasError('required')"
+                            >
+                                Please, provide your mobile number
+                            </mat-error>
                         </div>
                     </div>
                     <div formGroupName="user">

@@ -9,7 +9,10 @@
         <div class="login__content p-4 sm:p-8 flex flex-col justify-center bg-accent">
             <div class="login w-full max-w-xl rounded-md mx-auto border p-4 sm:p-8 xl:p-20">
                 <form [formGroup]="paymentForm" (ngSubmit)="onSubmit()">
-                    <h1 class="text-2xl font-bold uppercase">Confirm Booking</h1>
+                    <h1 class="text-2xl font-bold uppercase text-center">Confirm Booking</h1>
+                    <p class="font-bold text-center text-red-500 text-xs">
+                        NB: Please, crosscheck to be sure of the details
+                    </p>
                     <div class="mb-4 mt-6">
                         <label class="block text-gray-700 text-sm font-semibold mb-2" htmlFor="email"> Email </label>
                         <input
@@ -77,7 +80,7 @@
                             type="submit"
                             [disabled]="!paymentForm.valid || submitting"
                         >
-                            {{ (submitting ? 'Booking in progress ...' : 'Book') | uppercase }}
+                            {{ (submitting ? 'Booking in progress ...' : 'Submit') | uppercase }}
                         </button>
                     </div>
                 </form>

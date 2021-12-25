@@ -5,14 +5,10 @@ import { AuthRoutingModule } from './auth-routing.module';
 import { LoginComponent } from './login/login.component';
 import { SignupComponent } from './signup/signup.component';
 import { SharedModule } from '../shared/shared.module';
-
+import { ActivateaccountComponent } from '../components/activateaccount/activateaccount.component';
 
 @NgModule({
-  declarations: [LoginComponent, SignupComponent],
-  imports: [
-    CommonModule,
-    AuthRoutingModule,
-    SharedModule
-  ]
+    declarations: [LoginComponent, SignupComponent, ActivateaccountComponent],
+    imports: [CommonModule, AuthRoutingModule, SharedModule]
 })
-export class AuthModule { }
+export class AuthModule {}

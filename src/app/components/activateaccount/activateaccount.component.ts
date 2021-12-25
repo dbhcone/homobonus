@@ -6,7 +6,7 @@ import Swal from 'sweetalert2';
 @Component({
     selector: 'app-activateaccount',
     templateUrl: './activateaccount.component.html',
-    styleUrls: ['./activateaccount.component.scss']
+    styleUrls: ['./activateaccount.component.scss', '../../auth/login/login.component.scss']
 })
 export class ActivateaccountComponent implements OnInit {
     activateAccountForm;

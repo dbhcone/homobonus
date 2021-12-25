@@ -20,7 +20,11 @@ export class SignupComponent implements OnInit {
                 firstName: [null, [Validators.required]],
                 otherNames: [null],
                 gender: [null, [Validators.required]],
-                primaryMobileNumber: [null, [Validators.required, Validators.maxLength(10), Validators.minLength(10)]]
+                primaryMobileNumber: [
+                    null,
+                    [Validators.required, Validators.maxLength(10), Validators.minLength(10)],
+                    Validators.pattern('[0-9]{10}')
+                ]
             }),
             user: this.fb.group({
                 email: [null, [Validators.email, Validators.required]],

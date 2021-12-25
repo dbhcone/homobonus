@@ -42,7 +42,10 @@ export class CheckoutComponent implements OnInit, OnDestroy {
         });
         this.paymentForm = this.fb.group({
             // paymentType: [null, Validators.required],
-            mobileNumber: [null],
+            mobileNumber: [
+                null,
+                Validators.compose([Validators.required, Validators.minLength(10), Validators.maxLength(10)])
+            ],
             email: [this.useremail || null, Validators.compose([Validators.email])]
         });
     }

@@ -1,18 +1,34 @@
-<div class="container h-100 login-container">
-    <div class="row h-100 justify-content-center align-items-center">
-        <mat-card>
-            <mat-card-header class="center-content">
-                <mat-card-title class="text-center">ACTIVATE YOUR ACCOUNT</mat-card-title>
-                <mat-card-subtitle class="text-center"
-                    >Enter the 6-digit pin your received in your email</mat-card-subtitle
-                >
-            </mat-card-header>
-            <mat-card-content>
+<div class="login__page" [style.background-image]="'url(assets/images/login-bg.jpg)'">
+    <div class="login__row min-h-screen">
+        <div class="login__hero flex flex-col justify-center items-center py-10 px-4 sm:px-8 xl:px-20 text-white">
+            <a [routerLink]="['']" class="w-48 inline-block"
+                ><img src="assets/images/logo-lg.jpg" class="rounded" alt="HB Events"
+            /></a>
+            <!-- <h2 class="text-center mt-6">Welcome back!</h2> -->
+        </div>
+        <div class="login__content p-4 sm:p-8 flex flex-col justify-center bg-accent">
+            <div class="login w-full max-w-xl rounded-md mx-auto border p-4 sm:p-8 xl:p-20">
                 <form [formGroup]="activateAccountForm" (ngSubmit)="onSubmit()">
-                    <mat-form-field appearance="outline">
-                        <mat-label>PIN</mat-label>
+                    <h1 class="text-2xl font-bold uppercase text-center">ACTIVATE YOUR ACCOUNT</h1>
+                    <p class="text-center">Enter the 6-digit pin your received in your email</p>
+                    <div class="mb-4 mt-6">
+                        <label class="block text-gray-700 text-sm font-semibold mb-2" htmlFor="email"> Email </label>
                         <input
-                            matInput
+                            class="
+                                text-sm
+                                appearance-none
+                                rounded
+                                w-full
+                                py-2
+                                px-3
+                                text-gray-700
+                                bg-gray-100
+                                leading-tight
+                                focus:outline-none
+                                focus:shadow-outline
+                                h-10
+                            "
+                            id="email"
                             type="text"
                             formControlName="pin"
                             placeholder="enter your PIN here"
@@ -21,28 +37,33 @@
                             pattern="[0-9]{6}"
                             required
                         />
-                        <mat-icon matSuffix>pin</mat-icon>
                         <mat-error *ngIf="pin?.touched && pin?.hasError('pattern')"> Numbers only </mat-error>
                         <mat-error *ngIf="pin?.touched && pin?.hasError('required')"> Provide pin </mat-error>
-                    </mat-form-field>
+                    </div>
 
-                    <button
-                        class="full-width"
-                        type="submit"
-                        mat-raised-button
-                        color="accent"
-                        [disabled]="!activateAccountForm.valid || submitting"
-                    >
-                        {{ (submitting ? 'Activating ...' : 'Activate') | uppercase }}
-                    </button>
+                    <div class="flex w-full mt-6">
+                        <button
+                            class="
+                                w-full
+                                bg-gray-800
+                                hover:bg-grey-900
+                                text-white text-sm
+                                py-2
+                                px-4
+                                font-semibold
+                                rounded
+                                focus:outline-none
+                                focus:shadow-outline
+                                h-10
+                            "
+                            type="submit"
+                            [disabled]="!activateAccountForm.valid || submitting"
+                        >
+                            {{ (submitting ? 'Activating ...' : 'Activate') | uppercase }}
+                        </button>
+                    </div>
                 </form>
-            </mat-card-content>
-            <mat-card-footer>
-                <p>
-                    Don't have an account?
-                    <a routerLink="/signup"> Sign up here</a>
-                </p>
-            </mat-card-footer>
-        </mat-card>
+            </div>
+        </div>
     </div>
 </div>
