@@ -267,6 +267,9 @@
                         <label for="remember_me" class="ml-2 block text-sm text-gray-900">
                             I agree with HB Events Terms and conditions.
                         </label>
+                        <mat-error *ngIf="!agree?.valid && (agree?.dirty || agree?.touched)">
+                            <div [hidden]="!agree?.errors?.required">You need to agree to the terms</div>
+                        </mat-error>
                     </div>
                     <div class="flex w-full mt-6">
                         <button

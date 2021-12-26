@@ -31,7 +31,7 @@ const accountActivationEmail = async (firstname: string, temp_token: string, ema
                     <p>Welcome <b>${firstname}</b>. Thank you for choosing <b>HB EVENTS & USHERING SERVICES</b>. <br /> You are just one step away to completing your account setup. <br />
                     Please click the link below to activate your account</p> 
                     <br> 
-                    <a href="${callbackurl}/activate-account?token=${temp_token}" target="_blank">ACTIVATE ACCOUNT</a>
+                    <a href="${callbackurl}/auth/activate-account?token=${temp_token}" target="_blank">ACTIVATE ACCOUNT</a>
                     <br> 
                     <p>You will be required to enter your PIN: <strong>${pin}</strong></p>
                </section> 

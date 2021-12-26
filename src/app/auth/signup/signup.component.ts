@@ -64,10 +64,14 @@ export class SignupComponent implements OnInit {
         return this.signupForm.get(['account', 'gender']);
     }
 
+    get agree() {
+        return this.signupForm.get('agree');
+    }
+
     onSubmit() {
         this.submitting = true;
         console.log(this.signupForm.value);
-        return;
+
         const userdata = this.signupForm.get('user')?.value;
         const { confirmPassword, ...user } = userdata;
         const account = this.signupForm.get('account')?.value;
@@ -80,7 +84,7 @@ export class SignupComponent implements OnInit {
                 Swal.fire({ text: resp.message, icon: 'success', timer: 5000 }).then(
                     (result: SweetAlertResult<any>) => {
                         //
-                        this.router.navigate(['login']);
+                        this.router.navigate(['auth', 'login']);
                     }
                 );
             },
