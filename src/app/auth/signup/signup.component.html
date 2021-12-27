@@ -175,6 +175,10 @@
                                 placeholder="Email address"
                                 formControlName="email"
                             />
+                            <mat-error *ngIf="email?.hasError('email') && !email?.hasError('required')">
+                                Please enter a valid email address
+                            </mat-error>
+                            <mat-error *ngIf="email?.hasError('required')"> Email is required </mat-error>
                         </div>
 
                         <div class="mb-1 mt-1">
@@ -201,6 +205,9 @@
                                 placeholder="username"
                                 formControlName="username"
                             />
+                            <mat-error *ngIf="username?.touched && username?.hasError('required')">
+                                Please, provide username!
+                            </mat-error>
                         </div>
 
                         <div class="mb-1 mt-1">
@@ -228,6 +235,9 @@
                                 placeholder="Password"
                                 formControlName="password"
                             />
+                            <mat-error *ngIf="password?.touched && password?.hasError('required')">
+                                Please, provide password!
+                            </mat-error>
                         </div>
                         <div class="mb-1 mt-1">
                             <label class="block text-gray-700 text-sm font-semibold mb-2" for="password2">
