@@ -34,6 +34,9 @@
                             placeholder="Your username or email address"
                             formControlName="username"
                         />
+                        <mat-error *ngIf="username?.touched && username?.hasError('required')">
+                            Provide username or email
+                        </mat-error>
                     </div>
                     <div class="mb-6 mt-6">
                         <label class="block text-gray-700 text-sm font-semibold mb-2" htmlFor="password">
@@ -60,6 +63,9 @@
                             placeholder="Your password"
                             formControlName="password"
                         />
+                        <mat-error *ngIf="password?.touched && password?.hasError('required')">
+                            Provide password
+                        </mat-error>
                     </div>
                     <div class="flex items-center">
                         <input
