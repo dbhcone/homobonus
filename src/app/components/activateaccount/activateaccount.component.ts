@@ -23,6 +23,8 @@ export class ActivateaccountComponent implements OnInit {
         });
         route.queryParams.subscribe(param => {
             this.token = param['token'];
+            console.log('token', this.token);
+            console.log('param', param);
         });
     }
 
@@ -38,7 +40,7 @@ export class ActivateaccountComponent implements OnInit {
             async (resp: any) => {
                 console.log('activation', resp);
                 Swal.fire({ text: resp.message, icon: 'success', timer: 5000 }).then(res => {
-                    this.router.navigate(['login']);
+                    this.router.navigate(['auth', 'login']);
                 });
             },
             err => {

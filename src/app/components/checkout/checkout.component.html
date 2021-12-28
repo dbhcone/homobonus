@@ -35,9 +35,10 @@
                             placeholder="Your email address"
                             formControlName="email"
                         />
+                        <mat-error *ngIf="email?.touched && email?.hasError('required')"> Provide email </mat-error>
                     </div>
                     <div class="mb-6 mt-6">
-                        <label class="block text-gray-700 text-sm font-semibold mb-2" htmlFor="password">
+                        <label class="block text-gray-700 text-sm font-semibold mb-2" htmlFor="mobileNumber">
                             Mobile Number
                         </label>
                         <input
@@ -60,6 +61,12 @@
                             placeholder="Your mobile number"
                             formControlName="mobileNumber"
                         />
+                        <mat-error *ngIf="mobileNumber?.touched && mobileNumber?.hasError('required')">
+                            Please, provide your mobile number
+                        </mat-error>
+                        <mat-error *ngIf="mobileNumber?.touched && mobileNumber?.hasError('pattern')">
+                            Kindly check the format of the mobile number
+                        </mat-error>
                     </div>
 
                     <div class="flex w-full mt-6">

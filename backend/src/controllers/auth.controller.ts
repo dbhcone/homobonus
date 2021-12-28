@@ -76,17 +76,17 @@ const Signup = async (req: Request, res: Response) => {
 
                     const pin = generatePin(6);
                     // try sending sms only if there was a primary number
-                    if (account.primaryMobileNumber) {
-                        const standardNumber = intlTelNumberGh(account.primaryMobileNumber);
+                    // if (account.primaryMobileNumber) {
+                    //     const standardNumber = intlTelNumberGh(account.primaryMobileNumber);
 
-                        if (standardNumber) {
-                            const sendSMS = await sendDtechSms(
-                                accountCreationMsg(account.firstName, temp_token, pin),
-                                standardNumber
-                            );
-                            console.log('sms response', sendSMS, standardNumber);
-                        }
-                    }
+                    //     if (standardNumber) {
+                    //         const sendSMS = await sendDtechSms(
+                    //             accountCreationMsg(account.firstName, temp_token, pin),
+                    //             standardNumber
+                    //         );
+                    //         console.log('sms response', sendSMS, standardNumber);
+                    //     }
+                    // }
 
                     const sendmail = await accountActivationEmail(account.firstName, temp_token, user.email, pin);
 

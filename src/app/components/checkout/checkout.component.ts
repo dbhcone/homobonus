@@ -82,6 +82,8 @@ export class CheckoutComponent implements OnInit, OnDestroy {
         this.submitting = true;
         this.userSubscription = this.userStore.subscribe(us => {
             const { id, email } = us.user;
+            console.log('user', us);
+            // return;
             this.cartSubscription = this.cartStore.subscribe(ca => {
                 const items = ca.items;
                 // start

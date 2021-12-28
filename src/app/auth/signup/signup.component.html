@@ -299,7 +299,7 @@
                             type="submit"
                             [disabled]="!signupForm.valid || submitting"
                         >
-                            Sign up
+                            {{ (submitting ? 'Please wait ...' : 'Signup') | uppercase }}
                         </button>
                     </div>
                 </form>
