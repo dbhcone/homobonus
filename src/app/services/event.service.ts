@@ -61,5 +61,9 @@ export class EventService {
     redeemTicket(hashTicketId: string, userId: string) {
         return this.client.POST(`${Purchases.redeemTicket}`, { hashTicketId, userId });
     }
+
+    verifyTicket(scanResult: string) {
+        return this.client.POST(`${Purchases.verifyTicket}`, { scanResult });
+    }
     //#endregion
 }

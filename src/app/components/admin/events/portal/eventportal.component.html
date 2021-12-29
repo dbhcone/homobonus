@@ -1,51 +1,51 @@
 <section class="container">
-  <div class="row">
-    <div class="col-md-6">
-      <h2>EVENT STATS HERE</h2>
-      
-  <div class="row">
-    <!-- EVENT CAPACITY -->
-    <div class="col-md-4 col-sm-6 py-2">
-      <mat-card class="dashboard-card voilet">
-        <mat-card-header>
-          <mat-card-title> CAPACITY </mat-card-title>
-        </mat-card-header>
-        <mat-card-content class="card-content">
-          <p>{{ statistics?.capacity }}</p>
-        </mat-card-content>
-      </mat-card>
-    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <h2>EVENT STATS HERE</h2>
 
-    <!-- TOTAL COUNT -->
-    <div class="col-md-4 col-sm-6 py-2">
-      <mat-card class="card burlywood">
-        <mat-card-header>
-          <mat-card-title> TOTAL COUNT </mat-card-title>
-        </mat-card-header>
-        <mat-card-content class="card-content">
-          <p>{{ statistics?.totalCount }}</p>
-        </mat-card-content>
-      </mat-card>
-    </div>
+            <div class="row">
+                <!-- EVENT CAPACITY -->
+                <div class="col-md-4 col-sm-6 py-2">
+                    <mat-card class="dashboard-card voilet">
+                        <mat-card-header>
+                            <mat-card-title> CAPACITY </mat-card-title>
+                        </mat-card-header>
+                        <mat-card-content class="card-content">
+                            <p>{{ statistics?.capacity }}</p>
+                        </mat-card-content>
+                    </mat-card>
+                </div>
 
-    <!-- ANOTHER STATS -->
-    <div class="col-md-4 col-sm-6 py-2">
-      <mat-card class="card darkkhaki">
-        <mat-card-header>
-          <mat-card-title> ANOTHER STATS </mat-card-title>
-        </mat-card-header>
-        <mat-card-content class="card-content">
-          <!-- <p>{{ statistics?.anotherStats }}</p> -->
-        </mat-card-content>
-      </mat-card>
-    </div>
-  </div>
-    </div>
-    <div class="col-md-6">
-      <!-- Start Scan -->
-      <!-- API Documentation here -->
-      <!-- https://github.com/zxing-js/ngx-scanner/wiki/Component-API#api -->
-      <!-- 
+                <!-- TOTAL COUNT -->
+                <div class="col-md-4 col-sm-6 py-2">
+                    <mat-card class="card burlywood">
+                        <mat-card-header>
+                            <mat-card-title> TOTAL COUNT </mat-card-title>
+                        </mat-card-header>
+                        <mat-card-content class="card-content">
+                            <p>{{ statistics?.totalCount }}</p>
+                        </mat-card-content>
+                    </mat-card>
+                </div>
+
+                <!-- ANOTHER STATS -->
+                <div class="col-md-4 col-sm-6 py-2">
+                    <mat-card class="card darkkhaki">
+                        <mat-card-header>
+                            <mat-card-title> ANOTHER STATS </mat-card-title>
+                        </mat-card-header>
+                        <mat-card-content class="card-content">
+                            <!-- <p>{{ statistics?.anotherStats }}</p> -->
+                        </mat-card-content>
+                    </mat-card>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <!-- Start Scan -->
+            <!-- API Documentation here -->
+            <!-- https://github.com/zxing-js/ngx-scanner/wiki/Component-API#api -->
+            <!-- 
     - scanSuccess
     - scanFailure
     - scanError
@@ -53,82 +53,19 @@
     - camerasFound
     - camerasNotFound
  -->
-      <zxing-scanner
-        *ngIf="scannerEnabled"
-        #scanner
-        (scanSuccess)="scanSuccessHandler($event)"
-      >
-      </zxing-scanner>
-      <button
-        mat-raised-button
-        color="primary"
-        (click)="startScanner()"
-        *ngIf="!scannerEnabled"
-        type="button"
-      >
-        Start Scanner
-      </button>
-      <button
-        type="button"
-        class="btn btn-danger text-uppercase"
-        (click)="stopScanner()"
-        *ngIf="scannerEnabled"
-      >
-        Stop Scanner
-      </button>
+            <zxing-scanner *ngIf="scannerEnabled" #scanner (scanSuccess)="scanSuccessHandler($event)"> </zxing-scanner>
+            <button mat-raised-button color="primary" (click)="startScanner()" *ngIf="!scannerEnabled" type="button">
+                Start Scanner
+            </button>
+            <button type="button" class="btn btn-danger text-uppercase" (click)="stopScanner()" *ngIf="scannerEnabled">
+                Stop Scanner
+            </button>
 
-      <div>
-        <p>{{ formValueJson }}</p>
-      </div>
+            <div>
+                <p>{{ formValueJson }}</p>
+            </div>
 
-      <!-- Table Start -->
-
-      <table
-        class="table table-hover table-striped table-bordered"
-      >
-        <thead>
-          <tr>
-            <th>#</th>
-            <th>Event Name</th>
-            <th>Ticket Type</th>
-            <th>Unit Price (GHS)</th>
-            <th>Qty</th>
-            <th>Sub Total (GHS)</th>
-          </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td>1</td>
-                <td>Name one</td>
-                <td>Ticket Type One</td>
-                <td>50.00</td>
-                <td>2</td>
-                <td>100</td>
-            </tr>
-
-            <tr>
-                <td>1</td>
-                <td>Name one</td>
-                <td>Ticket Type One</td>
-                <td>50.00</td>
-                <td>2</td>
-                <td>100</td>
-            </tr>
-
-            <tr>
-                <td>1</td>
-                <td>Name one</td>
-                <td>Ticket Type One</td>
-                <td>50.00</td>
-                <td>2</td>
-                <td>100</td>
-            </tr>
-        </tbody>
-      </table>
-
-      <!-- Table End -->
-
-      <!-- End Scan -->
+            <!-- End Scan -->
+        </div>
     </div>
-  </div>
 </section>

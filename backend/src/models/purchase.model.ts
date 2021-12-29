@@ -6,7 +6,9 @@ const PurchaseSchema: Schema = new Schema(
         user: { type: Schema.Types.ObjectId, required: true, ref: 'users' },
         tickets: { type: Array },
         total: { type: Number },
-        qrcode: { type: String }
+        qrcode: { type: String },
+        redeemed: { type: Boolean, default: false },
+        dateOfRedemption: { type: Date }
     },
     { timestamps: true }
 );

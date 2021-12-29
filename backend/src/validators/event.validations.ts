@@ -17,30 +17,31 @@ const createEventValidation: ObjectSchema<{
     venue: Joi.string().required(),
     description: Joi.string().required(),
     capacity: Joi.string(),
-    extraDetails: Joi.array().allow(null),
+    extraDetails: Joi.array().allow(null)
     // photos: Joi.array().allow(null),
 });
 
 const createPurchase: ObjectSchema<{}> = Joi.object({
     user: Joi.object({
         id: Joi.string().required(),
-        email: Joi.string().email(),
+        email: Joi.string().email()
     }).required(),
-    items: Joi.array(),
+    items: Joi.array()
 });
 
 const redeemTicketValidation: ObjectSchema<{}> = Joi.object({
-    id: Joi.string().required(),
-    hashTicketId: Joi.string().required(),
+    userId: Joi.string().required(),
+    purchaseId: Joi.string().required(),
+    redemptionCode: Joi.string().required()
 });
 
 const verifyTicketValidation: ObjectSchema<{}> = Joi.object({
     userId: Joi.string().required(),
-    ticketId: Joi.string().required(),
+    ticketId: Joi.string().required()
 });
 
 const verifyScannedQrCodeValidation: ObjectSchema<{}> = Joi.object({
-    scanResult: Joi.string().required(),
+    scanResult: Joi.string().required()
 });
 
 export {
@@ -48,5 +49,5 @@ export {
     createPurchase,
     redeemTicketValidation,
     verifyTicketValidation,
-    verifyScannedQrCodeValidation,
+    verifyScannedQrCodeValidation
 };

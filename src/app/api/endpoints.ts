@@ -28,7 +28,8 @@ const Purchases = {
     getOneUserPurchase: '/purchases',
     // user purchase
     userPurchases: '/user/purchases',
-    redeemTicket: '/user/ticket/redeem'
+    redeemTicket: '/user/ticket/redeem',
+    verifyTicket: '/user/ticket/verify'
 };
 
 const Payments = {
