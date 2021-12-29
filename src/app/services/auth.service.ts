@@ -29,7 +29,7 @@ export class AuthService implements OnInit {
     }
     setToken(token: string) {
         const promise = new Promise((resolve, reject) => {
-            sessionStorage.setItem('access-token', token);
+            localStorage.setItem('access-token', token);
             resolve(token);
             reject(Error('There was an error'));
         });
@@ -37,11 +37,11 @@ export class AuthService implements OnInit {
     }
 
     unsetToken() {
-        sessionStorage.removeItem('access-token');
+        localStorage.removeItem('access-token');
     }
 
     getToken() {
-        return sessionStorage.getItem('access-token');
+        return localStorage.getItem('access-token');
     }
 
     data(): IUser {

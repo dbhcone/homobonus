@@ -33,7 +33,6 @@ import { TicketItem } from './cart/ticket-item';
         }),
         StoreModule.forRoot({ cart: cartReducer, userObj: userReducer }),
         ZXingScannerModule,
-        QRCodeModule,
         NgxSimpleCountdownModule
     ],
     providers: [],

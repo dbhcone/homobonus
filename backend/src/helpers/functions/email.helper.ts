@@ -98,7 +98,7 @@ function verifyToken(req: Request, res: Response, next: NextFunction) {
     }
 }
 
-const sendTicketEmail = async (email: string, firstname: string, items: ITicket[], qrcode: string) => {
+const sendTicketEmail = async (email: string, firstname: string, items: ITicket[], purchaseId: string) => {
     const preamble = `<header>
   <h2>HB EVENTS TICKET PURCHASE</h2>
 </header>
@@ -110,15 +110,10 @@ const sendTicketEmail = async (email: string, firstname: string, items: ITicket[
 </section>
 <section>
   <p>
-    Please, keep this qrcode safe. You will be required to provide it for
+  Please, <a href="${callbackurl}/user/qr-codes?purchaseId=${purchaseId}" target="_blank">click this link</a> to see your qr code. Do not share with anyone. You will be required to provide it for
     authentication at the gate entry during the event.
   </p>
-  <img
-    src="${qrcode}"
-    alt="qr code ticket of ${firstname}"
-    height="200"
-    width="200"
-  />
+  
 </section>`;
 
     let tbl = table(items);

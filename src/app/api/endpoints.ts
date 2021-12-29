@@ -2,11 +2,11 @@ const Auth = {
     login: '/auth/login',
     signup: '/auth/signup',
     activate: '/auth/activate-account',
-    merchantSignup: '/auth/merchantsignup',
+    merchantSignup: '/auth/merchantsignup'
 };
 
 const General = {
-    contactus: '/contactus',
+    contactus: '/contactus'
 };
 
 const Events = {
@@ -20,24 +20,23 @@ const Events = {
     pricings: '/events/pricelist',
     addPricing: '/events/pricelist',
     updatePricing: '/events/pricelist',
-    getPrice: '/events/pricings',
+    getPrice: '/events/pricings'
 };
 
 const Purchases = {
     create: '/purchases',
-
+    getOneUserPurchase: '/purchases',
     // user purchase
     userPurchases: '/user/purchases',
-
-    redeemTicket: '/user/ticket/redeem',
+    redeemTicket: '/user/ticket/redeem'
 };
 
 const Payments = {
-    listPayments: '/payments/listPaymentOptions',
+    listPayments: '/payments/listPaymentOptions'
 };
 
 const Statistics = {
     generalOverview: '/admin/stats/generaloverview',
-    eventPortal: '/admin/stats/eventportal',
+    eventPortal: '/admin/stats/eventportal'
 };
 export { Auth, General, Events, Statistics, Purchases, Payments };

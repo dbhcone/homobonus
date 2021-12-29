@@ -23,18 +23,16 @@ const create = async (req: Request, res: Response) => {
         let tickets: ITicket[] = [];
 
         const ids: any[] = [];
-        newItems.map((item) => {
+        newItems.map(item => {
             ids.push(item.id);
         });
         console.log('ids', ids);
-        const prs = await Pricings.find({ _id: { $in: [...ids] } }).populate(
-            'event'
-        );
+        const prs = await Pricings.find({ _id: { $in: [...ids] } }).populate('event');
         console.log('prs', prs);
         // return res.status(200).json({ data: { prs, ids } });
 
-        prs.map((pr) => {
-            let foundItem = newItems.find((item) => item.id == pr._id);
+        prs.map(pr => {
+            let foundItem = newItems.find(item => item.id == pr._id);
             if (foundItem) {
                 console.log('found', foundItem);
                 const ticket: ITicket = {
@@ -43,7 +41,7 @@ const create = async (req: Request, res: Response) => {
                     ticketType: pr.pricing.name,
                     unitPrice: pr.pricing.amount,
                     quantity: foundItem.quantity,
-                    subTotal: pr.pricing.amount * foundItem.quantity,
+                    subTotal: pr.pricing.amount * foundItem.quantity
                 };
                 console.log('ticket', ticket);
                 tickets.push(ticket);
@@ -51,7 +49,7 @@ const create = async (req: Request, res: Response) => {
         });
 
         let total = 0;
-        tickets.map((ticket) => {
+        tickets.map(ticket => {
             total += ticket.subTotal;
         });
 
@@ -73,52 +71,47 @@ const create = async (req: Request, res: Response) => {
                     return res.status(404).json({
                         message: 'Could not generate qr code',
                         code: 404,
-                        status: 'ok',
+                        status: 'ok'
                     });
                 }
 
-                const update = await Purchase.findByIdAndUpdate(purchase._id, { qrcode }, { new: true });
-                // const update = await purchase.updateOne({ qrcode }, { new: true });
-                console.log('updated', update);
+                const updatedPurchase = await Purchase.findByIdAndUpdate(purchase._id, { qrcode }, { new: true });
+                // const updatedPurchase = await purchase.updateOne({ qrcode }, { new: true });
+                console.log('updated purchase', updatedPurchase);
 
-                const us = await Users.findById(user.id).populate(
-                    'accountOwner'
-                );
+                const us = await Users.findById(user.id).populate('accountOwner');
 
                 // now send the email
-                let response = await sendTicketEmail(
-                    user.email,
-                    us?.accountOwner?.firstName,
-                    tickets,
-                    qrcode
-                );
+                if (tickets.length > 0) {
+                    let response = await sendTicketEmail(
+                        user.email,
+                        us?.accountOwner?.firstName,
+                        tickets,
+                        updatedPurchase?._id
+                    );
 
-                if (response.code == 200) {
-                    return res.status(200).json({
-                        message:
-                            'Purchase completed successfully. Check your email to get full details',
-                        status: 'ok',
-                        code: 200,
-                        data: purchase,
-                    });
-                } else {
-                    return res.status(response.code).json({
-                        message: response.message,
-                        status: 'error',
-                        code: response.code,
-                        data: purchase,
-                    });
+                    if (response.code == 200) {
+                        return res.status(200).json({
+                            message: 'Purchase completed successfully. Check your email to get full details',
+                            status: 'ok',
+                            code: 200,
+                            data: updatedPurchase
+                        });
+                    } else {
+                        return res.status(response.code).json({
+                            message: response.message,
+                            status: 'error',
+                            code: response.code,
+                            data: purchase
+                        });
+                    }
                 }
             });
         } catch (error: any) {
-            return res
-                .status(404)
-                .json({ message: error.message, code: 404, status: 'error' });
+            return res.status(404).json({ message: error.message, code: 404, status: 'error' });
         }
     } catch (error: any) {
-        return res
-            .status(404)
-            .json({ message: error.message, code: 404, status: 'error' });
+        return res.status(404).json({ message: error.message, code: 404, status: 'error' });
     }
 };
 
@@ -189,7 +182,7 @@ const read = async (req: Request, res: Response) => {
 
         return CResponse.success(res, {
             message: 'Success',
-            data: allPurchases,
+            data: allPurchases
         });
     } catch (error: any) {
         return CResponse.error(res, { message: error.message });
@@ -200,12 +193,27 @@ const readOne = async (req: Request, res: Response) => {
     try {
         const purchaseId = req.params['purchaseId'];
         const purchase = await Purchase.findById(purchaseId);
-        if (!purchase)
-            return CResponse.error(res, { message: 'Could not find purchase' });
+        if (!purchase) return CResponse.error(res, { message: 'Could not find purchase' });
 
         return CResponse.success(res, {
             message: 'Purchase details fetched',
-            data: purchase,
+            data: purchase
+        });
+    } catch (error: any) {
+        return CResponse.error(res, { message: error.message });
+    }
+};
+
+const readOneUserPurchase = async (req: Request, res: Response) => {
+    try {
+        const purchaseId = req.params['purchaseId'];
+        const userId = req.params['userId'];
+        const userPurchase = await Purchase.findOne({ _id: purchaseId, user: userId });
+        if (!userPurchase) return CResponse.error(res, { message: 'Could not find userPurchase' });
+
+        return CResponse.success(res, {
+            message: 'Purchase details fetched',
+            data: userPurchase
         });
     } catch (error: any) {
         return CResponse.error(res, { message: error.message });
@@ -219,16 +227,16 @@ const _delete = async (req: Request, res: Response) => {
         const deletedPurchase = await Purchase.findByIdAndDelete(purchaseId);
         if (!deletedPurchase)
             return CResponse.error(res, {
-                message: 'Could not delete purchase',
+                message: 'Could not delete purchase'
             });
 
         return CResponse.success(res, {
             message: 'Successfully deleted purchase',
-            data: deletedPurchase,
+            data: deletedPurchase
         });
     } catch (error: any) {
         return CResponse.error(res, { message: error.message });
     }
 };
 
-export { create, read, readOne, _delete };
+export { create, read, readOne, _delete, readOneUserPurchase };

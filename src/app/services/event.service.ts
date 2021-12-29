@@ -4,23 +4,19 @@ import { Events, Purchases, Statistics } from '../api/endpoints';
 import { Client } from '../utils/client';
 
 @Injectable({
-    providedIn: 'root',
+    providedIn: 'root'
 })
 export class EventService {
     httpOptions = {
         headers: new HttpHeaders({
             'Access-Control-Allow-Origin': '*',
-            Authorization: `Bearer ${sessionStorage.getItem('access-token')}`,
-        }),
+            Authorization: `Bearer ${localStorage.getItem('access-token')}`
+        })
     };
     constructor(private client: Client) {}
 
     createEvent(event: FormData) {
-        return this.client.POST(
-            `${Events.create}`,
-            event,
-            this.httpOptions.headers
-        );
+        return this.client.POST(`${Events.create}`, event, this.httpOptions.headers);
     }
 
     getAllEvents() {
@@ -57,14 +53,13 @@ export class EventService {
         return this.client.POST(Purchases.create, { user, items, paymentDetails });
     }
 
-
     //#region Event Portal
     getEventPortalStats(eventId: string) {
-      return this.client.GET(`${Statistics.eventPortal}/${eventId}`);
+        return this.client.GET(`${Statistics.eventPortal}/${eventId}`);
     }
 
     redeemTicket(hashTicketId: string, userId: string) {
-        return this.client.POST(`${Purchases.redeemTicket}`, {hashTicketId, userId });
+        return this.client.POST(`${Purchases.redeemTicket}`, { hashTicketId, userId });
     }
     //#endregion
 }
