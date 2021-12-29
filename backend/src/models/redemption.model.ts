@@ -7,7 +7,7 @@ const RedemptionSchema: Schema = new Schema(
         purchaseId: { type: String, required: true, ref: 'purchases' },
         redemptionCode: { type: String, required: true },
         redeemed: { type: Boolean, default: false },
-        dateRedeemed: { type: Date },
+        dateRedeemed: { type: Date }
     },
     { timestamps: true }
 );
