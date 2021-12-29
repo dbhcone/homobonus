@@ -3,6 +3,7 @@ import { EventService } from 'src/app/services/event.service';
 import { productsDB } from '../../shared/data/products';
 import * as moment from 'moment';
 import { Router } from '@angular/router';
+import { ShoppingCartService } from 'src/app/services/shoppingcart.service';
 @Component({
     selector: 'hb-product-list',
     templateUrl: './product-list.component.html',
@@ -20,7 +21,7 @@ export class ProductListComponent implements OnInit, OnDestroy {
      * Static event for enactus
      */
     cena_noctis = {
-        _id: '69d087e65b567c856',
+        _id: '61ca54f7bb8c82000438117e',
         title: 'Cena Noctis ',
         date: '2022-01-02 0:00:0',
         time: '16:00 GMT',
@@ -30,9 +31,9 @@ export class ProductListComponent implements OnInit, OnDestroy {
         extraDetails: [{ label: 'Dress Code', value: 'Strictly Official' }],
         description: 'It is going to be an amazing time together',
         rating: 5,
-        prices: [50]
+        ticketId: '61ca5575bb8c820004381184'
     };
-    constructor(private eventService: EventService, private router: Router) {}
+    constructor(private eventService: EventService, private router: Router, private cart: ShoppingCartService) {}
 
     ngOnInit(): void {
         // this.fetchAllEvents();
@@ -69,6 +70,7 @@ export class ProductListComponent implements OnInit, OnDestroy {
     }
 
     buyNow() {
+        this.cart.addToCart(this.cena_noctis.ticketId);
         this.router.navigate(['checkout']);
     }
 
