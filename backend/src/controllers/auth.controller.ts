@@ -94,7 +94,8 @@ const Signup = async (req: Request, res: Response) => {
                         // save the pin and email to activations to be later verified
                         const activation = await new Activations({
                             email: user.email,
-                            pin
+                            pin,
+                            mobileNumber: account.primaryMobileNumber
                         }).save();
                         return res.status(201).json({
                             message: 'A link has been sent to your email. Kindly follow to activate your account!',

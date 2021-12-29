@@ -205,9 +205,13 @@
                                 placeholder="username"
                                 formControlName="username"
                             />
-                            <mat-error *ngIf="username?.touched && username?.hasError('required')">
-                                Please, provide username!
-                            </mat-error>
+
+                            <div *ngIf="username?.invalid && (username?.dirty || username?.touched)">
+                                <mat-error *ngIf="username?.hasError('required')"> Username is required. </mat-error>
+                                <mat-error *ngIf="username?.touched && username?.hasError('minlength')">
+                                    Username must be at least 8 characters long.
+                                </mat-error>
+                            </div>
                         </div>
 
                         <div class="mb-1 mt-1">
