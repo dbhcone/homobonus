@@ -5,6 +5,7 @@ const accountActivationValidation: ObjectSchema<{
     pin: string;
 }> = Joi.object({
     token: Joi.string().required(),
+    mobileNumber: Joi.string().required().length(10),
     pin: Joi.string().required().length(6)
 });
 
