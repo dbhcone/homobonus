@@ -9,10 +9,14 @@
         <div class="login__content p-4 sm:p-8 flex flex-col justify-center bg-accent">
             <div class="login w-full max-w-xl rounded-md mx-auto border p-4 sm:p-8 xl:p-20">
                 <form [formGroup]="activateAccountForm" (ngSubmit)="onSubmit()">
-                    <h1 class="text-2xl font-bold uppercase text-center">ACTIVATE YOUR ACCOUNT</h1>
-                    <p class="text-center">Enter the 6-digit pin your received in your email</p>
+                    <h1 class="text-2xl font-bold uppercase text-blue-900 text-center">ACTIVATE YOUR ACCOUNT</h1>
+                    <hr />
+                    <p class="text-center">Enter the 6-digit pin your received in your email or via SMS</p>
+
                     <div class="mb-4 mt-6">
-                        <label class="block text-gray-700 text-sm font-semibold mb-2" htmlFor="email"> Email </label>
+                        <label class="block text-gray-700 text-sm font-semibold mb-2" htmlFor="mobileNumber">
+                            Mobile Number
+                        </label>
                         <input
                             class="
                                 text-sm
@@ -28,7 +32,46 @@
                                 focus:shadow-outline
                                 h-10
                             "
-                            id="email"
+                            id="mobileNumber"
+                            type="text"
+                            formControlName="mobileNumber"
+                            placeholder="enter your mobile number here"
+                            minlength="10"
+                            maxlength="10"
+                            pattern="[0-9]{10}"
+                            required
+                        />
+                        <mat-hint class="text-xs">The number you used during the sign up process</mat-hint>
+
+                        <div *ngIf="mobileNumber?.invalid && (mobileNumber?.dirty || mobileNumber?.touched)">
+                            <mat-error *ngIf="mobileNumber?.hasError('required')">
+                                Mobile number is required.
+                            </mat-error>
+                            <mat-error *ngIf="mobileNumber?.touched && mobileNumber?.hasError('minlength')">
+                                Mobile number must be 10 characters long.
+                            </mat-error>
+                            <mat-error *ngIf="mobileNumber?.hasError('pattern')"> Numbers only </mat-error>
+                        </div>
+                    </div>
+
+                    <div class="mb-4 mt-6">
+                        <label class="block text-gray-700 text-sm font-semibold mb-2" htmlFor="pin"> PIN </label>
+                        <input
+                            class="
+                                text-sm
+                                appearance-none
+                                rounded
+                                w-full
+                                py-2
+                                px-3
+                                text-gray-700
+                                bg-gray-100
+                                leading-tight
+                                focus:outline-none
+                                focus:shadow-outline
+                                h-10
+                            "
+                            id="pin"
                             type="text"
                             formControlName="pin"
                             placeholder="enter your PIN here"
@@ -37,8 +80,14 @@
                             pattern="[0-9]{6}"
                             required
                         />
-                        <mat-error *ngIf="pin?.touched && pin?.hasError('pattern')"> Numbers only </mat-error>
-                        <mat-error *ngIf="pin?.touched && pin?.hasError('required')"> Provide pin </mat-error>
+
+                        <mat-error *ngIf="pin?.invalid && (pin?.dirty || pin?.touched)">
+                            <mat-error *ngIf="pin?.hasError('required')"> pin is required. </mat-error>
+                            <mat-error *ngIf="pin?.touched && pin?.hasError('minlength')">
+                                pin must be 6 characters long.
+                            </mat-error>
+                            <mat-error *ngIf="pin?.hasError('pattern')"> Numbers only </mat-error>
+                        </mat-error>
                     </div>
 
                     <div class="flex w-full mt-6">

@@ -76,17 +76,17 @@ const Signup = async (req: Request, res: Response) => {
 
                     const pin = generatePin(6);
                     // try sending sms only if there was a primary number
-                    // if (account.primaryMobileNumber) {
-                    //     const standardNumber = intlTelNumberGh(account.primaryMobileNumber);
+                    if (account.primaryMobileNumber) {
+                        const standardNumber = intlTelNumberGh(account.primaryMobileNumber);
 
-                    //     if (standardNumber) {
-                    //         const sendSMS = await sendDtechSms(
-                    //             accountCreationMsg(account.firstName, temp_token, pin),
-                    //             standardNumber
-                    //         );
-                    //         console.log('sms response', sendSMS, standardNumber);
-                    //     }
-                    // }
+                        if (standardNumber) {
+                            const sendSMS = await sendDtechSms(
+                                accountCreationMsg(account.firstName, temp_token, pin),
+                                standardNumber
+                            );
+                            console.log('sms response', sendSMS, standardNumber);
+                        }
+                    }
 
                     const sendmail = await accountActivationEmail(account.firstName, temp_token, user.email, pin);
 
@@ -287,45 +287,56 @@ const ActivateAccount = async (req: Request, res: Response) => {
     try {
         const validation = await accountActivationValidation.validateAsync(req.body);
 
-        const { token, pin } = req.body;
-        let decoded = decodeToken(token);
+        const { token, pin, mobileNumber } = req.body;
+        // let decoded = decodeToken(token);
 
-        if (decoded.data) {
-            const dc = JSON.parse(JSON.stringify(decoded.data));
-            const activation = await Activations.findOne({ email: dc.email, pin });
+        // if (decoded.data) {
+        //     const dc = JSON.parse(JSON.stringify(decoded.data));
+        // const activation = await Activations.findOne({ email: dc.email, pin });
+        const activation = await Activations.findOne({ mobileNumber, pin });
 
-            if (activation) {
-                // found. now update the status in users and delete from activations
-                const user = await Users.findOneAndUpdate({ email: dc.email }, { $set: { status: 'active' } });
+        if (activation) {
+            // found. now update the status in users and delete from activations
+            // const user = await Users.findOneAndUpdate({ email: dc.email }, { $set: { status: 'active' } });
 
-                const del = await Activations.deleteMany({ email: dc.email, pin });
-                console.log('activations deleted', del);
-                if (user) {
-                    // activation successful
-                    return res.status(200).json({
-                        message: 'Account activation successful!',
-                        status: 'ok',
-                        code: 200
-                    });
-                } else {
-                    // unsuccessful activation
-                    return res.status(404).json({
-                        message: 'Could not activate account!',
-                        status: 'error',
-                        code: 404
-                    });
-                }
-            } else {
-                // activation not found
+            const acc = await Account.findOne({ primaryMobileNumber: mobileNumber });
+            if (!acc) {
                 return res.status(404).json({
-                    message: 'No pending activations with this user and pin. Request one now!',
+                    message: 'Could not verify mobile number. Check and try again!',
+                    status: 'error',
+                    code: 404
+                });
+            }
+            const user = await Users.findOneAndUpdate({ accountOwner: acc._id }, { $set: { status: 'active' } });
+
+            const del = await Activations.deleteMany({ mobileNumber, pin });
+            console.log('activations deleted', del);
+            if (user) {
+                // activation successful
+                return res.status(200).json({
+                    message: 'Account activation successful!',
+                    status: 'ok',
+                    code: 200
+                });
+            } else {
+                // unsuccessful activation
+                return res.status(404).json({
+                    message: 'Could not activate account!',
                     status: 'error',
                     code: 404
                 });
             }
         } else {
-            return res.status(404).json({ message: decoded.message, status: 'error', code: 404 });
+            // activation not found
+            return res.status(404).json({
+                message: 'No pending activations with this user and pin. Request one now!',
+                status: 'error',
+                code: 404
+            });
         }
+        // } else {
+        //     return res.status(404).json({ message: decoded.message, status: 'error', code: 404 });
+        // }
     } catch (error: any) {
         return res.status(404).json({ message: error.message, status: 'error', code: 404 });
     }

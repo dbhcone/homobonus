@@ -84,7 +84,7 @@ export class SignupComponent implements OnInit {
                 Swal.fire({ text: resp.message, icon: 'success', timer: 5000 }).then(
                     (result: SweetAlertResult<any>) => {
                         //
-                        this.router.navigate(['auth', 'login']);
+                        this.router.navigate(['auth', 'activate-account']);
                     }
                 );
             },

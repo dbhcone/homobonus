@@ -9,6 +9,8 @@ import { EventPortalComponent } from './components/admin/events/portal/eventport
 import { SettingsComponent } from './components/admin/settings/settings.component';
 import { UsersComponent } from './components/admin/users/users.component';
 import { CheckoutComponent } from './components/checkout/checkout.component';
+import { ForgotPasswordComponent } from './components/forgot-password/forgot-password.component';
+import { ResetPasswordComponent } from './components/reset-password/reset-password.component';
 import { AdminGuard } from './guards/admin.guard';
 import { AuthGuard } from './guards/auth.guard';
 import { BaseLayoutComponent } from './shared/components/layouts/base-layout/base-layout.component';
@@ -52,7 +54,9 @@ const routes: Routes = [
             { path: 'events/portal/:id', component: EventPortalComponent },
             { path: 'settings', component: SettingsComponent },
             { path: 'users', component: UsersComponent },
-            { path: 'clients', component: ClientsComponent }
+            { path: 'clients', component: ClientsComponent },
+            { path: 'forgot-password', component: ForgotPasswordComponent },
+            { path: 'reset-password', component: ResetPasswordComponent }
         ]
     },
     {

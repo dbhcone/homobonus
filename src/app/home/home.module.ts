@@ -18,6 +18,8 @@ import { EventformComponent } from '../components/admin/events/eventformcomponen
 import { AdminNavigationComponent } from '../components/admin/admin-navigation.component';
 import { ZXingScannerModule } from '@zxing/ngx-scanner';
 import { QRCodeModule } from 'angular2-qrcode';
+import { ResetPasswordComponent } from '../components/reset-password/reset-password.component';
+import { ForgotPasswordComponent } from '../components/forgot-password/forgot-password.component';
 
 @NgModule({
     declarations: [
@@ -32,7 +34,9 @@ import { QRCodeModule } from 'angular2-qrcode';
         EventpricingComponent,
         EventmanagementComponent,
         EventformComponent,
-        AdminNavigationComponent
+        AdminNavigationComponent,
+        ResetPasswordComponent,
+        ForgotPasswordComponent
     ],
     imports: [CommonModule, HomeRoutingModule, SharedModule, NgParticlesModule, ZXingScannerModule, QRCodeModule]
 })

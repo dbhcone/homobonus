@@ -19,7 +19,24 @@ export class ActivateaccountComponent implements OnInit {
         private router: Router
     ) {
         this.activateAccountForm = fb.group({
-            pin: [null, Validators.compose([Validators.required, Validators.pattern('[0-9]{6}')])]
+            mobileNumber: [
+                null,
+                Validators.compose([
+                    Validators.required,
+                    Validators.minLength(10),
+                    Validators.maxLength(10),
+                    Validators.pattern('[0-9]{10}')
+                ])
+            ],
+            pin: [
+                null,
+                Validators.compose([
+                    Validators.required,
+                    Validators.pattern('[0-9]{6}'),
+                    Validators.minLength(6),
+                    Validators.maxLength(6)
+                ])
+            ]
         });
         route.queryParams.subscribe(param => {
             this.token = param['token'];
@@ -33,10 +50,14 @@ export class ActivateaccountComponent implements OnInit {
     get pin(): AbstractControl | null {
         return this.activateAccountForm.get('pin');
     }
+    get mobileNumber(): AbstractControl | null {
+        return this.activateAccountForm.get('mobileNumber');
+    }
 
     onSubmit() {
         this.submitting = true;
-        this.auth.activateAccount(this.token || '', this.pin?.value)?.subscribe(
+        const data = { token: this.token || '', pin: this.pin?.value, mobileNumber: this.mobileNumber?.value };
+        this.auth.activateAccount(data)?.subscribe(
             async (resp: any) => {
                 console.log('activation', resp);
                 Swal.fire({ text: resp.message, icon: 'success', timer: 5000 }).then(res => {
