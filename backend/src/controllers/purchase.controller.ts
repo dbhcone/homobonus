@@ -2,6 +2,7 @@ import { Request, Response } from 'express';
 import { createPurchase } from '../validators/event.validations';
 import Pricings from '../models/pricings.model';
 import Purchase from '../models/purchase.model';
+import Confirmations from '../models/confirmation.model';
 import qr from 'qrcode';
 import { sendTicketEmail } from '../helpers/functions/email.helper';
 import Users from '../models/user.model';
@@ -16,8 +17,15 @@ const create = async (req: Request, res: Response) => {
         const validation = await createPurchase.validateAsync(data);
         // let { user, items, paymentDetails } = data;
         let { user, items } = data;
+        const us = await Users.findById(user.id).populate('accountOwner');
         const newItems = <any[]>items;
 
+        // TODO: Comment out the following code after CENA Noctis
+        const conf = await Confirmations.findOne({ mobileNumber: us?.accountOwner?.primaryMobileNumber });
+        if (!conf)
+            return CResponse.error(res, {
+                message: "Sorry, you haven't paid your GHS 50 yet. Kindly contact event organiser."
+            });
         // console.log('data', data);
 
         let tickets: ITicket[] = [];
@@ -59,6 +67,10 @@ const create = async (req: Request, res: Response) => {
          * TODO: Trigger payment and confirm before adding to
          * purchase document. Verify payment first.
          */
+
+        // do not store any purchase that has 0 tickets
+        if (tickets.length == 0) return;
+
         let purch = { user: user.id, tickets: tickets, total: total };
         let purchase = await new Purchase(purch).save();
         console.log('purchase', purchase);
@@ -79,7 +91,7 @@ const create = async (req: Request, res: Response) => {
                 // const updatedPurchase = await purchase.updateOne({ qrcode }, { new: true });
                 console.log('updated purchase', updatedPurchase);
 
-                const us = await Users.findById(user.id).populate('accountOwner');
+                // const us = await Users.findById(user.id).populate('accountOwner');
 
                 // now send the email
                 if (tickets.length > 0) {

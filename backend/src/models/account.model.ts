@@ -7,7 +7,7 @@ const AccountSchema: Schema = new Schema(
         firstName: { type: String, required: true },
         otherNames: { type: String, default: null },
         gender: { type: String, required: true },
-        primaryMobileNumber: { type: String, required: true },
+        primaryMobileNumber: { type: String, required: true, unique: true },
         otherNumbers: [{ type: String }],
         occupation: { type: String, default: null }
     },
