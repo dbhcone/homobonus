@@ -53,13 +53,7 @@
     - camerasFound
     - camerasNotFound
  -->
-            <zxing-scanner
-                *ngIf="scannerEnabled"
-                #scanner
-                (scanSuccess)="scanSuccessHandler($event)"
-                (scanComplete)="scanCompleteHandler($event)"
-            >
-            </zxing-scanner>
+            <zxing-scanner *ngIf="scannerEnabled" #scanner (scanSuccess)="scanSuccessHandler($event)"> </zxing-scanner>
             <button mat-raised-button color="primary" (click)="startScanner()" *ngIf="!scannerEnabled" type="button">
                 Start Scanner
             </button>

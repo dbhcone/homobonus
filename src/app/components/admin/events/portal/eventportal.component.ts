@@ -32,7 +32,7 @@ export class EventPortalComponent implements OnInit, OnDestroy {
 
     ngOnInit() {}
     ngOnDestroy() {
-        this.subscription.unsubscribe();
+        this.subscription?.unsubscribe();
     }
 
     getEventStats() {
