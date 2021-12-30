@@ -21,6 +21,10 @@
                     <th>
                         <span class="text-gray-800">Status</span>
                     </th>
+
+                    <th>
+                        <span class="text-gray-800">Mobile Number</span>
+                    </th>
                     <th class="text-right">Action</th>
                 </tr>
             </thead>
@@ -52,6 +56,9 @@
                         >
                             {{ user?.status | titlecase }}
                         </div>
+                    </td>
+                    <td>
+                        {{ user?.accountOwner?.primaryMobileNumber || 'N / A' }}
                     </td>
                     <td class="text-right">
                         <button class="action_icon__btn" mat-icon-button [matMenuTriggerFor]="menu">
