@@ -2,6 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { EventService } from 'src/app/services/event.service';
+import Swal from 'sweetalert2';
 
 @Component({
     selector: 'app-eventportal',
@@ -60,9 +61,30 @@ export class EventPortalComponent implements OnInit, OnDestroy {
         this.stopScanner();
         console.log('scan result', result);
         this.formValueJson = result;
+        this.verifyScanResult(this.formValueJson);
     }
 
-    verifyScanResult(scanResult: string) {}
+    public scanCompleteHandler(result?: any) {
+        this.stopScanner();
+        console.log('scan complete', result);
+    }
+
+    verifyScanResult(scanResult: string) {
+        this.eventService.verifyTicket(scanResult).subscribe(
+            async (resp: any) => {
+                console.log('verify', resp);
+                Swal.fire({ text: resp.message, icon: 'success', timer: 5000 });
+            },
+            err => {
+                this.submitting = false;
+                Swal.fire({
+                    title: `${err.error.status.toUpperCase()}`,
+                    text: `${err.error.message}`,
+                    icon: 'error'
+                });
+            }
+        );
+    }
 
     public redeem(hashTicketId: string) {}
 }

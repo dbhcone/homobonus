@@ -89,7 +89,7 @@ const verifyTicket = async (req: Request, res: Response) => {
                 // send email
                 const mail = await ticketVerificationEmail(firstName, email, pin);
 
-                // Send sms - Uncomment for production deployment
+                // TODO: Send sms - Uncomment for production deployment
                 // const sms = await sendDtechSms(ticketVerificationMsg(firstName, pin), primaryMobileNumber);
 
                 return CResponse.success(res, { message: 'Check your email or SMS for authorisation code' });
