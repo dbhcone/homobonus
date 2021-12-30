@@ -49,3 +49,11 @@ export interface IRedemption extends Document {
     redeemed?: boolean;
     dateRedeemed?: Date;
 }
+
+/**
+ * NOTE: This is specific to CENA NOCTIS
+ */
+export interface IConfirmation extends Document {
+    name: string;
+    mobileNumber: string;
+}

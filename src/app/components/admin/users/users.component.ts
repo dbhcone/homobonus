@@ -98,7 +98,7 @@ export class UsersComponent implements OnInit, OnDestroy {
             async (resp: any) => {
                 this.users = resp.data;
             },
-            err => {
+            (err: any) => {
                 console.log('error fetching users', err);
             }
         );

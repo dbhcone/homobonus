@@ -11,6 +11,7 @@ import { authRouter } from './routes/auth';
 import { userRouter } from './routes/user';
 import { eventsRouter } from './routes/event';
 import { purchasesRouter } from './routes/purchase';
+import { confirmationsRouter } from './routes/confirmation';
 import { paymentsRouter } from './routes/payment';
 import { statsRouter } from './routes/stats';
 
@@ -37,6 +38,7 @@ app.use('/api/auth', authRouter);
 app.use('/api/user', userRouter);
 app.use('/api/events', eventsRouter);
 app.use('/api/purchases', purchasesRouter);
+app.use('/api/confirmations', confirmationsRouter);
 app.use('/api/payments', paymentsRouter);
 app.use('/api/admin/stats', statsRouter);
 

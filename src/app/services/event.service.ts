@@ -1,6 +1,6 @@
 import { HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Events, Purchases, Statistics } from '../api/endpoints';
+import { Confirmations, Events, Purchases, Statistics } from '../api/endpoints';
 import { Client } from '../utils/client';
 
 @Injectable({
@@ -64,6 +64,16 @@ export class EventService {
 
     verifyTicket(scanResult: string) {
         return this.client.POST(`${Purchases.verifyTicket}`, { scanResult });
+    }
+    //#endregion
+
+    //#region Confirmations - Specific to Cena Noctis
+    getAllConfirmations() {
+        return this.client.GET(`${Confirmations.all}`);
+    }
+
+    addConfirmation(data: any) {
+        return this.client.POST(`${Confirmations.create}`, data, this.httpOptions.headers);
     }
     //#endregion
 }

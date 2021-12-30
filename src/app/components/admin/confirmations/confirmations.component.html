@@ -1,0 +1,57 @@
+<div>
+    <h3 class="mb-3 ml-2 text-blue-900 font-medium">PAYMENTS MADE OUTSIDE THE SYSTEM</h3>
+    <hr />
+    <button
+        class="
+            w-full
+            bg-gray-800
+            hover:bg-grey-900
+            text-white text-sm
+            py-2
+            px-4
+            font-semibold
+            rounded
+            focus:outline-none
+            focus:shadow-outline
+            h-10
+        "
+        type="button"
+        (click)="addNew()"
+    >
+        Add New
+    </button>
+    <div class="table-inside">
+        <table class="order-table table-auto ltMd:responsive">
+            <thead>
+                <tr class="border text-left">
+                    <th>
+                        <span class="text-gray-800">Id</span>
+                    </th>
+                    <th>
+                        <span class="text-gray-800">Name</span>
+                    </th>
+                    <th>
+                        <span class="text-gray-800">Mobile Number</span>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let confirmation of confirmations" class="border">
+                    <td>
+                        <a class="text-primary" href="/">#{{ confirmation?._id }}</a>
+                    </td>
+                    <td>
+                        {{ confirmation?.name }}
+                    </td>
+                    <td>
+                        <span>
+                            <a href="tel:{{ confirmation?.mobileNumber }}"
+                                ><mat-icon>call</mat-icon> {{ confirmation?.mobileNumber }}</a
+                            >
+                        </span>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

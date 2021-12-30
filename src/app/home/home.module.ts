@@ -21,6 +21,8 @@ import { QRCodeModule } from 'angular2-qrcode';
 import { ResetPasswordComponent } from '../components/reset-password/reset-password.component';
 import { ForgotPasswordComponent } from '../components/forgot-password/forgot-password.component';
 import { QrCodesComponent } from '../components/user/qr-codes/qr-codes.component';
+import { ConfirmationsComponent } from '../components/admin/confirmations/confirmations.component';
+import { ConfirmationformComponent } from '../components/admin/confirmations/confirmationform.component';
 
 @NgModule({
     declarations: [
@@ -38,7 +40,9 @@ import { QrCodesComponent } from '../components/user/qr-codes/qr-codes.component
         AdminNavigationComponent,
         ResetPasswordComponent,
         ForgotPasswordComponent,
-        QrCodesComponent
+        QrCodesComponent,
+        ConfirmationsComponent,
+        ConfirmationformComponent
     ],
     imports: [CommonModule, HomeRoutingModule, SharedModule, NgParticlesModule, ZXingScannerModule, QRCodeModule]
 })

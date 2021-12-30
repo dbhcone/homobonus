@@ -44,10 +44,16 @@ const verifyScannedQrCodeValidation: ObjectSchema<{}> = Joi.object({
     scanResult: Joi.string().required()
 });
 
+const addConfirmationValidation: ObjectSchema<{}> = Joi.object({
+    name: Joi.string().required(),
+    mobileNumber: Joi.string().required().length(10).label('Mobile Number')
+});
+
 export {
     createEventValidation,
     createPurchase,
     redeemTicketValidation,
     verifyTicketValidation,
-    verifyScannedQrCodeValidation
+    verifyScannedQrCodeValidation,
+    addConfirmationValidation
 };

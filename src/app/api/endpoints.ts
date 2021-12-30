@@ -24,6 +24,11 @@ const Events = {
     getPrice: '/events/pricings'
 };
 
+const Confirmations = {
+    all: '/confirmations',
+    create: '/confirmations'
+};
+
 const Purchases = {
     create: '/purchases',
     getOneUserPurchase: '/purchases',
@@ -41,4 +46,4 @@ const Statistics = {
     generalOverview: '/admin/stats/generaloverview',
     eventPortal: '/admin/stats/eventportal'
 };
-export { Auth, General, Events, Statistics, Purchases, Payments };
+export { Auth, General, Events, Statistics, Purchases, Payments, Confirmations };

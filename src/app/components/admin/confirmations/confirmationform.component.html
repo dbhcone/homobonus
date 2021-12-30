@@ -1,0 +1,42 @@
+<h2 class="text-lg text-blue-900 font-bold">
+    {{ HEADING }}
+</h2>
+<hr />
+<form [formGroup]="createConfirmationForm" (ngSubmit)="onSubmit()" novalidate>
+    <mat-dialog-content class="mat-typography">
+        <!-- Name -->
+        <mat-form-field appearance="outline">
+            <mat-label>Name</mat-label>
+            <input matInput type="text" formControlName="name" placeholder="enter name here..." required />
+            <mat-error *ngIf="name?.touched && name?.hasError('required')"> Provide name </mat-error>
+        </mat-form-field>
+
+        <!-- Mobile Number -->
+        <mat-form-field appearance="outline">
+            <mat-label>Mobile Number</mat-label>
+            <input
+                matInput
+                type="text"
+                formControlName="mobileNumber"
+                placeholder="enter mobile number here..."
+                required
+            />
+            <mat-error *ngIf="mobileNumber?.touched && mobileNumber?.hasError('required')">
+                Provide mobile number
+            </mat-error>
+        </mat-form-field>
+    </mat-dialog-content>
+
+    <mat-dialog-actions align="end">
+        <button mat-raised-button color="warn" mat-dialog-close>Cancel</button>
+        <button
+            mat-raised-button
+            color="primary"
+            cdkFocusInitial
+            type="submit"
+            [disabled]="!this.createConfirmationForm.valid || submitting"
+        >
+            {{ (submitting ? 'Saving' : 'Save') | uppercase }}
+        </button>
+    </mat-dialog-actions>
+</form>

@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AdminNavigationComponent } from './components/admin/admin-navigation.component';
 import { ClientsComponent } from './components/admin/clients/clients.component';
+import { ConfirmationsComponent } from './components/admin/confirmations/confirmations.component';
 import { DashboardComponent } from './components/admin/dashboard/dashboard.component';
 import { EventsComponent } from './components/admin/events/events.component';
 import { EventmanagementComponent } from './components/admin/events/management/eventmanagement.component';
@@ -58,7 +59,8 @@ const routes: Routes = [
             { path: 'events/portal/:id', component: EventPortalComponent },
             { path: 'settings', component: SettingsComponent },
             { path: 'users', component: UsersComponent },
-            { path: 'clients', component: ClientsComponent }
+            { path: 'clients', component: ClientsComponent },
+            { path: 'confirmations', component: ConfirmationsComponent }
         ]
     },
     {
