@@ -7,5 +7,5 @@ const router = express.Router();
 router.post('/', GetUserDetails);
 router.post('/upload-photo', photograph.single('photo'), UploadProfilePhoto);
 router.get('/purchases/:userId', GetUserPurchases);
-router.post('/user/ticket/verify', verifyTicket);
+router.post('/ticket/verify', verifyTicket);
 export { router as userRouter };
