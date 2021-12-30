@@ -1,1 +1,75 @@
-<p>users works!</p>
+<div>
+    <h5 class="mb-3 font-medium">Users</h5>
+    <div class="table-inside">
+        <table class="order-table table-auto ltMd:responsive">
+            <thead>
+                <tr class="border text-left">
+                    <th>
+                        <span class="text-gray-800">Id</span>
+                    </th>
+                    <th>
+                        <span class="text-gray-800">Name</span>
+                    </th>
+                    <th>
+                        <span class="text-gray-800">Email</span>
+                    </th>
+
+                    <th>
+                        <span class="text-gray-800">Created</span>
+                    </th>
+
+                    <th>
+                        <span class="text-gray-800">Status</span>
+                    </th>
+                    <th class="text-right">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let user of users" class="border">
+                    <td>
+                        <a class="text-primary" href="/">#{{ user?._id }}</a>
+                    </td>
+                    <td>
+                        {{ user?.accountOwner?.firstName || user?.username }}
+                    </td>
+                    <td>
+                        <span
+                            ><a href="mailto:{{ user?.email }}">{{ user?.email }}</a>
+                        </span>
+                    </td>
+                    <td>
+                        <span> N / A</span>
+                    </td>
+                    <td>
+                        <div
+                            [ngClass]="{
+                                'bg-blue-500 text-blue-500': user?.status === 'active',
+                                'bg-red-500 text-red-500': user?.status === 'suspended',
+                                'bg-yellow-500 text-yellow-900': user?.status === 'inactive',
+                                'bg-primary text-primary': user?.status === 'initialized'
+                            }"
+                            class="text-[12px] bg-opacity-20 rounded-full px-3 inline-block font-bold py-[3px]"
+                        >
+                            {{ user?.status | titlecase }}
+                        </div>
+                    </td>
+                    <td class="text-right">
+                        <button class="action_icon__btn" mat-icon-button [matMenuTriggerFor]="menu">
+                            <mat-icon>more_vert</mat-icon>
+                        </button>
+                        <mat-menu #menu="matMenu" xposition="before">
+                            <button mat-menu-item>
+                                <mat-icon>dialpad</mat-icon>
+                                <span>Details</span>
+                            </button>
+                            <button mat-menu-item>
+                                <mat-icon>delete</mat-icon>
+                                <span>Delete</span>
+                            </button>
+                        </mat-menu>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

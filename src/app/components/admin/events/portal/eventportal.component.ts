@@ -7,7 +7,7 @@ import Swal from 'sweetalert2';
 @Component({
     selector: 'app-eventportal',
     templateUrl: './eventportal.component.html',
-    styleUrls: ['./eventportal.component.scss']
+    styleUrls: ['./eventportal.component.scss', '../../../../auth/login/login.component.scss']
 })
 export class EventPortalComponent implements OnInit, OnDestroy {
     statistics: any;
@@ -86,5 +86,7 @@ export class EventPortalComponent implements OnInit, OnDestroy {
         );
     }
 
-    public redeem(hashTicketId: string) {}
+    public redeem(hashTicketId: string) {
+        alert('You want to redeem');
+    }
 }

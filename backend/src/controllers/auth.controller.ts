@@ -172,7 +172,7 @@ const UsersList = async (req: Request, res: Response) => {
     }
 };
 
-const MembersList = async (req: Request, res: Response) => {
+const AccountList = async (req: Request, res: Response) => {
     try {
         let data = await Users.find({}).populate('accountOwner');
         return res.status(200).json({
@@ -343,4 +343,4 @@ const ActivateAccount = async (req: Request, res: Response) => {
     }
 };
 
-export { Signup, Login, UsersList, MembersList, DeleteUser, UpdateMember, MembersStats, ActivateAccount };
+export { Signup, Login, UsersList, AccountList, DeleteUser, UpdateMember, MembersStats, ActivateAccount };

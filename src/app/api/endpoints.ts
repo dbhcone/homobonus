@@ -2,7 +2,8 @@ const Auth = {
     login: '/auth/login',
     signup: '/auth/signup',
     activate: '/auth/activate-account',
-    merchantSignup: '/auth/merchantsignup'
+    merchantSignup: '/auth/merchantsignup',
+    allUsers: '/auth/users'
 };
 
 const General = {
