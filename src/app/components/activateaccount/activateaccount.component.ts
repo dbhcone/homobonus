@@ -56,7 +56,7 @@ export class ActivateaccountComponent implements OnInit {
 
     onSubmit() {
         this.submitting = true;
-        const data = { token: this.token || '', pin: this.pin?.value, mobileNumber: this.mobileNumber?.value };
+        const data = { pin: this.pin?.value, mobileNumber: this.mobileNumber?.value };
         this.auth.activateAccount(data)?.subscribe(
             async (resp: any) => {
                 console.log('activation', resp);
