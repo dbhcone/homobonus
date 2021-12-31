@@ -25,6 +25,9 @@
             <thead>
                 <tr class="border text-left">
                     <th>
+                        <span class="text-gray-800">#</span>
+                    </th>
+                    <th>
                         <span class="text-gray-800">Id</span>
                     </th>
                     <th>
@@ -36,7 +39,10 @@
                 </tr>
             </thead>
             <tbody>
-                <tr *ngFor="let confirmation of confirmations" class="border">
+                <tr *ngFor="let confirmation of confirmations; let i = index" class="border">
+                    <td>
+                        {{ i + 1 }}
+                    </td>
                     <td>
                         <a class="text-primary" href="/">#{{ confirmation?._id }}</a>
                     </td>
