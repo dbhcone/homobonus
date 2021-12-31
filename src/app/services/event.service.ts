@@ -58,8 +58,8 @@ export class EventService {
         return this.client.GET(`${Statistics.eventPortal}/${eventId}`);
     }
 
-    redeemTicket(hashTicketId: string, userId: string) {
-        return this.client.POST(`${Purchases.redeemTicket}`, { hashTicketId, userId });
+    redeemTicket(data: any) {
+        return this.client.POST(`${Purchases.redeemTicket}`, data);
     }
 
     verifyTicket(scanResult: string) {

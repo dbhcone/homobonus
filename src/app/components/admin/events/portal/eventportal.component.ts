@@ -1,6 +1,8 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { AbstractControl, FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
+import { AuthService } from 'src/app/services/auth.service';
 import { EventService } from 'src/app/services/event.service';
 import Swal from 'sweetalert2';
 
@@ -13,6 +15,7 @@ export class EventPortalComponent implements OnInit, OnDestroy {
     statistics: any;
     eventId: any;
     subscription: Subscription;
+    ticketRedemptionForm: any;
 
     formValueJson: string = '';
     submitting: boolean = false;
@@ -20,7 +23,12 @@ export class EventPortalComponent implements OnInit, OnDestroy {
     // allowedFormats = [ BarcodeFormat.QR_CODE, BarcodeFormat.EAN_13, BarcodeFormat.CODE_128, BarcodeFormat.DATA_MATRIX /*, ...*/ ];
     public scannerEnabled: boolean = false;
 
-    constructor(private actRoute: ActivatedRoute, private eventService: EventService) {
+    constructor(
+        private actRoute: ActivatedRoute,
+        private eventService: EventService,
+        private fb: FormBuilder,
+        private auth: AuthService
+    ) {
         this.subscription = this.actRoute.paramMap.subscribe(pm => {
             if (pm.has('id')) {
                 this.eventId = pm.get('id');
@@ -28,11 +36,27 @@ export class EventPortalComponent implements OnInit, OnDestroy {
                 this.getEventStats();
             }
         });
+
+        this.ticketRedemptionForm = fb.group({
+            redemptionCode: [
+                null,
+                Validators.compose([
+                    Validators.required,
+                    Validators.pattern('[0-9]{6}'),
+                    Validators.minLength(6),
+                    Validators.maxLength(6)
+                ])
+            ]
+        });
     }
 
     ngOnInit() {}
     ngOnDestroy() {
         this.subscription?.unsubscribe();
+    }
+
+    get redemptionCode(): AbstractControl | null {
+        return this.ticketRedemptionForm.get('redemptionCode');
     }
 
     getEventStats() {
@@ -86,7 +110,23 @@ export class EventPortalComponent implements OnInit, OnDestroy {
         );
     }
 
-    public redeem(hashTicketId: string) {
-        alert('You want to redeem');
+    redeem() {
+        this.submitting = true;
+        const session = this.auth.session();
+        const data = { redemptionCode: this.redemptionCode?.value, eventId: this.eventId, userId: session.id };
+
+        this.eventService.redeemTicket(data)?.subscribe(
+            async (resp: any) => {
+                console.log('redemption ', resp);
+                Swal.fire({ text: resp.message, icon: 'success', timer: 5000 });
+            },
+            (err: any) => {
+                this.submitting = false;
+                Swal.fire({
+                    title: `${err.error.status} - ${err.error.code}`,
+                    text: `${err.error.message}`
+                });
+            }
+        );
     }
 }

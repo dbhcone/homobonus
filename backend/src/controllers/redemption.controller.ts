@@ -17,8 +17,13 @@ const redeemTicket = async (req: Request, res: Response) => {
     try {
         const data = req.body;
         const validation = await redeemTicketValidation.validateAsync(data);
-
         const { userId, purchaseId, redemptionCode } = data;
+
+        // check if the ticket has already been redeemed from purchases
+        const checkRedeemed = await Purchases.findOne({ user: userId, _id: purchaseId, redeemed: true });
+        if (checkRedeemed)
+            return CResponse.error(res, { message: 'Sorry! This ticket has already been redeemed. Get a new one!' });
+
         const date = new Date();
         const updatedRedemption = await Redemptions.findOneAndUpdate(
             { ...data },
@@ -29,7 +34,7 @@ const redeemTicket = async (req: Request, res: Response) => {
         if (!updatedRedemption) return CResponse.error(res, { message: 'Sorry! Could not redeem your ticket' });
 
         const updatePurchase = await Purchases.findOneAndUpdate(
-            { userId, purchaseId },
+            { user: userId, _id: purchaseId },
             { $set: { redeemed: true, dateOfRedemption: date } }
         );
 

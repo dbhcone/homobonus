@@ -119,25 +119,68 @@
                 </div>
 
                 <div class="mb-6 mt-6">
-                    <button
-                        class="
-                            w-full
-                            bg-gray-800
-                            hover:bg-grey-900
-                            text-white text-sm
-                            py-2
-                            px-4
-                            font-semibold
-                            rounded
-                            focus:outline-none
-                            focus:shadow-outline
-                            h-10
-                        "
-                        (click)="redeem('')"
-                        type="button"
-                    >
-                        Redeem
-                    </button>
+                    <form [formGroup]="ticketRedemptionForm" (ngSubmit)="redeem()">
+                        <div class="mb-2 mt-2">
+                            <label class="block text-gray-700 text-sm font-semibold mb-2" htmlFor="redemptionCode">
+                                REDEMPTION CODE
+                            </label>
+                            <input
+                                class="
+                                    text-sm
+                                    appearance-none
+                                    rounded
+                                    w-full
+                                    py-2
+                                    px-3
+                                    text-gray-700
+                                    bg-gray-100
+                                    leading-tight
+                                    focus:outline-none
+                                    focus:shadow-outline
+                                    h-10
+                                "
+                                id="redemptionCode"
+                                type="text"
+                                formControlName="redemptionCode"
+                                placeholder="enter your CODE here"
+                                minlength="6"
+                                maxlength="6"
+                                pattern="[0-9]{6}"
+                                required
+                            />
+
+                            <mat-error
+                                *ngIf="redemptionCode?.invalid && (redemptionCode?.dirty || redemptionCode?.touched)"
+                            >
+                                <mat-error *ngIf="redemptionCode?.hasError('required')">
+                                    redemptionCode is required.
+                                </mat-error>
+                                <mat-error *ngIf="redemptionCode?.touched && redemptionCode?.hasError('minlength')">
+                                    redemption Code must be 6 characters long.
+                                </mat-error>
+                                <mat-error *ngIf="redemptionCode?.hasError('pattern')"> Numbers only </mat-error>
+                            </mat-error>
+                        </div>
+                        <button
+                            class="
+                                w-full
+                                bg-gray-800
+                                hover:bg-grey-900
+                                text-white text-sm
+                                py-2
+                                px-4
+                                font-semibold
+                                rounded
+                                focus:outline-none
+                                focus:shadow-outline
+                                h-10
+                            "
+                            type="submit"
+                            [disabled]="!ticketRedemptionForm.valid"
+                        >
+                            Redeem
+                        </button>
+                    </form>
                 </div>
             </div>
         </div>
