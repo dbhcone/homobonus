@@ -1,10 +1,11 @@
 import Joi, { ObjectSchema } from 'joi';
 
 const accountActivationValidation: ObjectSchema<{
-    token: string;
+    // token: string;
     pin: string;
+    mobileNumber: string;
 }> = Joi.object({
-    token: Joi.string().required(),
+    // token: Joi.string().required(),
     mobileNumber: Joi.string().required().length(10),
     pin: Joi.string().required().length(6)
 });

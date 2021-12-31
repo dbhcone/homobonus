@@ -288,7 +288,8 @@ const ActivateAccount = async (req: Request, res: Response) => {
     try {
         const validation = await accountActivationValidation.validateAsync(req.body);
 
-        const { token, pin, mobileNumber } = req.body;
+        // const { token, pin, mobileNumber } = req.body;
+        const { pin, mobileNumber } = req.body;
         // let decoded = decodeToken(token);
 
         // if (decoded.data) {
