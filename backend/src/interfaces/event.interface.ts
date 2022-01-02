@@ -22,6 +22,11 @@ export interface IPurchase extends Document {
     dateOfRedemption?: Date;
 }
 
+export interface IAttendance extends Document {
+    user: IUser['_id'];
+    event: IEvent['_id'];
+}
+
 export interface IPricing extends Document {
     event: IEvent['_id'];
     pricing: IPrice;

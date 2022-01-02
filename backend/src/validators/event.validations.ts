@@ -49,11 +49,17 @@ const addConfirmationValidation: ObjectSchema<{}> = Joi.object({
     mobileNumber: Joi.string().required().length(10).label('Mobile Number')
 });
 
+const attendanceValidation: ObjectSchema<{}> = Joi.object({
+    user: Joi.string().required(),
+    event: Joi.string().required()
+});
+
 export {
     createEventValidation,
     createPurchase,
     redeemTicketValidation,
     verifyTicketValidation,
     verifyScannedQrCodeValidation,
-    addConfirmationValidation
+    addConfirmationValidation,
+    attendanceValidation
 };

@@ -16,6 +16,8 @@ export class EventPortalComponent implements OnInit, OnDestroy {
     eventId: any;
     subscription: Subscription;
     ticketRedemptionForm: any;
+    userId: any;
+    purchaseId: any;
 
     formValueJson: string = '';
     submitting: boolean = false;
@@ -97,6 +99,8 @@ export class EventPortalComponent implements OnInit, OnDestroy {
         this.eventService.verifyTicket(scanResult).subscribe(
             async (resp: any) => {
                 console.log('verify', resp);
+                this.userId = resp.data.userId;
+                this.purchaseId = resp.data.purchaseId;
                 Swal.fire({ text: resp.message, icon: 'success', timer: 5000 });
             },
             err => {
@@ -112,8 +116,9 @@ export class EventPortalComponent implements OnInit, OnDestroy {
 
     redeem() {
         this.submitting = true;
-        const session = this.auth.session();
-        const data = { redemptionCode: this.redemptionCode?.value, eventId: this.eventId, userId: session.id };
+        console.log('user_id', this.userId);
+        console.log('purchase_id', this.purchaseId);
+        const data = { redemptionCode: this.redemptionCode?.value, purchaseId: this.purchaseId, userId: this.userId };
 
         this.eventService.redeemTicket(data)?.subscribe(
             async (resp: any) => {

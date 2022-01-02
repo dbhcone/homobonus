@@ -12,10 +12,13 @@ import { generatePin, ticketVerificationEmail } from '../helpers/functions/email
 import { sendDtechSms } from '../helpers/functions/sms.helpers';
 import { ticketVerificationMsg } from '../helpers/functions/messages.helpers';
 import { decryptedPlainText } from '../helpers/functions/crypto.helpers';
+import { addAttendance } from './attendance.controller';
 
 const redeemTicket = async (req: Request, res: Response) => {
     try {
         const data = req.body;
+        // TODO: take away hard coded eventId and find a better way
+        const eventId = '61ca54f7bb8c82000438117e';
         const validation = await redeemTicketValidation.validateAsync(data);
         const { userId, purchaseId, redemptionCode } = data;
 
@@ -33,10 +36,15 @@ const redeemTicket = async (req: Request, res: Response) => {
 
         if (!updatedRedemption) return CResponse.error(res, { message: 'Sorry! Could not redeem your ticket' });
 
+        // update purchases
         const updatePurchase = await Purchases.findOneAndUpdate(
             { user: userId, _id: purchaseId },
             { $set: { redeemed: true, dateOfRedemption: date } }
         );
+
+        // add to attendance
+        const addatt = await addAttendance(userId, eventId);
+        if (addatt.status != 'ok') return CResponse.error(res, { message: addatt.message });
 
         return CResponse.success(res, { message: 'Authorisation completed successfully! Please enter' });
     } catch (error: any) {
@@ -97,7 +105,10 @@ const verifyTicket = async (req: Request, res: Response) => {
                 // TODO: Send sms - Uncomment for production deployment
                 const sms = await sendDtechSms(ticketVerificationMsg(firstName, pin), primaryMobileNumber);
 
-                return CResponse.success(res, { message: 'Check your email or SMS for authorisation code' });
+                return CResponse.success(res, {
+                    message: 'Check your email or SMS for authorisation code',
+                    data: { userId, purchaseId }
+                });
             }
             return CResponse.error(res, { message: 'Could not fetch user details to send authorisation code' });
         }
