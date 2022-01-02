@@ -123,13 +123,17 @@ export class EventPortalComponent implements OnInit, OnDestroy {
         this.eventService.redeemTicket(data)?.subscribe(
             async (resp: any) => {
                 console.log('redemption ', resp);
-                Swal.fire({ text: resp.message, icon: 'success', timer: 5000 });
+                Swal.fire({ text: resp.message, icon: 'success', timer: 5000 }).then(() => {
+                    this.getEventStats();
+                });
             },
             (err: any) => {
                 this.submitting = false;
                 Swal.fire({
                     title: `${err.error.status} - ${err.error.code}`,
                     text: `${err.error.message}`
+                }).then(() => {
+                    this.getEventStats();
                 });
             }
         );
