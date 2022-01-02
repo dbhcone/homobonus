@@ -113,10 +113,17 @@ const verifyTicket = async (req: Request, res: Response) => {
             return CResponse.error(res, { message: 'Could not fetch user details to send authorisation code' });
         }
 
-        if (redemption && redemption.redeemed)
+        if (redemption && redemption.redeemed) {
             return CResponse.error(res, {
                 message: 'This ticket has already been redeemed. Kindly scan a different one'
             });
+        } else {
+            {
+                return CResponse.error(res, {
+                    message: 'Code sent already. Check spam or your SMS once again'
+                });
+            }
+        }
     } catch (error: any) {
         return CResponse.error(res, { message: error.message });
     }
