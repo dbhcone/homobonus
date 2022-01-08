@@ -153,7 +153,7 @@ const Login = async (req: Request, res: Response) => {
                 .json({ code: 403, message: 'Account has not been activated. Request one now!', status: 'error' });
         }
 
-        let token = generateToken({ username: user.username, role: user.role, id: user._id, email: user.email }, '2h');
+        let token = generateToken({ username: user.username, role: user.role, id: user._id, email: user.email }, '7d');
 
         return res.status(200).json({ message: 'Login successful!', token, code: 200, status: 'ok' });
     } catch (error: any) {
