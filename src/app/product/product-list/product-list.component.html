@@ -119,6 +119,7 @@
 </div>
  -->
 
+<!--  
 <div class="hb-products-area mb-24">
     <div class="container">
         <h2>Latest Events</h2>
@@ -132,18 +133,12 @@
                         style="width: 100%; margin: 0 0 20px"
                     />
                     <mat-card-content class="flex">
-                        <!-- <div class="flex-none w-10">
-                            <img src="{{ cena_noctis?.created_by?.avatar }}" alt="cena_noctis?.created_by?.name" />
-                        </div> -->
+                        
                         <div class="flex-grow pl-3">
-                            <!-- <h4 class="hb-product__creator">{{ cena_noctis?.created_by?.name }}</h4>
-                            <h4 class="hb-product__creator">{{ cena_noctis?.venue }}</h4>
-                            <h2 class="hb-product__name">
-                                <a [routerLink]="['/events', cena_noctis?._id]">{{ cena_noctis?.title }}</a>
-                            </h2> -->
+                           
                             <div class="flex justify-between mt-5">
                                 <div class="hb-product__price-label">Count down:</div>
-                                <!-- <div class="hb-product__price text-accent font-bold">{{ countDown }}</div> -->
+                            
                                 <div class="hb-product__price text-accent font-bold">2 days left</div>
                             </div>
                         </div>
@@ -160,28 +155,31 @@
             </div>
         </div>
     </div>
-</div>
+</div> 
+
+-->
 
 <div class="hb-products-area mb-24">
     <div class="container">
         <!-- <h2>Latest Events</h2> -->
-        <div class="grid grid-cols-12 gap-6 xxl:gap-8" *ngIf="events.length > 0">
+
+        <div class="grid grid-cols-12 gap-6 xxl:gap-8" *ngIf="events && events.length > 0">
             <div *ngFor="let event of events" class="col-span-12 md:col-span-6 xl:col-span-4">
                 <mat-card class="hb-product">
                     <img
                         mat-card-image
-                        [src]="event?.images[0]"
-                        alt="{{ event?.name }}"
+                        src="{{ displayFlyer(event?.flyer) }}"
+                        alt="{{ event?.title }}"
                         style="width: 100%; margin: 0 0 20px"
                     />
                     <mat-card-content class="flex">
                         <div class="flex-none w-10">
-                            <img src="{{ event?.created_by?.avatar }}" alt="event?.created_by?.name" />
+                            <!-- <img src="{{ event?.created_by?.avatar }}" alt="event?.created_by?.name" /> -->
                         </div>
                         <div class="flex-grow pl-3">
-                            <h4 class="hb-product__creator">{{ event?.created_by?.name }}</h4>
+                            <h4 class="hb-product__creator">{{ event?.venue }}</h4>
                             <h2 class="hb-product__name">
-                                <a [routerLink]="['/events', event?.id]">{{ event?.name }}</a>
+                                <a [routerLink]="['/events', event?._id]">{{ event?.title }}</a>
                             </h2>
                             <div class="flex justify-between mt-5">
                                 <div class="hb-product__price-label">Prices:</div>
@@ -193,10 +191,12 @@
                     </mat-card-content>
                     <mat-card-actions class="hb-product__action flex justify-between">
                         <div class="flex-1 text-center flex items-center justify-center">
-                            <mat-icon color="warn">star</mat-icon> {{ event?.rating }}/5
+                            <mat-icon color="warn">star</mat-icon>
+                            <mat-icon color="warn">star</mat-icon>
+                            <mat-icon color="warn">star</mat-icon>
                         </div>
                         <div class="flex-1 text-center">
-                            <a [routerLink]="['/events', event?.id]" mat-raised-button color="warn" class="px-4"
+                            <a [routerLink]="['/events', event?._id]" mat-raised-button color="warn" class="px-4"
                                 >See it more</a
                             >
                         </div>
@@ -204,7 +204,8 @@
                 </mat-card>
             </div>
         </div>
-        <!-- <div *ngIf="!isLoaded">
+
+        <div *ngIf="!isLoaded">
             <ngx-skeleton-loader
                 count="9"
                 appearance="circle"
@@ -214,10 +215,11 @@
                     width: 'calc(33% - 10px)'
                 }"
             ></ngx-skeleton-loader>
-        </div> -->
+        </div>
     </div>
 </div>
 
+<!-- 
 <div class="hb-products-area mb-24">
     <div class="container">
         <h2>Past Events</h2>
@@ -271,7 +273,7 @@
         </div>
     </div>
 </div>
-
+ -->
 <div class="hb-find-more mt-10 mb-36">
     <div class="container rounded-md">
         <h2 class="hb-find-more__heading">Didn't find what you were looking for? There is more we can do for you.</h2>

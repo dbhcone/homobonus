@@ -2,8 +2,10 @@
     <div class="container">
         <div class="grid grid-cols-12 gap-8">
             <div class="col-span-12 md:col-span-7 xl:col-span-8 border p-5">
-                <a href="javascript:void(0)" class="category text-primary inline-block mb-5">Personal</a>
-                <h1 class="_title font-medium">Potential analysis - digitization for manufacturing companies</h1>
+                <a href="javascript:void(0)" class="category text-primary inline-block mb-5">{{
+                    eventDetails?.event?.title
+                }}</a>
+                <h1 class="_title font-medium">{{ eventDetails?.event?.description }}</h1>
                 <ul class="product-meta flex flex-wrap items-center mt-8 mb-8">
                     <li class="mr-4">
                         <a class="flex items-center pr-4 py-1 hover:text-primary" href="javascript:void(0)"
@@ -22,14 +24,23 @@
                         >
                     </li>
                 </ul>
-                <img class="w-full" src="assets/images/products/details.jpg" alt="img not found" />
+                <img class="w-full" src="{{ displayFlyer(eventDetails?.event?.flyer) }}" alt="img not found" />
                 <div class="hb-content mt-8">
                     <h5>
                         We provide you with process mechanics for plastics and rubber technology (m / f / d) from Spain.
                         Our candidates speak English and would like to continue their respective careers in the plastics
                         country.
                     </h5>
-                    <h6>Problem</h6>
+                    <div *ngIf="eventDetails?.event?.extraDetails.length > 0">
+                        <div *ngFor="let detail of eventDetails?.event?.extraDetails">
+                            <h6>{{ detail?.label }}</h6>
+
+                            <p>
+                                {{ detail?.value }}
+                            </p>
+                        </div>
+                    </div>
+                    <!-- <h6>Problem</h6>
                     <p>
                         It is difficult to find talented & motivated process mechanics in Germany. Lateral entrants from
                         Germany can work, but the best are those talents who have learned the process from scratch and
@@ -50,7 +61,7 @@
                         during the pandemic. Basically, the European population under the age of 30, and especially
                         those with an affinity for technology and machines, speak good to very good English. You should
                         benefit.
-                    </p>
+                    </p> -->
                     <h6>What you get with this booking and for this price:</h6>
                     <ul>
                         <li>
@@ -87,8 +98,10 @@
             <div class="col-span-12 md:col-span-5 xl:col-span-4">
                 <div class="border">
                     <div class="border-b text-center pt-10 pb-10">
-                        <div class="text-accent text-4xl font-semibold">€3,000.00</div>
-                        <div class="font-medium text-lg mt-3 text-gray-400 tracking-wider">Price</div>
+                        <div class="text-accent text-4xl font-semibold">
+                            {{ displayPriceRange(eventDetails?.pricings) }}
+                        </div>
+                        <div class="font-medium text-lg mt-3 text-gray-400 tracking-wider">Available tickets</div>
                     </div>
                     <div class="border-b p-5">
                         <ul class="service-info">

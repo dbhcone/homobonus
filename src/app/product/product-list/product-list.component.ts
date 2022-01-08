@@ -13,7 +13,7 @@ export class ProductListComponent implements OnInit, OnDestroy {
     isLoaded: boolean = false;
     advanceSearchExpanded: boolean = false;
     products: any[] = [];
-    events: any[] = [];
+    events: any;
     countDown: string = '';
     timer: any;
 
@@ -36,13 +36,13 @@ export class ProductListComponent implements OnInit, OnDestroy {
     constructor(private eventService: EventService, private router: Router, private cart: ShoppingCartService) {}
 
     ngOnInit(): void {
-        // this.fetchAllEvents();
+        this.fetchAllEvents();
         // this.displayCountDown();
 
-        setTimeout(() => {
-            this.products = productsDB.Product;
-            this.isLoaded = true;
-        }, 3000);
+        // setTimeout(() => {
+        //     this.products = productsDB.Product;
+        //     this.isLoaded = true;
+        // }, 3000);
     }
 
     ngOnDestroy(): void {
@@ -50,9 +50,16 @@ export class ProductListComponent implements OnInit, OnDestroy {
     }
 
     fetchAllEvents() {
-        this.eventService.getAllEvents().subscribe(async (resp: any) => {
-            this.events = resp.data.events;
-        });
+        this.eventService.getAllEvents().subscribe(
+            async (resp: any) => {
+                this.events = resp.data.events;
+                console.log('events', this.events);
+                this.isLoaded = true;
+            },
+            (err: any) => {
+                console.log('we have an error', err);
+            }
+        );
     }
 
     displayPriceRange(pricings: []) {
@@ -91,5 +98,9 @@ export class ProductListComponent implements OnInit, OnDestroy {
             this.countDown =
                 duration.days() + 'd ' + duration.hours() + 'h ' + duration.minutes() + 'm ' + duration.seconds() + 's';
         }, interval);
+    }
+
+    displayFlyer(flyer: any) {
+        return `${flyer.fileBaseUrl}/${flyer.filename}`;
     }
 }
