@@ -27,7 +27,7 @@ export class AuthGuard implements CanActivate, CanActivateChild, CanDeactivate<u
     canActivate() {
         const session = this.auth.session();
         if (session.isTokenExpired) {
-            this.router.navigate(['/login']);
+            this.router.navigate(['/auth/login']);
             return false;
         }
         return true;

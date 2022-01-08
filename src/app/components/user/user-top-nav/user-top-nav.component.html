@@ -18,6 +18,10 @@
             <a class="btn" routerLink="/dashboard"><mat-icon matPrefix>person</mat-icon> My Account</a>
         </button>
 
+        <button mat-menu-item *ngIf="(userStore | async)?.user?.role == 'admin'">
+            <a class="btn" routerLink="/admin/dashboard"><mat-icon matPrefix>dashboard</mat-icon> Admin Dashboard</a>
+        </button>
+
         <mat-divider></mat-divider>
         <button mat-menu-item (click)="onLogout()">
             <a class="btn"><mat-icon matPrefix>logout</mat-icon> Logout</a>

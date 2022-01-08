@@ -10,7 +10,7 @@ export class AdminGuard implements CanActivate {
     canActivate() {
         const session = this.auth.session();
         if (session.role !== 'admin') {
-            this.router.navigate(['/login']);
+            this.router.navigate(['/auth/login']);
             return false;
         }
         return true;

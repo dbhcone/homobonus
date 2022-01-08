@@ -49,7 +49,7 @@ const routes: Routes = [
     {
         path: 'admin',
         component: AdminNavigationComponent,
-        // canActivate: [AuthGuard, AdminGuard],
+        canActivate: [AuthGuard, AdminGuard],
 
         children: [
             { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
