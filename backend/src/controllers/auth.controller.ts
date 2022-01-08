@@ -6,6 +6,7 @@ import md5 from 'md5';
 
 import Account from '../models/account.model';
 import Users from '../models/user.model';
+import PasswordResets from '../models/passwordreset.model';
 import Activations from '../models/user.activations.model';
 
 // import validations
@@ -14,12 +15,15 @@ import {
     loginValidation,
     accountValidation,
     accountUpdateValidation,
-    accountActivationValidation
+    accountActivationValidation,
+    requestPasswordResetValidation,
+    passwordResetValidation
 } from '../validators/auth.validations';
-import { accountActivationEmail, generatePin } from '../helpers/functions/email.helper';
+import { accountActivationEmail, generatePin, passwordResetRequestEmail } from '../helpers/functions/email.helper';
 
 import { intlTelNumberGh, sendDtechSms } from '../helpers/functions/sms.helpers';
 import { accountCreationMsg } from '../helpers/functions/messages.helpers';
+import { CResponse } from '../helpers/classes/response.class';
 
 const Signup = async (req: Request, res: Response) => {
     let user: IUser, account: IAccount;
@@ -158,8 +162,11 @@ const Login = async (req: Request, res: Response) => {
     }
 };
 
-const UsersList = async (req: Request, res: Response) => {
+const UsersList = async (req: any, res: Response) => {
     try {
+        if (req.userData == null) return CResponse.error(res, { message: 'Access denied' });
+        if (req.userData && req.userData.role !== 'admin')
+            return CResponse.error(res, { message: 'You do not have authorization!' });
         let data = await Users.find({});
         return res.status(200).json({ message: '', status: 'ok', code: 200, data });
     } catch (error: any) {
@@ -172,8 +179,11 @@ const UsersList = async (req: Request, res: Response) => {
     }
 };
 
-const AccountList = async (req: Request, res: Response) => {
+const AccountList = async (req: any, res: Response) => {
     try {
+        if (req.userData == null) return CResponse.error(res, { message: 'Access denied' });
+        if (req.userData && req.userData.role !== 'admin')
+            return CResponse.error(res, { message: 'You do not have authorization!' });
         let data = await Users.find({}).populate('accountOwner');
         return res.status(200).json({
             code: 200,
@@ -187,18 +197,21 @@ const AccountList = async (req: Request, res: Response) => {
     }
 };
 
-const DeleteUser = async (req: Request, res: Response) => {
+const DeleteUser = async (req: any, res: Response) => {
     // this is not going to set a status flag, it is actually going to perform a delete
-    const { _id } = req.body;
-    if (!_id) {
-        return res.status(404).json({ message: 'User id is required', status: 'error', code: 404 });
-    }
-    /**
-     * Use the _id received to delete from accounts
-     * Use that _id to pick the document with owner from users
-     * then delete
-     */
     try {
+        if (req.userData == null) return CResponse.error(res, { message: 'Access denied' });
+        if (req.userData && req.userData.role !== 'admin')
+            return CResponse.error(res, { message: 'You do not have authorization!' });
+        const { _id } = req.body;
+        if (!_id) {
+            return res.status(404).json({ message: 'User id is required', status: 'error', code: 404 });
+        }
+        /**
+         * Use the _id received to delete from accounts
+         * Use that _id to pick the document with owner from users
+         * then delete
+         */
         const account = await Account.findByIdAndDelete(_id);
         if (account) {
             // we were able to remove that account (member details)
@@ -344,4 +357,83 @@ const ActivateAccount = async (req: Request, res: Response) => {
     }
 };
 
-export { Signup, Login, UsersList, AccountList, DeleteUser, UpdateMember, MembersStats, ActivateAccount };
+const RequestPasswordReset = async (req: Request, res: Response) => {
+    try {
+        const data = req.body;
+        const validation = await requestPasswordResetValidation.validateAsync(data);
+
+        const user = await Users.findOne({ email: data.email, status: 'active' }).populate({ path: 'accountOwner' });
+
+        if (!user)
+            return CResponse.error(res, {
+                message: 'There is no user associated with this email. Please, check and try again.'
+            });
+
+        const temp_pin = generatePin(6);
+        const temp_token = generateToken({ action: 'Password reset', email: data.email }, '1d');
+
+        const reset = await new PasswordResets({ pin: temp_pin, token: temp_token, email: data.email }).save();
+        const sendmail = await passwordResetRequestEmail(user.accountOwner.firstName, temp_token, data.email, temp_pin);
+
+        return CResponse.success(res, {
+            message: 'Password reset request sent. Check your email and follow the link'
+        });
+    } catch (error: any) {
+        return res.status(404).json({ message: error.message, status: 'error', code: 404 });
+    }
+};
+
+const ResetPassword = async (req: Request, res: Response) => {
+    try {
+        // may not necessarily be relevant
+        if (!req.body) return CResponse.error(res, { message: 'Body is required' });
+        const validation = await passwordResetValidation.validateAsync(req.body);
+
+        const data = req.body;
+
+        // check for the details in password reset
+        const { pin, token, newPassword, confirmPassword } = data;
+
+        // decode token
+        const decodedToken = decodeToken(token);
+
+        if (decodedToken.data == null) return CResponse.error(res, { message: 'Invalid token passed' });
+
+        const { email } = decodedToken.data;
+
+        if (newPassword !== confirmPassword)
+            return CResponse.error(res, { message: 'Passwords do not match. Please, check and try again' });
+        const checkReset = await PasswordResets.findOne({ pin, token, email });
+
+        if (!checkReset)
+            return CResponse.error(res, {
+                message: 'No password request available. Check your pin and try again or request one now!'
+            });
+
+        const hashedPassword = md5(newPassword);
+        const user = await Users.findOneAndUpdate({ email }, { $set: { password: hashedPassword } });
+
+        if (!user) return CResponse.error(res, { message: 'Could not reset password' });
+
+        return res.status(200).json({
+            message: 'Password reset was successful',
+            status: 'ok',
+            code: 200
+        });
+    } catch (error: any) {
+        return res.status(404).json({ message: error.message, status: 'error', code: 404 });
+    }
+};
+
+export {
+    Signup,
+    Login,
+    UsersList,
+    AccountList,
+    DeleteUser,
+    UpdateMember,
+    MembersStats,
+    ActivateAccount,
+    RequestPasswordReset,
+    ResetPassword
+};

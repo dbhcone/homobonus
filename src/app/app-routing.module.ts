@@ -43,8 +43,8 @@ const routes: Routes = [
         component: CheckoutComponent,
         pathMatch: 'full'
     },
-    { path: 'forgot-password', component: ForgotPasswordComponent, pathMatch: 'full' },
-    { path: 'reset-password', component: ResetPasswordComponent, pathMatch: 'full' },
+    { path: 'forgot-password', component: ForgotPasswordComponent },
+    { path: 'reset-password', component: ResetPasswordComponent },
     { path: 'user/qr-codes', component: QrCodesComponent },
     {
         path: 'admin',

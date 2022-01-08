@@ -20,6 +20,6 @@ export class UserService {
     }
 
     getUserDetails() {
-        return this.client.POST(User.getDetails);
+        return this.client.GET(User.getDetails);
     }
 }

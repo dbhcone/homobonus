@@ -3,7 +3,9 @@ const Auth = {
     signup: '/auth/signup',
     activate: '/auth/activate-account',
     merchantSignup: '/auth/merchantsignup',
-    allUsers: '/auth/users'
+    allUsers: '/auth/users',
+    requestPasswordReset: '/auth/forgot-password',
+    resetPassword: '/auth/reset-password'
 };
 
 const User = {

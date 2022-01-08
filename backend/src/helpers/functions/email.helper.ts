@@ -1,8 +1,6 @@
-//import Mailer
 import nodemailer from 'nodemailer';
 import config from 'config';
 import SMTPTransport from 'nodemailer/lib/smtp-transport';
-import { NextFunction, Request, Response } from 'express';
 import table from './ticket.helper';
 import { ITicket } from '../../interfaces/event.interface';
 
@@ -51,22 +49,27 @@ const accountActivationEmail = async (firstname: string, temp_token: string, ema
 };
 
 //Password Reset Request Notification
-const passwordResetRequestEmail = async (firstname: string, temp_token: string, email: string, temp_pin: number) => {
+const passwordResetRequestEmail = async (
+    firstname: string,
+    temp_token: string,
+    email: string,
+    temp_pin: number | string
+) => {
     const mailOptions = {
         from: `HB Events<${mailer}>`,
         to: `${email}`,
-        subject: 'Password Reset',
+        subject: 'Password Reset Request',
         html: `<body> 
                  <header> <h1>HB EVENTS</h1> </header> 
-                 <br> 
+                  
                  <section> 
-                      <p>Hello <b>"${firstname}"</b>. We received a password reset request from you. Kindly click on the button below to reset your password</p> 
-                      <p>Ignore this message if you did not make any request.</p>
+                      <p>Hello <b>${firstname}</b>. We received a password reset request from you. Kindly click on the link below to reset your password</p> 
+                      <p><i>Ignore this message if you did not make any request.</i></p>
                       <br> 
-                      <h2><p>PIN: <b style="color:Green;">${temp_pin}</b></p></h2> 
-                      <br> 
-                      <a href="${callbackurl}/resetpassword?token=${temp_token}" target="_blank"> RESET PASSWORD</a>
-                      <br> 
+                      <a href="${callbackurl}/reset-password?token=${temp_token}" target="_blank"> RESET PASSWORD</a>
+                      
+                      <p>You will be required to enter this pin during the password reset</p>
+                      <p>PIN: <b>${temp_pin}</b></p> 
                  </section> 
               </body>`
     };
@@ -84,19 +87,6 @@ const passwordResetRequestEmail = async (firstname: string, temp_token: string, 
 const generatePin = (digit: number) => {
     return Math.random().toFixed(digit).split('.')[1];
 };
-
-//Function to verify token
-function verifyToken(req: Request, res: Response, next: NextFunction) {
-    const bearerHeader = req.headers['authorization'];
-    if (typeof bearerHeader !== 'undefined') {
-        const bearerToken = bearerHeader.split(' ')[1];
-
-        // req.token = bearerToken.split('"')[0];
-        next();
-    } else {
-        res.sendStatus(403);
-    }
-}
 
 const sendTicketEmail = async (email: string, firstname: string, items: ITicket[], purchaseId: string) => {
     const preamble = `<header>

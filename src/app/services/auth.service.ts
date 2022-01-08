@@ -86,4 +86,12 @@ export class AuthService implements OnInit {
     getAllUsers() {
         return this.client?.GET(Auth.allUsers);
     }
+
+    requestPasswordReset(data: any) {
+        return this.client?.POST(Auth.requestPasswordReset, data);
+    }
+
+    resetPassword(data: any) {
+        return this.client?.POST(Auth.resetPassword, data);
+    }
 }

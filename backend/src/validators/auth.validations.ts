@@ -67,4 +67,31 @@ const accountUpdateValidation = Joi.object({
         occupation: Joi.string().min(5).allow(null)
     }).required()
 });
-export { loginValidation, userValidation, accountValidation, accountUpdateValidation, accountActivationValidation };
+
+const requestPasswordResetValidation: ObjectSchema<{
+    email: string;
+}> = Joi.object({
+    email: Joi.string().email().required()
+});
+
+const passwordResetValidation: ObjectSchema<{
+    token: string;
+    pin: string | number;
+    newPassword: string;
+    confirmPassword: string;
+}> = Joi.object({
+    token: Joi.string().required(),
+    pin: Joi.string().length(6),
+    newPassword: Joi.string().required().min(8),
+    confirmPassword: Joi.string().required().min(8)
+});
+
+export {
+    loginValidation,
+    userValidation,
+    accountValidation,
+    accountUpdateValidation,
+    accountActivationValidation,
+    requestPasswordResetValidation,
+    passwordResetValidation
+};

@@ -5,7 +5,7 @@ import { verifyToken } from '../helpers/functions/auth.helpers';
 import { photograph } from '../validators/shared.validations';
 const router = express.Router();
 
-router.post('/get-details', verifyToken, GetUserDetails);
+router.get('/get-details', verifyToken, GetUserDetails);
 router.post('/upload-photo', photograph.single('photo'), UploadProfilePhoto);
 router.get('/purchases/:userId', GetUserPurchases);
 router.post('/ticket/verify', verifyTicket);
