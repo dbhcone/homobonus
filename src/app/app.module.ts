@@ -8,11 +8,10 @@ import { SharedModule } from './shared/shared.module';
 import { NgxSkeletonLoaderModule } from 'ngx-skeleton-loader';
 import { StoreModule } from '@ngrx/store';
 import { ZXingScannerModule } from '@zxing/ngx-scanner';
-import { QRCodeModule } from 'angular2-qrcode';
 import { ShoppingCartModule } from 'ng-shopping-cart';
 import { NgxSimpleCountdownModule } from 'ngx-simple-countdown';
 import { cartReducer } from './store/reducers/cart.reducers';
-import { userReducer } from './store/reducers/user.reducers';
+import { userProfileReducer, userReducer } from './store/reducers/user.reducers';
 import { TicketItem } from './cart/ticket-item';
 
 @NgModule({
@@ -31,7 +30,7 @@ import { TicketItem } from './cart/ticket-item';
                 clearOnError: true
             }
         }),
-        StoreModule.forRoot({ cart: cartReducer, userObj: userReducer }),
+        StoreModule.forRoot({ cart: cartReducer, userObj: userReducer, userProfile: userProfileReducer }),
         ZXingScannerModule,
         NgxSimpleCountdownModule
     ],

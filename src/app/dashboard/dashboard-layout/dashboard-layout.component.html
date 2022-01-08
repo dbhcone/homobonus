@@ -4,7 +4,10 @@
             <div class="rounded-md border overflow-hidden w-72">
                 <div class="user text-center bg-primary py-10 px-5">
                     <img class="ml-auto mr-auto" src="assets/images/avatar.png" alt="abraham lincoln" />
-                    <h4 class="text-base text-white mt-3">Andrew Davis</h4>
+                    <h4 class="text-base text-white mt-3">
+                        {{ (userProfile | async)?.accountOwner?.surname }}
+                        {{ (userProfile | async)?.accountOwner?.firstName }}
+                    </h4>
                 </div>
                 <mat-nav-list class="_sidenav">
                     <a
@@ -58,28 +61,7 @@
                             <mat-icon>menu</mat-icon>
                         </button>
                         <div class="items-center flex ml-auto">
-                            <button mat-icon-button>
-                                <mat-icon>notifications</mat-icon>
-                            </button>
-                            <button mat-icon-button [matMenuTriggerFor]="beforeMenu">
-                                <mat-icon>account_circle</mat-icon>
-                            </button>
-                            <!--  -->
-                            <mat-menu #beforeMenu="matMenu" xPosition="before">
-                                <button mat-menu-item>
-                                    <a class="btn" role="button"><mat-icon matPrefix>person</mat-icon> View Profile</a>
-                                </button>
-                                <button mat-menu-item>
-                                    <a class="btn" role="button" routerLink="/dashboard"
-                                        ><mat-icon matPrefix>dashboard</mat-icon> My Dashboard</a
-                                    >
-                                </button>
-                                <mat-divider></mat-divider>
-                                <button mat-menu-item (click)="onLogout()">
-                                    <a class="btn"><mat-icon matPrefix>logout</mat-icon> Logout</a>
-                                </button>
-                            </mat-menu>
-                            <!--  -->
+                            <hb-user-top-nav></hb-user-top-nav>
                         </div>
                     </div>
                 </div>
@@ -97,7 +79,10 @@
                                             src="assets/images/avatar.png"
                                             alt="abraham lincoln"
                                         />
-                                        <h4 class="text-white mt-3">Andrew Davis</h4>
+                                        <h4 class="text-white mt-3">
+                                            {{ (userProfile | async)?.accountOwner?.surname }}
+                                            {{ (userProfile | async)?.accountOwner?.firstName }}
+                                        </h4>
                                     </div>
                                     <mat-nav-list class="_sidenav">
                                         <a

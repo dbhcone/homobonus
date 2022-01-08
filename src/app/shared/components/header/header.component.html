@@ -24,16 +24,7 @@
                 <mat-icon>menu</mat-icon>
             </button>
             <div class="hidden items-center md:flex ml-auto">
-                <a [routerLink]="['/auth/login']" mat-raised-button color="warn" class="text-lg font-bold py-2 px-5"
-                    >Login</a
-                >
-                <a
-                    [routerLink]="['/auth/signup']"
-                    mat-raised-button
-                    color="accent"
-                    class="text-lg font-bold py-2 px-5 ml-2"
-                    >Signup</a
-                >
+                <hb-user-top-nav></hb-user-top-nav>
             </div>
         </div>
     </div>

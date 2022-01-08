@@ -43,6 +43,7 @@ import { MatBadgeModule } from '@angular/material/badge';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
+import { UserTopNavComponent } from '../components/user/user-top-nav/user-top-nav.component';
 
 const commonModules = [
     HttpClientModule,
@@ -101,7 +102,8 @@ const commonModules = [
         FeatureComponent,
         BaseLayoutComponent,
         LoaderComponent,
-        SidenavComponent
+        SidenavComponent,
+        UserTopNavComponent
     ],
     imports: [CommonModule, RouterModule, ...commonModules],
     exports: [
@@ -111,6 +113,7 @@ const commonModules = [
         FeatureComponent,
         LoaderComponent,
         SidenavComponent,
+        UserTopNavComponent,
         ...commonModules
     ]
 })

@@ -6,6 +6,10 @@ const Auth = {
     allUsers: '/auth/users'
 };
 
+const User = {
+    getDetails: '/user/get-details'
+};
+
 const General = {
     contactus: '/contactus'
 };
@@ -46,4 +50,4 @@ const Statistics = {
     generalOverview: '/admin/stats/generaloverview',
     eventPortal: '/admin/stats/eventportal'
 };
-export { Auth, General, Events, Statistics, Purchases, Payments, Confirmations };
+export { Auth, General, Events, Statistics, Purchases, Payments, Confirmations, User };

@@ -1,6 +1,6 @@
 import { HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Purchases } from '../api/endpoints';
+import { Purchases, User } from '../api/endpoints';
 import { Client } from '../utils/client';
 
 @Injectable({
@@ -17,5 +17,9 @@ export class UserService {
 
     getAllPurchases(userId: string) {
         return this.client.GET(`${Purchases.userPurchases}/${userId}`);
+    }
+
+    getUserDetails() {
+        return this.client.POST(User.getDetails);
     }
 }

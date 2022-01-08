@@ -1,0 +1,27 @@
+<div *ngIf="!isLoggedIn; else elseBlock">
+    <a [routerLink]="['/auth/login']" mat-raised-button color="warn" class="text-lg font-bold py-2 px-5">Login</a>
+    <a [routerLink]="['/auth/signup']" mat-raised-button color="accent" class="text-lg font-bold py-2 px-5 ml-2"
+        >Signup</a
+    >
+</div>
+
+<ng-template #elseBlock>
+    <button mat-icon-button>
+        <mat-icon>shopping_cart</mat-icon>
+    </button>
+    <button mat-icon-button [matMenuTriggerFor]="beforeMenu">
+        <mat-icon>account_circle</mat-icon>
+    </button>
+    <!--  -->
+    <mat-menu #beforeMenu="matMenu" xPosition="before">
+        <button mat-menu-item>
+            <a class="btn" routerLink="/dashboard"><mat-icon matPrefix>person</mat-icon> My Account</a>
+        </button>
+
+        <mat-divider></mat-divider>
+        <button mat-menu-item (click)="onLogout()">
+            <a class="btn"><mat-icon matPrefix>logout</mat-icon> Logout</a>
+        </button>
+    </mat-menu>
+    <!--  -->
+</ng-template>

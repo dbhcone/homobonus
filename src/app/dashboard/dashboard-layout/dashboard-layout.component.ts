@@ -1,6 +1,9 @@
 import { BreakpointObserver } from '@angular/cdk/layout';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { Store } from '@ngrx/store';
+import { Observable } from 'rxjs';
+import { AppState } from 'src/app/store/app.state';
 
 @Component({
     selector: 'hb-dashboard-layout',
@@ -9,8 +12,16 @@ import { Router } from '@angular/router';
 })
 export class DashboardLayoutComponent implements OnInit {
     isLessThanLargeDevice: boolean = false;
-
-    constructor(private breakpointObserver: BreakpointObserver, private router: Router) {}
+    userProfile: Observable<{
+        accountOwner: any;
+    }>;
+    constructor(
+        private breakpointObserver: BreakpointObserver,
+        private router: Router,
+        private store: Store<AppState>
+    ) {
+        this.userProfile = this.store.select('userProfile');
+    }
 
     ngOnInit(): void {
         this.breakpointObserver.observe(['(max-width: 1199px)']).subscribe(({ matches }) => {
