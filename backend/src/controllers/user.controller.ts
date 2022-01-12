@@ -4,10 +4,6 @@ import Users from '../models/user.model';
 import { mongoidValidation } from '../validators/shared.validations';
 import Purchase from '../models/purchase.model';
 import { CResponse } from '../helpers/classes/response.class';
-// import config from 'config';
-// import fs from 'fs';
-
-// import { Dropbox, files } from 'dropbox';
 
 const GetUserDetails = async (req: any, res: Response) => {
     try {
@@ -94,6 +90,63 @@ const UploadProfilePhoto = async (req: any, res: Response, next: NextFunction) =
     }
 };
 
+const UpdateProfile = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        const userId = req.params['userId'];
+        let photo = Object();
+
+        if (req.file) {
+            console.log('we have a file');
+            const { buffer, ...fileOtherDetails } = req.file;
+            photo = fileOtherDetails;
+        }
+
+        const user = await Users.findById(userId);
+
+        if (!user) {
+            return CResponse.error(res, {
+                message: 'User does not exist'
+            });
+        }
+
+        // find the account
+        const account = await Account.findByIdAndUpdate(user.accountOwner, { $set: { ...req.body } });
+
+        if (!account) {
+            return res.status(404).json({
+                message: 'Account does not exist. Update failed!',
+                status: 'error',
+                code: 404
+            });
+        }
+
+        // if there was a profile photo then set it.
+        if (req.file) {
+            console.log('in the other req.file check', photo);
+            const updateProfile = await Users.findByIdAndUpdate(user._id, { $set: { profilePhoto: { ...photo } } });
+
+            if (!updateProfile) {
+                return res.status(404).json({
+                    message: 'Could not find user to update',
+                    status: 'error',
+                    code: 404
+                });
+            }
+        }
+
+        return res.status(200).json({
+            data: user.populate('accountOwner'),
+            status: 'ok',
+            code: 200,
+            message: 'Profile updated successfully'
+        });
+
+        // }
+    } catch (error: any) {
+        return res.status(404).json({ status: 'error', message: error.message, code: 404 });
+    }
+};
+
 const GetUserPurchases = async (req: Request, res: Response) => {
     try {
         const userId = req.params['userId'];
@@ -107,4 +160,4 @@ const GetUserPurchases = async (req: Request, res: Response) => {
     }
 };
 
-export { GetUserDetails, UploadProfilePhoto, GetUserPurchases };
+export { GetUserDetails, UploadProfilePhoto, GetUserPurchases, UpdateProfile };

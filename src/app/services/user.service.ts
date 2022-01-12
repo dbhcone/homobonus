@@ -22,4 +22,9 @@ export class UserService {
     getUserDetails() {
         return this.client.GET(User.getDetails);
     }
+
+    updateUserProfile(id: string, data: FormData) {
+        const headers = { Authorization: `Bearer ${localStorage.getItem('access-token')}` };
+        return this.client.PATCH(User.updateProfile, id, data, headers);
+    }
 }

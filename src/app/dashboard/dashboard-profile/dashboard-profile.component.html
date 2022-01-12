@@ -26,10 +26,10 @@
     <div class="border bg-white mt-8 rounded-md">
         <div class="flex p-4 bg-gray-200">
             <h6 class="text-normal">Primary Information</h6>
-            <button class="text-blue-400 hover:text-accent ml-auto flex items-center">
+            <!-- <button class="text-blue-400 hover:text-accent ml-auto flex items-center">
                 <mat-icon class="_edit_icon mr-2">edit</mat-icon>
                 Edit
-            </button>
+            </button> -->
         </div>
         <div class="flex flex-wrap p-4">
             <div class="w-full sm:w-1/2">
@@ -67,7 +67,7 @@
     <div class="border bg-white mt-8 rounded-md">
         <div class="flex p-4 bg-gray-200">
             <h6 class="text-normal">Personal Information</h6>
-            <button class="text-blue-400 hover:text-accent ml-auto flex items-center">
+            <button class="text-blue-400 hover:text-accent ml-auto flex items-center" (click)="openProfileDialog()">
                 <mat-icon class="_edit_icon mr-2">edit</mat-icon>
                 Edit
             </button>

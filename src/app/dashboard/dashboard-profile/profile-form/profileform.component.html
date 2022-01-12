@@ -1,0 +1,239 @@
+<h1 class="text-2xl font-bold text-blue-900 uppercase text-center">
+    UPDATE PROFILE DETAILS <span mat-dialog-close>&times;</span>
+</h1>
+<hr />
+<form [formGroup]="createProfileForm" (ngSubmit)="onSubmit()">
+    <mat-dialog-content>
+        <!-- Profile Photo -->
+        <div class="mb-1 mt-1">
+            <input type="file" style="display: none" (change)="onFileSelected($event)" #fileInput />
+            <img *ngIf="photoSrc" [src]="photoSrc" style="height: 200px; width: 200px" />
+            <button mat-raised-button type="button" (click)="fileInput.click()">
+                <mat-icon color="primary">add_a_photo</mat-icon> Upload a photo
+            </button>
+        </div>
+        <!-- Surname -->
+        <div class="mb-1 mt-1">
+            <label class="block text-gray-700 text-sm font-semibold mb-2" for="surname"> Surname </label>
+            <input
+                class="
+                    text-sm
+                    appearance-none
+                    rounded
+                    w-full
+                    py-2
+                    px-3
+                    text-gray-700
+                    bg-gray-100
+                    leading-tight
+                    focus:outline-none
+                    focus:shadow-outline
+                    h-10
+                "
+                id="surname"
+                type="text"
+                placeholder="Surname"
+                formControlName="surname"
+            />
+            <mat-error *ngIf="surname?.touched && surname?.hasError('required')">
+                Please, provide the surname!
+            </mat-error>
+        </div>
+
+        <!-- First Name -->
+        <div class="mb-1 mt-1">
+            <label class="block text-gray-700 text-sm font-semibold mb-2" for="firstName"> First Name </label>
+            <input
+                class="
+                    text-sm
+                    appearance-none
+                    rounded
+                    w-full
+                    py-2
+                    px-3
+                    text-gray-700
+                    bg-gray-100
+                    leading-tight
+                    focus:outline-none
+                    focus:shadow-outline
+                    h-10
+                "
+                id="firstName"
+                type="text"
+                placeholder="First Name"
+                formControlName="firstName"
+            />
+            <mat-error *ngIf="firstName?.touched && firstName?.hasError('required')">
+                Please, provide the first name!
+            </mat-error>
+        </div>
+        <!-- Other Name(s) -->
+        <div class="mb-1 mt-1">
+            <label class="block text-gray-700 text-sm font-semibold mb-2" for="otherNames"> Other Name(s) </label>
+            <input
+                class="
+                    text-sm
+                    appearance-none
+                    rounded
+                    w-full
+                    py-2
+                    px-3
+                    text-gray-700
+                    bg-gray-100
+                    leading-tight
+                    focus:outline-none
+                    focus:shadow-outline
+                    h-10
+                "
+                id="otherNames"
+                type="text"
+                placeholder="Other Name(s)"
+                formControlName="otherNames"
+            />
+        </div>
+        <!-- Gender -->
+        <div class="mb-1 mt-1">
+            <mat-radio-group formControlName="gender" aria-label="Select an option for gender">
+                <mat-label class="block text-gray-700 text-sm font-semibold mb-2">Gender</mat-label>
+                <mat-radio-button class="text-sm appearance-none h-7 text-gray-700" id="male" value="M"
+                    >Male</mat-radio-button
+                >
+                <mat-radio-button class="text-sm appearance-none h-7 text-gray-700" id="female" value="F"
+                    >Female</mat-radio-button
+                >
+            </mat-radio-group>
+            <mat-error *ngIf="!gender?.valid && (gender?.dirty || gender?.touched)">
+                <div [hidden]="!gender?.errors?.required">gender is required</div>
+            </mat-error>
+        </div>
+
+        <!-- Mobile Number -->
+        <div class="mb-1 mt-1">
+            <label class="block text-gray-700 text-sm font-semibold mb-2" for="mobileNumber"> Mobile Number </label>
+            <input
+                class="
+                    text-sm
+                    appearance-none
+                    rounded
+                    w-full
+                    py-2
+                    px-3
+                    text-gray-700
+                    bg-gray-100
+                    leading-tight
+                    focus:outline-none
+                    focus:shadow-outline
+                    h-10
+                "
+                id="mobileNumber"
+                type="text"
+                placeholder="Eg: 024xxxxxxx"
+                formControlName="primaryMobileNumber"
+            />
+            <!-- <mat-hint> Example: 024xxxxxxx </mat-hint> -->
+            <mat-error *ngIf="primaryMobileNumber?.touched && primaryMobileNumber?.hasError('required')">
+                Please, provide your mobile number
+            </mat-error>
+            <mat-error *ngIf="primaryMobileNumber?.touched && primaryMobileNumber?.hasError('pattern')">
+                Kindly check the format of the mobile number
+            </mat-error>
+        </div>
+
+        <!-- Occupation -->
+        <div class="mb-1 mt-1">
+            <label class="block text-gray-700 text-sm font-semibold mb-2" for="occupation"> Occupation </label>
+            <input
+                class="
+                    text-sm
+                    appearance-none
+                    rounded
+                    w-full
+                    py-2
+                    px-3
+                    text-gray-700
+                    bg-gray-100
+                    leading-tight
+                    focus:outline-none
+                    focus:shadow-outline
+                    h-10
+                "
+                id="occupation"
+                type="text"
+                placeholder="Occupation"
+                formControlName="occupation"
+            />
+        </div>
+
+        <!-- Company -->
+        <div class="mb-1 mt-1">
+            <label class="block text-gray-700 text-sm font-semibold mb-2" for="company"> Company </label>
+            <input
+                class="
+                    text-sm
+                    appearance-none
+                    rounded
+                    w-full
+                    py-2
+                    px-3
+                    text-gray-700
+                    bg-gray-100
+                    leading-tight
+                    focus:outline-none
+                    focus:shadow-outline
+                    h-10
+                "
+                id="company"
+                type="text"
+                placeholder="company name"
+                formControlName="company"
+            />
+        </div>
+
+        <!-- Date of Birth -->
+        <div class="mb-1 mt-1">
+            <label class="block text-gray-700 text-sm font-semibold mb-2" for="dateOfBirth"> Date of Birth </label>
+            <input
+                class="
+                    text-sm
+                    appearance-none
+                    rounded
+                    w-full
+                    py-2
+                    px-3
+                    text-gray-700
+                    bg-gray-100
+                    leading-tight
+                    focus:outline-none
+                    focus:shadow-outline
+                    h-10
+                "
+                id="dateOfBirth"
+                type="date"
+                placeholder="date of birth"
+                formControlName="dateOfBirth"
+            />
+        </div>
+    </mat-dialog-content>
+    <div class="flex w-full mt-6">
+        <button
+            class="
+                w-full
+                bg-gray-800
+                hover:bg-grey-900
+                text-white text-sm
+                py-2
+                px-4
+                font-semibold
+                rounded
+                focus:outline-none
+                focus:shadow-outline
+                h-10
+            "
+            type="submit"
+            [disabled]="!createProfileForm.valid || submitting"
+            [mat-dialog-close]="userInfo"
+        >
+            {{ (submitting ? 'Please wait ...' : 'Save Changes') | uppercase }}
+        </button>
+    </div>
+</form>

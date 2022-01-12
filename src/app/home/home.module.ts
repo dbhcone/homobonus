@@ -23,6 +23,7 @@ import { ForgotPasswordComponent } from '../components/forgot-password/forgot-pa
 import { QrCodesComponent } from '../components/user/qr-codes/qr-codes.component';
 import { ConfirmationsComponent } from '../components/admin/confirmations/confirmations.component';
 import { ConfirmationformComponent } from '../components/admin/confirmations/confirmationform.component';
+import { ProfileformComponent } from '../dashboard/dashboard-profile/profile-form/profileform.component';
 
 @NgModule({
     declarations: [
@@ -42,7 +43,8 @@ import { ConfirmationformComponent } from '../components/admin/confirmations/con
         ForgotPasswordComponent,
         QrCodesComponent,
         ConfirmationsComponent,
-        ConfirmationformComponent
+        ConfirmationformComponent,
+        ProfileformComponent
     ],
     imports: [CommonModule, HomeRoutingModule, SharedModule, NgParticlesModule, ZXingScannerModule, QRCodeModule]
 })

@@ -9,7 +9,8 @@ const Auth = {
 };
 
 const User = {
-    getDetails: '/user/get-details'
+    getDetails: '/user/get-details',
+    updateProfile: '/user/update-profile'
 };
 
 const General = {
