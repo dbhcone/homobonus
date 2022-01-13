@@ -4,6 +4,7 @@ import Users from '../models/user.model';
 import { mongoidValidation } from '../validators/shared.validations';
 import Purchase from '../models/purchase.model';
 import { CResponse } from '../helpers/classes/response.class';
+import config from 'config';
 
 const GetUserDetails = async (req: any, res: Response) => {
     try {
@@ -101,7 +102,7 @@ const UpdateProfile = async (req: Request, res: Response, next: NextFunction) =>
             photo = fileOtherDetails;
         }
 
-        const user = await Users.findById(userId);
+        const user = await Users.findById(userId).populate('accountOwner');
 
         if (!user) {
             return CResponse.error(res, {
@@ -110,7 +111,7 @@ const UpdateProfile = async (req: Request, res: Response, next: NextFunction) =>
         }
 
         // find the account
-        const account = await Account.findByIdAndUpdate(user.accountOwner, { $set: { ...req.body } });
+        const account = await Account.findByIdAndUpdate(user.accountOwner._id, { $set: { ...req.body } });
 
         if (!account) {
             return res.status(404).json({
@@ -122,8 +123,11 @@ const UpdateProfile = async (req: Request, res: Response, next: NextFunction) =>
 
         // if there was a profile photo then set it.
         if (req.file) {
+            const fileBaseUrl = <string>config.get('UPLOADPATH');
             console.log('in the other req.file check', photo);
-            const updateProfile = await Users.findByIdAndUpdate(user._id, { $set: { profilePhoto: { ...photo } } });
+            const updateProfile = await Users.findByIdAndUpdate(user._id, {
+                $set: { profilePhoto: { ...photo, fileBaseUrl } }
+            });
 
             if (!updateProfile) {
                 return res.status(404).json({
@@ -135,7 +139,7 @@ const UpdateProfile = async (req: Request, res: Response, next: NextFunction) =>
         }
 
         return res.status(200).json({
-            data: user.populate('accountOwner'),
+            data: user,
             status: 'ok',
             code: 200,
             message: 'Profile updated successfully'

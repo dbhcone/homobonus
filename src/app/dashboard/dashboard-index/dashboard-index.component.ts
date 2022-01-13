@@ -69,7 +69,7 @@ export class DashboardIndexComponent implements OnInit {
         this.user.getUserDetails().subscribe(
             async (resp: any) => {
                 console.log('resp', resp.data);
-                this.store.dispatch(setUserProfile({ accountOwner: resp.data.accountOwner }));
+                this.store.dispatch(setUserProfile({ accountOwner: resp.data.accountOwner, profile: resp.data?.profilePhoto }));
             },
             (err: any) => {
                 console.log('error', err);

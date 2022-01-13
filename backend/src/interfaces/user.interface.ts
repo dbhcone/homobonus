@@ -24,4 +24,5 @@ export interface IProfilePhoto {
     originalname?: string;
     destination?: string;
     encoding?: string;
+    fileBaseUrl?: string;
 }

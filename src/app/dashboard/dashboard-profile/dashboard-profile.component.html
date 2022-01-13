@@ -3,7 +3,11 @@
     <div class="flex flex-wrap">
         <div class="flex space-x-3 bg-primary rounded-md px-5 py-3 w-full sm:w-1/2">
             <div class="w-16 h-16 rounded-full overflow-hidden shadow-md">
-                <img src="assets/images/user-128x128.jpg" alt="" class="w-full h-full object-cover" />
+                <img
+                    src="{{ displayPhoto((userProfile | async)?.profile) }}"
+                    alt=""
+                    class="w-full h-full object-cover"
+                />
             </div>
             <div class="text-white">
                 <h5>
@@ -88,7 +92,9 @@
                 </div>
                 <div class="hb-dataset mt-4">
                     <div class="hb-dataset__label">Date of Birth:</div>
-                    <div class="hb-dataset__value">07 February 1990</div>
+                    <div class="hb-dataset__value">
+                        {{ (userProfile | async)?.accountOwner?.dateOfBirth | date: 'dd-MM-yyyy' }}
+                    </div>
                 </div>
             </div>
             <div class="w-full sm:w-1/2 mt-4 sm:mt-0">

@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
+import { TextFormat } from 'src/app/helpers/textformat.helper';
 import { AppState } from 'src/app/store/app.state';
 
 @Component({
@@ -14,6 +15,7 @@ export class DashboardLayoutComponent implements OnInit {
     isLessThanLargeDevice: boolean = false;
     userProfile: Observable<{
         accountOwner: any;
+        profile?: any;
     }>;
     constructor(
         private breakpointObserver: BreakpointObserver,
@@ -30,5 +32,9 @@ export class DashboardLayoutComponent implements OnInit {
     }
     onLogout(): void {
         this.router.navigate(['auth/login']);
+    }
+
+    displayPhoto(photo: any) {
+        return TextFormat.displayFlyer(photo);
     }
 }

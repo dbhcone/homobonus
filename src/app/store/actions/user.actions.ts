@@ -11,6 +11,7 @@ const setUserProfile = createAction(
     'Set [User UserProfile]',
     props<{
         accountOwner: any;
+        profile?: any;
     }>()
 );
 

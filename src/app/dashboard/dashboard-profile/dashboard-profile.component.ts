@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Store } from '@ngrx/store';
 import { Observable, Subscription } from 'rxjs';
+import { TextFormat } from 'src/app/helpers/textformat.helper';
 import { UserService } from 'src/app/services/user.service';
 import { setUserProfile } from 'src/app/store/actions/user.actions';
 import { AppState } from 'src/app/store/app.state';
@@ -16,7 +17,7 @@ export class DashboardProfileComponent implements OnInit {
     subscription?: Subscription;
     data: any;
     userStore: Observable<{ user: { username: string; email: string; role: string } }>;
-    userProfile: Observable<{ accountOwner: any }>;
+    userProfile: Observable<{ accountOwner: any; profile?: any }>;
     constructor(private store: Store<AppState>, private dialog: MatDialog, private userService: UserService) {
         this.userStore = store.select('userObj');
         this.userProfile = this.store.select('userProfile');
@@ -51,5 +52,9 @@ export class DashboardProfileComponent implements OnInit {
             // TODO: make a call or update user profile
             // this.store.dispatch(setUserProfile({accountOwner: result}))
         });
+    }
+
+    displayPhoto(photo: any) {
+        return TextFormat.displayFlyer(photo);
     }
 }

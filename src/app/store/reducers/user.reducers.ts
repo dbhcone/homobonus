@@ -28,14 +28,15 @@ export function userReducer(
 }
 
 const profileReducer = createReducer(
-    { accountOwner: null },
+    { accountOwner: null, profile: {} },
     on(setUserProfile, (state, action) => {
         console.log('state', state);
         console.log('action', action);
-        return { ...state, accountOwner: action.accountOwner };
+        const { fileBaseUrl, filename } = action.profile;
+        return { ...state, accountOwner: action.accountOwner, profile: { fileBaseUrl, filename } };
     })
 );
 
-export function userProfileReducer(state: { accountOwner: any } | undefined, action: Action) {
+export function userProfileReducer(state: { accountOwner: any; profile: any } | undefined, action: Action) {
     return profileReducer(state, action);
 }

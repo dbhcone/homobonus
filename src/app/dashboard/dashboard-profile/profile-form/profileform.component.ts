@@ -4,6 +4,9 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { UserService } from 'src/app/services/user.service';
 import { formatDate } from '@angular/common';
 import Swal from 'sweetalert2';
+import { Store } from '@ngrx/store';
+import { AppState } from 'src/app/store/app.state';
+import { setUserProfile } from 'src/app/store/actions/user.actions';
 
 @Component({
     selector: 'app-profileform',
@@ -21,6 +24,7 @@ export class ProfileformComponent implements OnInit {
         private userService: UserService,
         public dialogRef: MatDialogRef<ProfileformComponent>,
         @Inject(LOCALE_ID) private locale: string,
+        private store: Store<AppState>,
         @Inject(MAT_DIALOG_DATA) public data?: any
     ) {
         this.createProfileForm = this.fb.group({
@@ -95,6 +99,16 @@ export class ProfileformComponent implements OnInit {
         this.userService.updateUserProfile(this.data?._id, formData).subscribe(
             async (resp: any) => {
                 this.userInfo = resp.data;
+                const { accountOwner, profilePhoto } = this.userInfo;
+                console.log('user infor', this.userInfo);
+                this.store.dispatch(
+                    setUserProfile({
+                        accountOwner: {
+                            ...accountOwner,
+                            profile: { filename: profilePhoto.filename, fileBaseUrl: profilePhoto.fileBaseUrl }
+                        }
+                    })
+                );
                 Swal.fire({
                     icon: 'success',
                     titleText: resp.message
