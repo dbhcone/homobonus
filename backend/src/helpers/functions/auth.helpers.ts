@@ -2,6 +2,7 @@ import jwt from 'jsonwebtoken';
 import config from 'config';
 import { Response, NextFunction } from 'express';
 import Users from '../../models/user.model';
+import Merchants from '../../models/merchant.model';
 
 const generateToken = (payload: any, duration: string | number) => {
     return jwt.sign({ iss: config.get('BE_URL'), ...payload }, config.get('JWT_SECRET'), { expiresIn: duration });
@@ -37,8 +38,13 @@ const verifyToken = async (req: any, res: Response, next: NextFunction) => {
         if (Date.now() >= expireDate * 1000) return res.status(401).send({ error: 'Token Expired' });
 
         const udata = await userData(tokenObj.data.id);
-
         req.userData = udata;
+
+        if (tokenObj.data.role == 'merchant') {
+            const mdata = await merchantData(tokenObj.data.id);
+            req.merchantData = mdata;
+        }
+
         next();
     } catch (error: any) {
         return res.status(404).send({ error: error.message });
@@ -48,6 +54,11 @@ const verifyToken = async (req: any, res: Response, next: NextFunction) => {
 const userData = async (_id: string) => {
     const udata = await Users.findById(_id, { password: 0 }).populate('accountOwner');
     return udata;
+};
+
+const merchantData = async (_id: string) => {
+    const mdata = await Merchants.findById(_id);
+    return mdata;
 };
 
 export { generateToken, decodeToken, verifyToken };

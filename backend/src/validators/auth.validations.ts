@@ -86,6 +86,33 @@ const passwordResetValidation: ObjectSchema<{
     confirmPassword: Joi.string().required().min(8)
 });
 
+const merchantAccountValidation: ObjectSchema<{
+    email: string;
+    username: string;
+    password: string;
+    organisationName: string;
+    typeOfOrganisation: string;
+    ownerName: string;
+    mobileNumber: string;
+    address: string;
+    ghPostAddress: string;
+}> = Joi.object({
+    email: Joi.string().required().email(),
+    username: Joi.string().required().alphanum().min(5).max(10),
+    password: Joi.string().required().min(8),
+    ownerName: Joi.string().required().min(5),
+    organisationName: Joi.string().required().min(5),
+    typeOfOrganisation: Joi.string().required().min(5),
+    mobileNumber: Joi.string().required().min(10).max(10).messages({
+        'string.base': `'mobile number' should be a type of 'text'`,
+        'string.empty': `'mobile number' cannot be an empty field`,
+        'string.length': `'mobile number' must be {#limit} characters long`,
+        'any.required': `'mobile number' is a required field`
+    }),
+    address: Joi.string().min(5),
+    ghPostAddress: Joi.string().min(7).optional()
+}).or('address', 'ghPostAddress');
+
 export {
     loginValidation,
     userValidation,
@@ -93,5 +120,6 @@ export {
     accountUpdateValidation,
     accountActivationValidation,
     requestPasswordResetValidation,
-    passwordResetValidation
+    passwordResetValidation,
+    merchantAccountValidation
 };

@@ -21,11 +21,12 @@ export class AuthService implements OnInit {
     }
 
     merchantSignup(merchantData: IMerchant) {
-        return this.client?.POST(`${Auth.signup}`, merchantData);
+        return this.client?.POST(`${Auth.merchantSignup}`, merchantData);
     }
 
-    activateAccount(data: any) {
-        return this.client?.POST(`${Auth.activate}`, data);
+    activateAccount(data: any, token?: any) {
+        const headers = { Authorization: `Bearer ${token}` };
+        return this.client?.POST(`${Auth.activate}`, data, headers);
     }
     setToken(token: string) {
         const promise = new Promise((resolve, reject) => {

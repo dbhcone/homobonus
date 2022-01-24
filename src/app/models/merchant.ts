@@ -3,6 +3,9 @@ export interface IMerchant {
     username: string;
     password: string;
     organisationName: string;
+    typeOfOrganisation: string;
+    ownerName: string;
     mobileNumber: string;
-    status: string;
-  }
+    address?: string;
+    ghPostAddress?: string;
+}

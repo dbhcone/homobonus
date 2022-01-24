@@ -1,0 +1,369 @@
+<div class="login__page" [style.background-image]="'url(assets/images/login-bg.jpg)'">
+    <div class="login__row min-h-screen">
+        <div class="login__hero flex flex-col justify-center items-center py-10 px-4 sm:px-8 xl:px-20 text-white">
+            <a [routerLink]="['']" class="w-48 inline-block"
+                ><img src="assets/images/logo-lg.jpg" class="rounded" alt="HB Events"
+            /></a>
+            <h2 class="text-center mt-6">DO YOU WANT TO ORGANISE EVENTS??? YOU ARE AT THE RIGHT PLACE. SIGN UP NOW</h2>
+        </div>
+        <div class="login__content p-4 sm:p-8 flex flex-col justify-center bg-accent">
+            <div class="login w-full max-w-xl rounded-md mx-auto border p-4 sm:p-8 xl:px-20">
+                <form [formGroup]="signupForm" (ngSubmit)="onSubmit()">
+                    <h1 class="text-2xl font-bold text-blue-900 uppercase text-center">SET UP YOUR ACCOUNT</h1>
+                    <hr />
+
+                    <!-- Organisation Name -->
+                    <div class="mb-1 mt-1">
+                        <label class="block text-gray-700 text-sm font-semibold mb-2" for="organisationName">
+                            Name of Organisation
+                        </label>
+                        <input
+                            class="
+                                text-sm
+                                appearance-none
+                                rounded
+                                w-full
+                                py-2
+                                px-3
+                                text-gray-700
+                                bg-gray-100
+                                leading-tight
+                                focus:outline-none
+                                focus:shadow-outline
+                                h-10
+                            "
+                            id="organisationName"
+                            type="text"
+                            placeholder="organisation name"
+                            formControlName="organisationName"
+                        />
+                        <mat-error *ngIf="organisationName?.touched && organisationName?.hasError('required')">
+                            Please provide the name of the organisation
+                        </mat-error>
+                    </div>
+
+                    <!-- Owners' Name -->
+                    <div class="mb-1 mt-1">
+                        <label class="block text-gray-700 text-sm font-semibold mb-2" for="ownerName">
+                            Owners' Name
+                        </label>
+                        <input
+                            class="
+                                text-sm
+                                appearance-none
+                                rounded
+                                w-full
+                                py-2
+                                px-3
+                                text-gray-700
+                                bg-gray-100
+                                leading-tight
+                                focus:outline-none
+                                focus:shadow-outline
+                                h-10
+                            "
+                            id="ownerName"
+                            type="text"
+                            placeholder="Owners' Name"
+                            formControlName="ownerName"
+                        />
+                        <mat-error *ngIf="ownerName?.touched && ownerName?.hasError('required')">
+                            Please, provide the owner's name
+                        </mat-error>
+                    </div>
+                    <!-- Type of Organisation -->
+                    <div class="mb-1 mt-1">
+                        <label class="block text-gray-700 text-sm font-semibold mb-2" for="typeOfOrganisation">
+                            Type of Organisation
+                        </label>
+                        <input
+                            class="
+                                text-sm
+                                appearance-none
+                                rounded
+                                w-full
+                                py-2
+                                px-3
+                                text-gray-700
+                                bg-gray-100
+                                leading-tight
+                                focus:outline-none
+                                focus:shadow-outline
+                                h-10
+                            "
+                            id="typeOfOrganisation"
+                            type="text"
+                            placeholder="Type of Organisation"
+                            formControlName="typeOfOrganisation"
+                        />
+                    </div>
+                    <!-- Gender -->
+                    <!-- <div class="mb-1 mt-1">
+                        <mat-radio-group formControlName="gender" aria-label="Select an option for gender">
+                            <mat-label class="block text-gray-700 text-sm font-semibold mb-2">Gender</mat-label>
+                            <mat-radio-button class="text-sm appearance-none h-7 text-gray-700" id="male" value="M"
+                                >Male</mat-radio-button
+                            >
+                            <mat-radio-button class="text-sm appearance-none h-7 text-gray-700" id="female" value="F"
+                                >Female</mat-radio-button
+                            >
+                        </mat-radio-group>
+                        <mat-error *ngIf="!gender?.valid && (gender?.dirty || gender?.touched)">
+                            <div [hidden]="!gender?.errors?.required">gender is required</div>
+                        </mat-error>
+                    </div> -->
+
+                    <!-- Mobile Number -->
+                    <div class="mb-1 mt-1">
+                        <label class="block text-gray-700 text-sm font-semibold mb-2" for="mobileNumber">
+                            Mobile Number
+                        </label>
+                        <input
+                            class="
+                                text-sm
+                                appearance-none
+                                rounded
+                                w-full
+                                py-2
+                                px-3
+                                text-gray-700
+                                bg-gray-100
+                                leading-tight
+                                focus:outline-none
+                                focus:shadow-outline
+                                h-10
+                            "
+                            id="mobileNumber"
+                            type="text"
+                            placeholder="Eg: 024xxxxxxx"
+                            formControlName="mobileNumber"
+                        />
+
+                        <mat-error *ngIf="mobileNumber?.touched && mobileNumber?.hasError('required')">
+                            Please, provide your mobile number
+                        </mat-error>
+                        <mat-error *ngIf="mobileNumber?.touched && mobileNumber?.hasError('pattern')">
+                            Kindly check the format of the mobile number
+                        </mat-error>
+                    </div>
+
+                    <!-- Address -->
+                    <div class="mb-1 mt-1">
+                        <label class="block text-gray-700 text-sm font-semibold mb-2" for="address"> Address </label>
+                        <input
+                            class="
+                                text-sm
+                                appearance-none
+                                rounded
+                                w-full
+                                py-2
+                                px-3
+                                text-gray-700
+                                bg-gray-100
+                                leading-tight
+                                focus:outline-none
+                                focus:shadow-outline
+                                h-10
+                            "
+                            id="address"
+                            type="text"
+                            placeholder="Eg: Residential Address"
+                            formControlName="address"
+                        />
+                    </div>
+
+                    <!-- GH Post Address -->
+                    <div class="mb-1 mt-1">
+                        <label class="block text-gray-700 text-sm font-semibold mb-2" for="ghPostAddress"
+                            >GH Post Address
+                        </label>
+                        <input
+                            class="
+                                text-sm
+                                appearance-none
+                                rounded
+                                w-full
+                                py-2
+                                px-3
+                                text-gray-700
+                                bg-gray-100
+                                leading-tight
+                                focus:outline-none
+                                focus:shadow-outline
+                                h-10
+                            "
+                            id="ghPostAddress"
+                            type="text"
+                            placeholder="Eg: GH Post Address, or Residential Address"
+                            formControlName="ghPostAddress"
+                        />
+
+                        <mat-error *ngIf="ghPostAddress?.touched && ghPostAddress?.hasError('minLength')">
+                            Minimum length of GH Post is 10
+                        </mat-error>
+                    </div>
+                    <div class="mb-1 mt-1">
+                        <label class="block text-gray-700 text-sm font-semibold mb-2" for="email"> Email </label>
+                        <input
+                            class="
+                                text-sm
+                                appearance-none
+                                rounded
+                                w-full
+                                py-2
+                                px-3
+                                text-gray-700
+                                bg-gray-100
+                                leading-tight
+                                focus:outline-none
+                                focus:shadow-outline
+                                h-10
+                            "
+                            id="email"
+                            type="email"
+                            placeholder="Email address"
+                            formControlName="email"
+                        />
+                        <mat-error *ngIf="email?.hasError('email') && email?.hasError('required')">
+                            Please enter a valid email address
+                        </mat-error>
+                        <mat-error *ngIf="email?.hasError('required')"> Email is required </mat-error>
+                    </div>
+
+                    <div class="mb-1 mt-1">
+                        <label class="block text-gray-700 text-sm font-semibold mb-2" for="username"> Username </label>
+                        <input
+                            class="
+                                text-sm
+                                appearance-none
+                                rounded
+                                w-full
+                                py-2
+                                px-3
+                                text-gray-700
+                                bg-gray-100
+                                leading-tight
+                                focus:outline-none
+                                focus:shadow-outline
+                                h-10
+                            "
+                            id="username"
+                            type="text"
+                            placeholder="username"
+                            formControlName="username"
+                        />
+
+                        <div *ngIf="username?.invalid && (username?.dirty || username?.touched)">
+                            <mat-error *ngIf="username?.hasError('required')"> Username is required. </mat-error>
+                            <mat-error *ngIf="username?.touched && username?.hasError('minlength')">
+                                Username must be at least 8 characters long.
+                            </mat-error>
+                        </div>
+                    </div>
+
+                    <div class="mb-1 mt-1">
+                        <label class="block text-gray-700 text-sm font-semibold mb-2" for="password"> Password </label>
+                        <input
+                            class="
+                                text-sm
+                                bg-gray-100
+                                appearance-none
+                                rounded
+                                w-full
+                                py-2
+                                px-3
+                                text-gray-700
+                                mb-1
+                                leading-tight
+                                focus:outline-none
+                                focus:shadow-outline
+                                h-10
+                            "
+                            id="password"
+                            type="password"
+                            placeholder="Password"
+                            formControlName="password"
+                        />
+                        <mat-error *ngIf="password?.touched && password?.hasError('required')">
+                            Please, provide password
+                        </mat-error>
+                    </div>
+                    <div class="mb-1 mt-1">
+                        <label class="block text-gray-700 text-sm font-semibold mb-2" for="password2">
+                            Confirm Password
+                        </label>
+                        <input
+                            class="
+                                text-sm
+                                bg-gray-100
+                                appearance-none
+                                rounded
+                                w-full
+                                py-2
+                                px-3
+                                text-gray-700
+                                mb-1
+                                leading-tight
+                                focus:outline-none
+                                focus:shadow-outline
+                                h-10
+                            "
+                            id="password2"
+                            type="password"
+                            placeholder="confirm password"
+                            formControlName="confirmPassword"
+                        />
+                    </div>
+
+                    <div class="flex items-center">
+                        <input
+                            id="remember_me"
+                            name="remember_me"
+                            type="checkbox"
+                            class="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border rounded"
+                            formControlName="agree"
+                        />
+                        <label for="remember_me" class="ml-2 block text-sm text-gray-900">
+                            I agree with HB Events Terms and conditions.
+                        </label>
+                        <mat-error *ngIf="!agree?.valid && (agree?.dirty || agree?.touched)">
+                            <div [hidden]="!agree?.errors?.required">You need to agree to the terms</div>
+                        </mat-error>
+                    </div>
+                    <div class="flex w-full mt-6">
+                        <button
+                            class="
+                                w-full
+                                bg-gray-800
+                                hover:bg-grey-900
+                                text-white text-sm
+                                py-2
+                                px-4
+                                font-semibold
+                                rounded
+                                focus:outline-none
+                                focus:shadow-outline
+                                h-10
+                            "
+                            type="submit"
+                            [disabled]="!signupForm.valid || submitting"
+                        >
+                            {{ (submitting ? 'Please wait ...' : 'Signup') | uppercase }}
+                        </button>
+                    </div>
+                </form>
+                <div class="mt-3">
+                    <span class="text-gray-600 text-sm"> Already have an account? </span>
+                    <a routerLink="/auth/login" class="text-gray-700 text-sm font-semibold hover:text-accent">
+                        login
+                    </a>
+                </div>
+                <div class="mt-4">
+                    <a [routerLink]="['/']" class="text-gray-700 text-sm hover:text-accent inline-flex items-center"
+                        ><mat-icon class="h-4 w-4 leading-4 text-lg mr-2">keyboard_backspace</mat-icon>Go to Home</a
+                    >
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

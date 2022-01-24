@@ -8,6 +8,7 @@ import Account from '../models/account.model';
 import Users from '../models/user.model';
 import PasswordResets from '../models/passwordreset.model';
 import Activations from '../models/user.activations.model';
+import Merchants from '../models/merchant.model';
 
 // import validations
 import {
@@ -17,13 +18,20 @@ import {
     accountUpdateValidation,
     accountActivationValidation,
     requestPasswordResetValidation,
-    passwordResetValidation
+    passwordResetValidation,
+    merchantAccountValidation
 } from '../validators/auth.validations';
-import { accountActivationEmail, generatePin, passwordResetRequestEmail } from '../helpers/functions/email.helper';
+import {
+    accountActivationEmail,
+    generatePin,
+    merchantAccountActivationEmail,
+    passwordResetRequestEmail
+} from '../helpers/functions/email.helper';
 
 import { intlTelNumberGh, sendDtechSms } from '../helpers/functions/sms.helpers';
 import { accountCreationMsg } from '../helpers/functions/messages.helpers';
 import { CResponse } from '../helpers/classes/response.class';
+import { IMerchant } from '../interfaces/merchant.interface';
 
 const Signup = async (req: Request, res: Response) => {
     let user: IUser, account: IAccount;
@@ -76,21 +84,24 @@ const Signup = async (req: Request, res: Response) => {
                      * Now send email to account account.
                      */
                     //Generate token
-                    const temp_token = generateToken({ email: user.email, username: user.username }, '24h');
+                    const temp_token = generateToken(
+                        { email: user.email, username: user.username, role: 'user', id: userData._id },
+                        '24h'
+                    );
 
                     const pin = generatePin(6);
                     // try sending sms only if there was a primary number
-                    if (account.primaryMobileNumber) {
-                        const standardNumber = intlTelNumberGh(account.primaryMobileNumber);
+                    // if (account.primaryMobileNumber) {
+                    //     const standardNumber = intlTelNumberGh(account.primaryMobileNumber);
 
-                        if (standardNumber) {
-                            const sendSMS = await sendDtechSms(
-                                accountCreationMsg(account.firstName, temp_token, pin),
-                                standardNumber
-                            );
-                            console.log('sms response', sendSMS, standardNumber);
-                        }
-                    }
+                    //     if (standardNumber) {
+                    //         const sendSMS = await sendDtechSms(
+                    //             accountCreationMsg(account.firstName, temp_token, pin),
+                    //             standardNumber
+                    //         );
+                    //         console.log('sms response', sendSMS, standardNumber);
+                    //     }
+                    // }
 
                     const sendmail = await accountActivationEmail(account.firstName, temp_token, user.email, pin);
 
@@ -297,49 +308,64 @@ const MembersStats = async (req: Request, res: Response) => {
     }
 };
 
-const ActivateAccount = async (req: Request, res: Response) => {
+const ActivateAccount = async (req: any, res: Response) => {
     try {
         const validation = await accountActivationValidation.validateAsync(req.body);
 
         // const { token, pin, mobileNumber } = req.body;
         const { pin, mobileNumber } = req.body;
-        // let decoded = decodeToken(token);
 
-        // if (decoded.data) {
-        //     const dc = JSON.parse(JSON.stringify(decoded.data));
-        // const activation = await Activations.findOne({ email: dc.email, pin });
         const activation = await Activations.findOne({ mobileNumber, pin });
 
         if (activation) {
             // found. now update the status in users and delete from activations
             // const user = await Users.findOneAndUpdate({ email: dc.email }, { $set: { status: 'active' } });
 
-            const acc = await Account.findOne({ primaryMobileNumber: mobileNumber });
-            if (!acc) {
-                return res.status(404).json({
-                    message: 'Could not verify mobile number. Check and try again!',
-                    status: 'error',
-                    code: 404
+            if (req.merchantData) {
+                const merchant = await Merchants.findByIdAndUpdate(req.merchantData._id, {
+                    $set: { status: 'active' }
                 });
-            }
-            const user = await Users.findOneAndUpdate({ accountOwner: acc._id }, { $set: { status: 'active' } });
-
-            const del = await Activations.deleteMany({ mobileNumber, pin });
-            console.log('activations deleted', del);
-            if (user) {
-                // activation successful
+                if (!merchant) {
+                    return res.status(404).json({
+                        message: 'Could not activate your account. Check and try again!',
+                        status: 'error',
+                        code: 404
+                    });
+                }
+                const del = await Activations.deleteMany({ mobileNumber, pin });
                 return res.status(200).json({
                     message: 'Account activation successful!',
                     status: 'ok',
                     code: 200
                 });
-            } else {
-                // unsuccessful activation
-                return res.status(404).json({
-                    message: 'Could not activate account!',
-                    status: 'error',
-                    code: 404
-                });
+            } else if (req.userData) {
+                const acc = await Account.findOne({ primaryMobileNumber: mobileNumber });
+                if (!acc) {
+                    return res.status(404).json({
+                        message: 'Could not verify mobile number. Check and try again!',
+                        status: 'error',
+                        code: 404
+                    });
+                }
+                const user = await Users.findOneAndUpdate({ accountOwner: acc._id }, { $set: { status: 'active' } });
+
+                const del = await Activations.deleteMany({ mobileNumber, pin });
+                console.log('activations deleted', del);
+                if (user) {
+                    // activation successful
+                    return res.status(200).json({
+                        message: 'Account activation successful!',
+                        status: 'ok',
+                        code: 200
+                    });
+                } else {
+                    // unsuccessful activation
+                    return res.status(404).json({
+                        message: 'Could not activate account!',
+                        status: 'error',
+                        code: 404
+                    });
+                }
             }
         } else {
             // activation not found
@@ -425,6 +451,74 @@ const ResetPassword = async (req: Request, res: Response) => {
     }
 };
 
+const MerchantSignup = async (req: Request, res: Response) => {
+    const data = req.body;
+
+    try {
+        let validation = await merchantAccountValidation.validateAsync(data);
+        const merchantData = { ...data, password: md5(data.password) };
+
+        let merchant: IMerchant = merchantData;
+
+        // now create a merchant
+        let newMerchant = await new Merchants(merchant).save();
+
+        if (newMerchant) {
+            console.log('Merchant creation data', newMerchant);
+
+            //Generate token
+            const temp_token = generateToken(
+                { email: merchant.email, username: merchant.username, role: 'merchant', id: newMerchant._id },
+                '24h'
+            );
+
+            const pin = generatePin(6);
+            // try sending sms only if there was a mobile number
+            // if (merchant.mobileNumber) {
+            //     const standardNumber = intlTelNumberGh(merchant.mobileNumber);
+
+            //     if (standardNumber) {
+            //         const sendSMS = await sendDtechSms(
+            //             accountCreationMsg(merchant.organisationName, temp_token, pin),
+            //             standardNumber
+            //         );
+            //         console.log('sms response', sendSMS, standardNumber);
+            //     }
+            // }
+
+            const sendmail = await merchantAccountActivationEmail(
+                merchant.ownerName,
+                merchant.organisationName,
+                temp_token,
+                merchant.email,
+                pin
+            );
+
+            if (sendmail.status == 'ok') {
+                // save the pin and email to activations to be later verified
+                const activation = await new Activations({
+                    email: merchant.email,
+                    pin,
+                    mobileNumber: merchant.mobileNumber
+                }).save();
+                return res.status(201).json({
+                    message: 'A link has been sent to your email. Kindly follow to activate your account!',
+                    code: 201,
+                    status: 'ok'
+                });
+            }
+        } else {
+            return res.status(400).json({
+                message: 'Could not create merchant',
+                code: 400,
+                status: 'error'
+            });
+        }
+    } catch (error: any) {
+        return res.status(404).send({ code: 404, status: 'error', message: error.message });
+    }
+};
+
 export {
     Signup,
     Login,
@@ -435,5 +529,6 @@ export {
     MembersStats,
     ActivateAccount,
     RequestPasswordReset,
-    ResetPassword
+    ResetPassword,
+    MerchantSignup
 };

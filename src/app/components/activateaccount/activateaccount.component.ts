@@ -57,7 +57,7 @@ export class ActivateaccountComponent implements OnInit {
     onSubmit() {
         this.submitting = true;
         const data = { pin: this.pin?.value, mobileNumber: this.mobileNumber?.value };
-        this.auth.activateAccount(data)?.subscribe(
+        this.auth.activateAccount(data, this.token)?.subscribe(
             async (resp: any) => {
                 console.log('activation', resp);
                 Swal.fire({ text: resp.message, icon: 'success', timer: 5000 }).then(res => {

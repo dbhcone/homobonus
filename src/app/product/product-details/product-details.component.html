@@ -2,10 +2,8 @@
     <div class="container">
         <div class="grid grid-cols-12 gap-8">
             <div class="col-span-12 md:col-span-7 xl:col-span-8 border p-5">
-                <a href="javascript:void(0)" class="category text-primary inline-block mb-5">{{
-                    eventDetails?.event?.title
-                }}</a>
-                <h1 class="_title font-medium">{{ eventDetails?.event?.description }}</h1>
+                <a href="javascript:void(0)" class="category text-primary inline-block mb-5"></a>
+                <h1 class="_title font-medium text-primary">{{ eventDetails?.event?.title }}</h1>
                 <ul class="product-meta flex flex-wrap items-center mt-8 mb-8">
                     <li class="mr-4">
                         <a class="flex items-center pr-4 py-1 hover:text-primary" href="javascript:void(0)"
@@ -27,9 +25,7 @@
                 <img class="w-full" src="{{ displayFlyer(eventDetails?.event?.flyer) }}" alt="img not found" />
                 <div class="hb-content mt-8">
                     <h5>
-                        We provide you with process mechanics for plastics and rubber technology (m / f / d) from Spain.
-                        Our candidates speak English and would like to continue their respective careers in the plastics
-                        country.
+                        {{ eventDetails?.event?.description }}
                     </h5>
                     <div *ngIf="eventDetails?.event?.extraDetails.length > 0">
                         <div *ngFor="let detail of eventDetails?.event?.extraDetails">
