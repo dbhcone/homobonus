@@ -5,6 +5,7 @@ const ContactUsSchema: Schema = new Schema(
     {
         email: { type: String, required: true },
         fullName: { type: String, required: true },
+        mobileNumber: { type: String },
         message: { type: String, required: true },
         subject: { type: String, default: null }
     },

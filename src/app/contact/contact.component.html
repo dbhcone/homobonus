@@ -15,38 +15,59 @@
                     <h3>Leave us a message</h3>
                     <p>You will receive a response within 24 hours from our team.</p>
                 </div>
-                <form>
+                <form [formGroup]="contactUsForm" (ngSubmit)="onSubmit()">
                     <div class="flex flex-wrap sm:flex-nowrap sm:space-x-5 mt-3">
                         <input
                             type="text"
+                            formControlName="fullName"
                             placeholder="Your Name"
                             class="border border-gray-200 p-2 px-4 w-full sm:w-1/2 rounded-sm"
                         />
+                        <mat-error *ngIf="fullName?.touched && fullName?.hasError('required')">
+                            Provide full name
+                        </mat-error>
                         <input
-                            type="number"
+                            type="text"
+                            pattern="[0-9]{10}"
+                            maxlength="10"
+                            minlength="10"
                             placeholder="Your Number"
+                            formControlName="mobileNumber"
                             class="border border-gray-200 p-2 px-4 w-full sm:w-1/2 rounded-sm mt-3 sm:mt-0"
                         />
+                        <mat-error *ngIf="mobileNumber?.touched && mobileNumber?.hasError('required')">
+                            Provide mobile number
+                        </mat-error>
                     </div>
                     <input
                         type="email"
                         placeholder="Your Email"
+                        formControlName="email"
                         class="border border-gray-200 p-2 px-4 w-full rounded-sm mt-5"
                     />
+                    <mat-error *ngIf="email?.touched && email?.hasError('email')"> Provide a valid email </mat-error>
                     <input
                         type="text"
                         placeholder="Subject"
+                        formControlName="subject"
                         class="border border-gray-200 p-2 px-4 w-full rounded-sm mt-5"
                     />
+                    <mat-error *ngIf="subject?.touched && subject?.hasError('required')"> Provide subject </mat-error>
                     <textarea
                         cols="10"
                         rows="3"
-                        placeholder="Tell us about desired property"
-                        [value]="''"
-                        class="border border-gray-200 p-3 mt-5 w-full rounded-sm mt-5"
+                        placeholder="Make a complain, recommendation, suggestion etc"
+                        formControlName="message"
+                        class="border border-gray-200 p-3 w-full rounded-sm mt-5"
                     >
                     </textarea>
-                    <button class="px-5 py-2 bg-accent text-white mt-5 rounded font-medium">Send Message</button>
+                    <button
+                        type="submit"
+                        class="px-5 py-2 bg-accent text-white mt-5 rounded font-medium"
+                        [disabled]="!contactUsForm.valid || submitting"
+                    >
+                        {{ (submitting ? 'Please wait ...' : 'Send Message') | uppercase }}
+                    </button>
                 </form>
             </div>
             <div

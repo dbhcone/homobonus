@@ -5,4 +5,5 @@ export interface IContactUs extends Document {
     message: string;
     subject: string;
     fullName: string;
+    mobileNumber: string;
 }

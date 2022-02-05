@@ -3,4 +3,5 @@ export interface IContactUs {
     message: string;
     subject: string;
     fullName: string;
+    mobileNumber: string;
 }
